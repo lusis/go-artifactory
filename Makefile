@@ -1,4 +1,4 @@
-BINARIES = artif-list-projects
+BINARIES = artif-list-repos artif-get-repo artif-get-license artif-list-users artif-get-user artif-list-groups artif-get-group artif-list-permission-targets artif-get-permission-target artif-create-user artif-delete-user
 
 GOPATH := $(GOPATH):$(TRAVIS_BUILD_DIR)
 all: clean test artifactory artifactory-bin

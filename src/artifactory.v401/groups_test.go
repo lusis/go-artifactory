@@ -1,6 +1,7 @@
 package artifactory
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
@@ -11,24 +12,90 @@ import (
 	"testing"
 )
 
-func TestCreateUserFailure(t *testing.T) {
+func TestGetGroups(t *testing.T) {
+	responseFile, err := os.Open("assets/test/groups.json")
+	if err != nil {
+		t.Fatalf("Unable to read test data: %s", err.Error())
+	}
+	defer responseFile.Close()
+	responseBody, _ := ioutil.ReadAll(responseFile)
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprintf(w, string(responseBody))
+	}))
+	defer server.Close()
+
+	transport := &http.Transport{
+		Proxy: func(req *http.Request) (*url.URL, error) {
+			return url.Parse(server.URL)
+		},
+	}
+
 	conf := &ClientConfig{
 		BaseURL:   "http://127.0.0.1:8080/",
 		Username:  "username",
 		Password:  "password",
 		VerifySSL: false,
+		Transport: transport,
 	}
 
 	client := NewClient(conf)
-	var details UserDetails = UserDetails{}
-	err := client.CreateUser("testuser", details)
-	assert.Error(t, err, "should return an error")
+	groups, err := client.GetGroups()
+	assert.NoError(t, err, "should not return an error")
+	assert.Len(t, groups, 5, "should have five groups")
+	assert.Equal(t, groups[0].Name, "administrators", "Should have the administrators group")
+	assert.Equal(t, groups[0].Uri, "https://artifactory/artifactory/api/security/groups/administrators", "should have a uri")
+	for _, g := range groups {
+		assert.NotNil(t, g.Name, "Name should not be empty")
+		assert.NotNil(t, g.Uri, "Uri should not be empty")
+	}
 }
 
-func TestDeleteUser(t *testing.T) {
+func TestGetGroupDetails(t *testing.T) {
+	responseFile, err := os.Open("assets/test/single_group.json")
+	if err != nil {
+		t.Fatalf("Unable to read test data: %s", err.Error())
+	}
+	defer responseFile.Close()
+	responseBody, _ := ioutil.ReadAll(responseFile)
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(200)
 		w.Header().Set("Content-Type", "application/json")
+		fmt.Fprintf(w, string(responseBody))
+	}))
+	defer server.Close()
+
+	transport := &http.Transport{
+		Proxy: func(req *http.Request) (*url.URL, error) {
+			return url.Parse(server.URL)
+		},
+	}
+
+	conf := &ClientConfig{
+		BaseURL:   "http://127.0.0.1:8080/",
+		Username:  "username",
+		Password:  "password",
+		VerifySSL: false,
+		Transport: transport,
+	}
+
+	client := NewClient(conf)
+	group, err := client.GetGroupDetails("docker-readers")
+	assert.NoError(t, err, "should not return an error")
+	assert.Equal(t, group.Name, "docker-readers", "name should be docker-readers")
+	assert.Equal(t, group.Description, "Can read from Docker repositories", "description should match")
+	assert.False(t, group.AutoJoin, "autojoin should be false")
+	assert.Equal(t, group.Realm, "artifactory", "realm should be artifactory")
+}
+
+func TestCreateGroupNoDetails(t *testing.T) {
+	var buf bytes.Buffer
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+		w.Header().Set("Content-Type", "application/json")
+		req, _ := ioutil.ReadAll(r.Body)
+		buf.Write(req)
 		fmt.Fprintf(w, "")
 	}))
 	defer server.Close()
@@ -48,15 +115,20 @@ func TestDeleteUser(t *testing.T) {
 	}
 
 	client := NewClient(conf)
-	err := client.DeleteUser("testuser")
+	var details GroupDetails = GroupDetails{}
+	err := client.CreateGroup("testgroup", details)
 	assert.NoError(t, err, "should not return an error")
+	assert.Equal(t, "{}", string(buf.Bytes()), "should send empty json")
 }
 
-func TestCreateUser(t *testing.T) {
+func TestCreateGroupDetails(t *testing.T) {
+	var buf bytes.Buffer
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(200)
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintf(w, "user created")
+		req, _ := ioutil.ReadAll(r.Body)
+		buf.Write(req)
+		fmt.Fprintf(w, "")
 	}))
 	defer server.Close()
 
@@ -75,86 +147,12 @@ func TestCreateUser(t *testing.T) {
 	}
 
 	client := NewClient(conf)
-	var details UserDetails = UserDetails{
-		Email:    "test@test.com",
-		Password: "somepass",
+	var details GroupDetails = GroupDetails{
+		Description: "test group desc",
+		AutoJoin:    true,
 	}
-	err := client.CreateUser("testuser", details)
+	expectedJson := `{"description":"test group desc","autoJoin":true}`
+	err := client.CreateGroup("testgroup", details)
 	assert.NoError(t, err, "should not return an error")
-}
-
-func TestGetUsers(t *testing.T) {
-	responseFile, err := os.Open("assets/test/users.json")
-	if err != nil {
-		t.Fatalf("Unable to read test data: %s", err.Error())
-	}
-	defer responseFile.Close()
-	responseBody, _ := ioutil.ReadAll(responseFile)
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)
-		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintf(w, string(responseBody))
-	}))
-	defer server.Close()
-
-	transport := &http.Transport{
-		Proxy: func(req *http.Request) (*url.URL, error) {
-			return url.Parse(server.URL)
-		},
-	}
-
-	conf := &ClientConfig{
-		BaseURL:   "http://127.0.0.1:8080/",
-		Username:  "username",
-		Password:  "password",
-		VerifySSL: false,
-		Transport: transport,
-	}
-
-	client := NewClient(conf)
-	users, err := client.GetUsers()
-	assert.NoError(t, err, "should not return an error")
-	assert.Len(t, users, 2, "should have two users")
-}
-
-func TestGetUserDetails(t *testing.T) {
-	responseFile, err := os.Open("assets/test/single_user.json")
-	if err != nil {
-		t.Fatalf("Unable to read test data: %s", err.Error())
-	}
-	defer responseFile.Close()
-	responseBody, _ := ioutil.ReadAll(responseFile)
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)
-		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintf(w, string(responseBody))
-	}))
-	defer server.Close()
-
-	transport := &http.Transport{
-		Proxy: func(req *http.Request) (*url.URL, error) {
-			return url.Parse(server.URL)
-		},
-	}
-
-	conf := &ClientConfig{
-		BaseURL:   "http://127.0.0.1:8080/",
-		Username:  "username",
-		Password:  "password",
-		VerifySSL: false,
-		Transport: transport,
-	}
-
-	client := NewClient(conf)
-	user, err := client.GetUserDetails("admin")
-	assert.NoError(t, err, "should not return an error")
-	assert.Equal(t, user.Name, "admin", "name should be admin")
-	assert.Equal(t, user.Email, "admin@admin.com", "should have email of admin@admin.com")
-	assert.True(t, user.Admin, "user should be an admin")
-	assert.True(t, user.ProfileUpdatable, "profile updatable should be true")
-	assert.False(t, user.InternalPasswordDisabled, "Internal password should not be disabled")
-	assert.Len(t, user.Groups, 1, "User should be in one group")
-	assert.Equal(t, user.Groups[0], "administrators", "user should be in the administrators group")
-	assert.Equal(t, user.Realm, "internal", "user realm should be internal")
-	assert.NotNil(t, user.LastLoggedIn, "lastLoggedIn should not be empty")
+	assert.Equal(t, expectedJson, string(buf.Bytes()), "should send empty json")
 }

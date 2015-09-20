@@ -46,3 +46,16 @@ func (c *ArtifactoryClient) GetGroupDetails(u string) (GroupDetails, error) {
 		}
 	}
 }
+
+func (c *ArtifactoryClient) CreateGroup(gname string, g GroupDetails) error {
+	j, jerr := json.Marshal(g)
+	if jerr != nil {
+		return jerr
+	}
+	o := make(map[string]string)
+	_, err := c.Put("/api/security/groups/"+gname, string(j), o)
+	if err != nil {
+		return err
+	}
+	return nil
+}

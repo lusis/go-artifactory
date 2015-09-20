@@ -13,7 +13,7 @@ artifactory:
 
 artifactory-bin:
 	@mkdir -p bin/
-	$(foreach bin,$(BINARIES),go install $(bin);)
+	@$(foreach bin,$(BINARIES),go install $(bin);)
 
 clean:
 	@rm -rf bin/ pkg/

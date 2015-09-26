@@ -1,13 +1,15 @@
 package artifactory
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
-func (c *ArtifactoryClient) DeployArtifact(repoKey string, filename string, path string, properties map[string]string) error {
+func (c *ArtifactoryClient) DeployArtifact(repoKey string, filename string, path string, properties map[string]string) (CreatedStorageItem, error) {
+	var res CreatedStorageItem
 	var fileProps []string
 	var finalUrl string
 	finalUrl = "/" + repoKey + "/"
@@ -25,13 +27,19 @@ func (c *ArtifactoryClient) DeployArtifact(repoKey string, filename string, path
 	}
 	data, err := os.Open(filename)
 	if err != nil {
-		return err
+		return res, err
 	}
 	defer data.Close()
 	b, _ := ioutil.ReadAll(data)
-	_, err = c.Put(finalUrl, string(b), make(map[string]string))
+	d, err := c.Put(finalUrl, string(b), make(map[string]string))
 	if err != nil {
-		return err
+		return res, err
+	} else {
+		e := json.Unmarshal(d, &res)
+		if e != nil {
+			return res, e
+		} else {
+			return res, nil
+		}
 	}
-	return nil
 }

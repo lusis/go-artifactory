@@ -2,6 +2,7 @@ package artifactory
 
 import (
 	"bytes"
+	"crypto/sha1"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -54,7 +55,17 @@ func (c *ArtifactoryClient) makeRequest(method string, path string, options map[
 	if len(options) != 0 {
 		u.RawQuery = qs.Encode()
 	}
-	req, _ := http.NewRequest(method, u.String(), body)
+	buf := new(bytes.Buffer)
+	if body != nil {
+		buf.ReadFrom(body)
+	}
+	req, _ := http.NewRequest(method, u.String(), bytes.NewReader(buf.Bytes()))
+	if body != nil {
+		h := sha1.New()
+		h.Write(buf.Bytes())
+		chkSum := h.Sum(nil)
+		req.Header.Add("X-Checksum-Sha1", fmt.Sprintf("%x", chkSum))
+	}
 	req.Header.Add("user-agent", "artifactory-go."+VERSION)
 	req.SetBasicAuth(c.Config.Username, c.Config.Password)
 	r, err := c.Client.Do(req)

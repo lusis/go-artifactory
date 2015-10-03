@@ -67,6 +67,7 @@ func (c *ArtifactoryClient) makeRequest(method string, path string, options map[
 		req.Header.Add("X-Checksum-Sha1", fmt.Sprintf("%x", chkSum))
 	}
 	req.Header.Add("user-agent", "artifactory-go."+VERSION)
+	req.Header.Add("X-Result-Detail", "info, properties")
 	req.SetBasicAuth(c.Config.Username, c.Config.Password)
 	r, err := c.Client.Do(req)
 	if err != nil {

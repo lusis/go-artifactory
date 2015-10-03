@@ -76,3 +76,8 @@ func (c *ArtifactoryClient) DeleteUser(uname string) error {
 		return nil
 	}
 }
+
+func (c *ArtifactoryClient) GetUserEncryptedPassword() (s string, err error) {
+	d, err := c.Get("/api/security/encryptedPassword", make(map[string]string))
+	return string(d), err
+}

@@ -158,3 +158,31 @@ func TestGetUserDetails(t *testing.T) {
 	assert.Equal(t, user.Realm, "internal", "user realm should be internal")
 	assert.NotNil(t, user.LastLoggedIn, "lastLoggedIn should not be empty")
 }
+
+func TestGetUserEncryptedPassword(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+		w.Header().Set("Content-Type", "text/plain")
+		fmt.Fprintf(w, "ABCDEFGH")
+	}))
+	defer server.Close()
+
+	transport := &http.Transport{
+		Proxy: func(req *http.Request) (*url.URL, error) {
+			return url.Parse(server.URL)
+		},
+	}
+
+	conf := &ClientConfig{
+		BaseURL:   "http://127.0.0.1:8080/",
+		Username:  "username",
+		Password:  "password",
+		VerifySSL: false,
+		Transport: transport,
+	}
+
+	client := NewClient(conf)
+	d, err := client.GetUserEncryptedPassword()
+	assert.NoError(t, err, "should not return an error")
+	assert.Equal(t, d, "ABCDEFGH", "encrypted password should be returned")
+}

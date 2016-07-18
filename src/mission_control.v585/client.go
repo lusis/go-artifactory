@@ -1,12 +1,12 @@
-package artifactory
+package mission_control
 
 import (
 	"crypto/tls"
 	"fmt"
 	"net/http"
 	"os"
-	"net"
 	"time"
+	"net"
 )
 
 type ClientConfig struct {
@@ -19,13 +19,13 @@ type ClientConfig struct {
 	Timeout   time.Duration
 }
 
-type ArtifactoryClient struct {
+type MissionControlClient struct {
 	Client    *http.Client
 	Config    *ClientConfig
 	Transport *http.Transport
 }
 
-func NewClient(config *ClientConfig) (c ArtifactoryClient) {
+func NewClient(config *ClientConfig) (c MissionControlClient) {
 	verifySSL := func() bool {
 		if config.VerifySSL != true {
 			return false
@@ -47,26 +47,26 @@ func NewClient(config *ClientConfig) (c ArtifactoryClient) {
 		config.Client = new(http.Client)
 	}
 	config.Client.Transport = config.Transport
-	return ArtifactoryClient{Client: config.Client, Config: config}
+	return MissionControlClient{Client: config.Client, Config: config}
 }
 
 func clientConfigFrom(from string) (c *ClientConfig) {
 	switch from {
 	case "environment":
-		if os.Getenv("ARTIFACTORY_URL") == "" || os.Getenv("ARTIFACTORY_USERNAME") == "" || os.Getenv("ARTIFACTORY_PASSWORD") == "" {
-			fmt.Printf("You must set the environment variables ARTIFACTORY_URL/ARTIFACTORY_USERNAME/ARTIFACTORY_PASSWORD\n")
+		if os.Getenv("MISSION_CONTROL_URL") == "" || os.Getenv("MISSION_CONTROL_USERNAME") == "" || os.Getenv("MISSION_CONTROL_PASSWORD") == "" {
+			fmt.Printf("You must set the environment variables MISSION_CONTROL_URL/MISSION_CONTROL_USERNAME/MISSION_CONTROL_PASSWORD\n")
 			os.Exit(1)
 		}
 	}
 	conf := ClientConfig{
-		BaseURL:  os.Getenv("ARTIFACTORY_URL"),
-		Username: os.Getenv("ARTIFACTORY_USERNAME"),
-		Password: os.Getenv("ARTIFACTORY_PASSWORD"),
+		BaseURL:  os.Getenv("MISSION_CONTROL_URL"),
+		Username: os.Getenv("MISSION_CONTROL_USERNAME"),
+		Password: os.Getenv("MISSION_CONTROL_PASSWORD"),
 	}
 	return &conf
 }
 
-func NewClientFromEnv() (c ArtifactoryClient) {
+func NewClientFromEnv() (c MissionControlClient) {
 	config := clientConfigFrom("environment")
 	client := NewClient(config)
 	return client

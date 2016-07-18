@@ -1,4 +1,4 @@
-package artifactory
+package mission_control
 
 import (
 	"net/http/httptest"

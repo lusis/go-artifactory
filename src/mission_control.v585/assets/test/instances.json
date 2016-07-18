@@ -1,0 +1,9 @@
+{
+  "data": [{
+    "url": "http://10.0.0.110:8080/artifactory",
+    "name": "QA"
+  }, {
+    "url": "http://10.0.0.120:8080/artifactory",
+    "name": "DEV"
+  }]
+}

@@ -1,0 +1,28 @@
+{
+  "artifactProperties": [
+    {
+      "name": "artifactory.replication.docker-prod.result",
+      "value": "ok"
+    },
+    {
+      "name": "artifactory.replication.docker-prod.finished",
+      "value": "1465070400180"
+    },
+    {
+      "name": "artifactory.replication.docker-prod.started",
+      "value": "1465014175127"
+    },
+    {
+      "name": "artifactory.replication.docker-prod_registry001.docker.io_artifactory_docker-repo.result",
+      "value": "ok"
+    },
+    {
+      "name": "artifactory.replication.docker-prod_registry001.docker.io_artifactory_docker-repo.finished",
+      "value": "1465013917370"
+    },
+    {
+      "name": "artifactory.replication.docker-prod_registry002.docker.io_artifactory_docker-repo.started",
+      "value": "1465014175254"
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-package artifactory
+package mission_control
 
 import (
 	"bytes"
@@ -13,21 +13,21 @@ import (
 	"strings"
 )
 
-func (c *ArtifactoryClient) Get(path string, options map[string]string) ([]byte, error) {
+func (c *MissionControlClient) Get(path string, options map[string]string) ([]byte, error) {
 	return c.makeRequest("GET", path, options, nil)
 }
 
-func (c *ArtifactoryClient) Post(path string, data string, options map[string]string) ([]byte, error) {
+func (c *MissionControlClient) Post(path string, data string, options map[string]string) ([]byte, error) {
 	body := strings.NewReader(data)
 	return c.makeRequest("POST", path, options, body)
 }
 
-func (c *ArtifactoryClient) Put(path string, data string, options map[string]string) ([]byte, error) {
+func (c *MissionControlClient) Put(path string, data string, options map[string]string) ([]byte, error) {
 	body := strings.NewReader(data)
 	return c.makeRequest("PUT", path, options, body)
 }
 
-func (c *ArtifactoryClient) Delete(path string) error {
+func (c *MissionControlClient) Delete(path string) error {
 	_, err := c.makeRequest("DELETE", path, make(map[string]string), nil)
 	if err != nil {
 		return err
@@ -36,7 +36,7 @@ func (c *ArtifactoryClient) Delete(path string) error {
 	}
 }
 
-func (c *ArtifactoryClient) makeRequest(method string, path string, options map[string]string, body io.Reader) ([]byte, error) {
+func (c *MissionControlClient) makeRequest(method string, path string, options map[string]string, body io.Reader) ([]byte, error) {
 	qs := url.Values{}
 	for q, p := range options {
 		qs.Add(q, p)
@@ -61,7 +61,7 @@ func (c *ArtifactoryClient) makeRequest(method string, path string, options map[
 		chkSum := h.Sum(nil)
 		req.Header.Add("X-Checksum-Sha1", fmt.Sprintf("%x", chkSum))
 	}
-	req.Header.Add("user-agent", "artifactory-go."+VERSION)
+	req.Header.Add("user-agent", "mission-control-go."+VERSION)
 	req.Header.Add("X-Result-Detail", "info, properties")
 	req.SetBasicAuth(c.Config.Username, c.Config.Password)
 	r, err := c.Client.Do(req)

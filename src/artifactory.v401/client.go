@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"net"
+	"time"
 )
 
 type ClientConfig struct {
@@ -14,6 +16,7 @@ type ClientConfig struct {
 	VerifySSL bool
 	Client    *http.Client
 	Transport *http.Transport
+	Timeout   time.Duration
 }
 
 type ArtifactoryClient struct {
@@ -34,6 +37,12 @@ func NewClient(config *ClientConfig) (c ArtifactoryClient) {
 		config.Transport = new(http.Transport)
 	}
 	config.Transport.TLSClientConfig = &tls.Config{InsecureSkipVerify: verifySSL()}
+	if config.Timeout != 0 {
+		config.Transport.Dial = func(network, addr string) (net.Conn, error) {
+			return net.DialTimeout(network, addr, config.Timeout)
+		}
+	}
+
 	if config.Client == nil {
 		config.Client = new(http.Client)
 	}

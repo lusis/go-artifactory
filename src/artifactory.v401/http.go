@@ -41,12 +41,7 @@ func (c *ArtifactoryClient) makeRequest(method string, path string, options map[
 	for q, p := range options {
 		qs.Add(q, p)
 	}
-	var base_req_path string
-	if c.Config.BaseURL[:len(c.Config.BaseURL)-1] == "/" {
-		base_req_path = c.Config.BaseURL + path
-	} else {
-		base_req_path = c.Config.BaseURL + "/" + path
-	}
+	base_req_path := strings.TrimRight(c.Config.BaseURL, "/") + path
 	u, err := url.Parse(base_req_path)
 	if err != nil {
 		var data bytes.Buffer

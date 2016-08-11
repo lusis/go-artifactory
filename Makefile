@@ -11,10 +11,11 @@ endif
 all: clean test artifactory $(BINLIST)
 
 test:
-	@go test artifactory.v401 #-test.v
+	@go get -t -d ./...
+	@go test artifactory.v401 -v #-test.v
 
 artifactory:
-	@go get ./... 
+	@go get -t -d ./... 
 	@go install artifactory.v401
 
 $(BINLIST):
@@ -22,6 +23,6 @@ $(BINLIST):
 	@go install $@
 
 clean:
-	@rm -rf bin/ pkg/
+	@rm -rf bin/ pkg/ src/github.com src/gopkg.in
 
 .PHONY: all clean test artifactory $(BINLIST)

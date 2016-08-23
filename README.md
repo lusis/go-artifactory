@@ -7,6 +7,20 @@ There are two ways to use this:
 - as a library
 - via the bundled utilities
 
+### configuration
+The following four environment variables are supported for configuring the artifactory client:
+
+- `ARTIFACTORY_URL`
+- `ARTIFACTORY_TOKEN`
+- `ARTIFACTORY_PASSWORD`
+- `ARTIFACTORY_USERNAME`
+
+Newer version of artifactory support an API key that gets passed as a header instead of using basic auth. In the event that username, password and token are all specified, the token takes precedence.
+
+Note that `ARTIFACTORY_URL` should be the base path to artifactory. This will be appended with the api paths e.g. `/api/security/users`). For this reason and due to issues with trailing slashes, if you have a trailing slash in the `ARTIFACTORY_URL` this will be trimmed.
+
+You can read more about how artifactory authenticates the API [here](https://www.jfrog.com/confluence/display/RTF/Artifactory+REST+API)
+
 ### as a library
 ```go
 package main
@@ -19,10 +33,16 @@ import (
 
 func main() {
 	/*
-		NewClientFromEnv requires three environement variables:
+		NewClientFromEnv requires two or three environment variables depending:
 		- ARTIFACTORY_URL (i.e. https://myartifactory.domain.com/artifactory)
+
+		and one of either:
+		- ARTIFACTORY_TOKEN (this is the API key in newer versions of artifactory)
+
+		or
+
 		- ARTIFACTORY_USERNAME
-    - ARTIFACTORY_PASSWORD
+    		- ARTIFACTORY_PASSWORD
 	*/
 	client := artifactory.NewClientFromEnv()
 	data, err := client.GetUsers()
@@ -40,6 +60,8 @@ git clone https://github.com/lusis/go-artifactory.git
 cd go-artifactory
 make all
 ARTIFACTORY_URL=https://artifactory.domain.com/artifactory ARTIFACTORY_USERNAME=foo ARTIFACTORY_PASSWORD=bar bin/artif-list-repos
+or
+ARTIFACTORY_URL=https://artifactory.domain.com/artifactory ARTIFACTORY_TOKEN=XXXXXXX bin/artif-list-repos
 ```
 
 ```

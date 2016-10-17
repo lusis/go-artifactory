@@ -1,14 +1,15 @@
 BINARIES := $(shell find src/ -maxdepth 1 -type d -name 'artif-*' -exec sh -c 'echo $(basename {})' \;)
 BINLIST := $(subst src/,,$(BINARIES))
-#BINARIES = $(sort $(dir $(wildcard src/artif-*/)))
-#BINARIES = artif-list-repos artif-get-repo artif-get-license artif-list-users artif-get-user artif-list-groups artif-get-group artif-list-permission-targets artif-get-permission-target artif-create-user artif-delete-user artif-deploy-artifact
 
 ifeq ($(TRAVIS_BUILD_DIR),)
 	GOPATH := $(GOPATH)
 else
 	GOPATH := $(GOPATH):$(TRAVIS_BUILD_DIR)
 endif
+
 all: clean test artifactory $(BINLIST)
+
+osx: clean artifactory $(BINLIST) osx-zip
 
 test:
 	@go get -t -d ./...
@@ -24,7 +25,11 @@ $(BINLIST):
 	@echo $@
 	@go install $@
 
+osx-zip:
+	@mkdir target
+	@zip -j target/artifactory-tools-`date +%s`.zip bin/darwin_386/*
+	
 clean:
-	@rm -rf bin/ pkg/ src/github.com src/gopkg.in
+	@rm -rf bin/ pkg/ src/github.com src/gopkg.in target/
 
-.PHONY: all clean test artifactory $(BINLIST)
+.PHONY: all clean test artifactory osx-zip $(BINLIST)

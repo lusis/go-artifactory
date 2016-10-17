@@ -87,7 +87,6 @@ func (c *ArtifactoryClient) makeRequest(method string, path string, options map[
 			var ej ErrorsJson
 			uerr := json.Unmarshal(data, &ej)
 			if uerr != nil {
-				fmt.Println("%#v\n", req)
 				emsg := fmt.Sprintf("Non-2xx code returned: %d. Message follows:\n%s", r.StatusCode, string(data))
 				return data, errors.New(emsg)
 			} else {

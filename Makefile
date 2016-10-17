@@ -13,10 +13,12 @@ all: clean test artifactory $(BINLIST)
 test:
 	@go get -t -d ./...
 	@go test artifactory.v401 -v #-test.v
+	@go test artifactory.v491 -v #-test.v
 
 artifactory:
 	@go get -t -d ./... 
 	@go install artifactory.v401
+	@go install artifactory.v491
 
 $(BINLIST):
 	@echo $@

@@ -7,7 +7,7 @@ import (
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 	"os"
 
-	artifactory "artifactory.v401"
+	artifactory "artifactory.v491"
 )
 
 var (

@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	artifactory "artifactory.v401"
+	artifactory "artifactory.v491"
 )
 
 var (

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	artifactory "artifactory.v401"
+	artifactory "artifactory.v491"
 )
 
 func main() {

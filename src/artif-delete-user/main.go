@@ -1,7 +1,7 @@
 package main
 
 import (
-	artifactory "artifactory.v401"
+	artifactory "artifactory.v491"
 	"fmt"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 	"os"

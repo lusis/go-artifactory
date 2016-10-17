@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	artifactory "artifactory.v401"
+	artifactory "artifactory.v491"
 	"github.com/olekukonko/tablewriter"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )

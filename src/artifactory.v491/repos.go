@@ -105,7 +105,12 @@ func (client *ArtifactoryClient) GetRepos(rtype string) ([]Repo, error) {
 		o["type"] = rtype
 	}
 	var dat []Repo
-	d, e := client.Get("/api/repositories", o)
+	d, e := client.HttpRequest(ArtifactoryRequest{
+		Verb:        "GET",
+		Path:        "/api/repositories",
+		QueryParams: o,
+	})
+	//d, e := client.Get("/api/repositories", o)
 	if e != nil {
 		return dat, e
 	} else {
@@ -119,9 +124,12 @@ func (client *ArtifactoryClient) GetRepos(rtype string) ([]Repo, error) {
 }
 
 func (client *ArtifactoryClient) GetRepo(key string) (RepoConfig, error) {
-	o := make(map[string]string, 0)
 	dat := new(GenericRepoConfig)
-	d, e := client.Get("/api/repositories/"+key, o)
+	d, e := client.HttpRequest(ArtifactoryRequest{
+		Verb: "GET",
+		Path: "/api/repositories/" + key,
+	})
+	//d, e := client.Get("/api/repositories/"+key, o)
 	if e != nil {
 		return *dat, e
 	} else {

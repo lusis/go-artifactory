@@ -1,6 +1,7 @@
 package artifactory
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 )
@@ -24,7 +25,10 @@ type UserDetails struct {
 
 func (c *ArtifactoryClient) GetUsers() ([]User, error) {
 	var res []User
-	d, e := c.Get("/api/security/users", make(map[string]string))
+	d, e := c.HttpRequest(ArtifactoryRequest{
+		Verb: "GET",
+		Path: "/api/security/users",
+	})
 	if e != nil {
 		return res, e
 	} else {
@@ -39,7 +43,10 @@ func (c *ArtifactoryClient) GetUsers() ([]User, error) {
 
 func (c *ArtifactoryClient) GetUserDetails(u string) (UserDetails, error) {
 	var res UserDetails
-	d, e := c.Get("/api/security/users/"+u, make(map[string]string))
+	d, e := c.HttpRequest(ArtifactoryRequest{
+		Verb: "GET",
+		Path: "/api/security/users/" + u,
+	})
 	if e != nil {
 		return res, e
 	} else {
@@ -61,7 +68,12 @@ func (c *ArtifactoryClient) CreateUser(uname string, u UserDetails) error {
 		return jerr
 	}
 	o := make(map[string]string)
-	_, err := c.Put("/api/security/users/"+uname, string(j), o)
+	_, err := c.HttpRequest(ArtifactoryRequest{
+		Verb:        "PUT",
+		Path:        "/api/security/users/" + uname,
+		Body:        bytes.NewReader(j),
+		QueryParams: o,
+	})
 	if err != nil {
 		return err
 	}
@@ -69,7 +81,10 @@ func (c *ArtifactoryClient) CreateUser(uname string, u UserDetails) error {
 }
 
 func (c *ArtifactoryClient) DeleteUser(uname string) error {
-	err := c.Delete("/api/security/users/" + uname)
+	_, err := c.HttpRequest(ArtifactoryRequest{
+		Verb: "DELETE",
+		Path: "/api/security/users/" + uname,
+	})
 	if err != nil {
 		return err
 	} else {
@@ -78,13 +93,19 @@ func (c *ArtifactoryClient) DeleteUser(uname string) error {
 }
 
 func (c *ArtifactoryClient) GetUserEncryptedPassword() (s string, err error) {
-	d, err := c.Get("/api/security/encryptedPassword", make(map[string]string))
+	d, err := c.HttpRequest(ArtifactoryRequest{
+		Verb: "GET",
+		Path: "/api/security/encryptedPassword",
+	})
 	return string(d), err
 }
 
 func (c *ArtifactoryClient) GetUserApiKey() (s string, err error) {
 	var res UserApiKey
-	d, err := c.Get("/api/security/apiKey", make(map[string]string))
+	d, err := c.HttpRequest(ArtifactoryRequest{
+		Verb: "GET",
+		Path: "/api/security/apiKey",
+	})
 	if err != nil {
 		return s, err
 	} else {

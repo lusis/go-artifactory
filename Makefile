@@ -9,6 +9,10 @@ endif
 
 all: clean test artifactory $(BINLIST)
 
+linux: export GOOS=linux
+linux: all linux-zip
+
+osx: export GOOS=darwin
 osx: clean artifactory $(BINLIST) osx-zip
 
 test:
@@ -17,6 +21,7 @@ test:
 	@go test artifactory.v491 -v #-test.v
 
 artifactory:
+	@echo "Building for $(GOOS)"
 	@go get -t -d ./... 
 	@go install artifactory.v401
 	@go install artifactory.v491
@@ -26,10 +31,15 @@ $(BINLIST):
 	@go install $@
 
 osx-zip:
-	@mkdir target
-	@zip -j target/artifactory-tools-`date +%s`.zip bin/darwin_386/*
+	@mkdir target || echo "directory already exists"
+	@zip -j target/artifactory-tools-osx-`date +%s`.zip bin/darwin_amd64/*
+
+linux-zip:
+	@mkdir target || echo "directory already exists"
+	@zip -j target/artifactory-tools-linux-`date +%s`.zip bin/*
+
 	
 clean:
-	@rm -rf bin/ pkg/ src/github.com src/gopkg.in target/
+	@rm -rf bin/ pkg/ src/github.com src/gopkg.in
 
-.PHONY: all clean test artifactory osx-zip $(BINLIST)
+.PHONY: all clean test artifactory osx-zip linux-zip osx linux $(BINLIST)

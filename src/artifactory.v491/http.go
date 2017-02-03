@@ -15,6 +15,27 @@ import (
 	"strings"
 )
 
+// unused for now
+type ArtifactoryRequest struct {
+	Verb        string
+	Path        string
+	ContentType string
+	Accept      string
+	QueryParams map[string]string
+	Body        io.Reader
+}
+
+func (c *ArtifactoryClient) HttpRequest(ar ArtifactoryRequest) ([]byte, error) {
+	options := make(map[string]string)
+	if ar.ContentType != "" {
+		options["content-type"] = ar.ContentType
+	}
+	for q, p := range ar.QueryParams {
+		options[q] = p
+	}
+	return c.makeRequest(ar.Verb, ar.Path, options, ar.Body)
+}
+
 func (c *ArtifactoryClient) Get(path string, options map[string]string) ([]byte, error) {
 	return c.makeRequest("GET", path, options, nil)
 }
@@ -57,6 +78,9 @@ func (c *ArtifactoryClient) makeRequest(method string, path string, options map[
 	//	base_req_path = c.Config.BaseURL + "/" + path
 	//}
 	base_req_path = strings.TrimSuffix(c.Config.BaseURL, "/") + path
+	if os.Getenv("ARTIFACTORY_DEBUG") != "" {
+		log.Printf("Final URL: %s", base_req_path)
+	}
 	u, err := url.Parse(base_req_path)
 	if err != nil {
 		var data bytes.Buffer
@@ -88,7 +112,9 @@ func (c *ArtifactoryClient) makeRequest(method string, path string, options map[
 	}
 	if os.Getenv("ARTIFACTORY_DEBUG") != "" {
 		log.Printf("Headers: %#v", req.Header)
-		log.Printf("Body: %#v", string(buf.Bytes()))
+		if len(buf.Bytes()) > 0 {
+			log.Printf("Body: %#v", string(buf.Bytes()))
+		}
 	}
 	r, err := c.Client.Do(req)
 	if err != nil {

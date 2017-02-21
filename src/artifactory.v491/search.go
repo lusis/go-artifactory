@@ -2,6 +2,7 @@ package artifactory
 
 import (
 	"encoding/json"
+	"fmt"
 	"strings"
 )
 
@@ -44,4 +45,25 @@ func (c *ArtifactoryClient) GAVCSearch(coords *Gavc) (files []FileInfo, e error)
 			return files, nil
 		}
 	}
+}
+
+func (c *ArtifactoryClient) DockerSearch(name string) (files []FileInfo, e error) {
+	var request ArtifactoryRequest
+	params := make(map[string]string)
+	params["docker.repoName"] = fmt.Sprintf("*%s*", name)
+	request.Verb = "GET"
+	request.Path = "/api/search/prop"
+	request.QueryParams = params
+	request.ContentType = "application/json"
+	data, err := c.HttpRequest(request)
+	if err != nil {
+		return files, err
+	}
+	var dat GavcSearchResults
+	uerr := json.Unmarshal(data, &dat)
+	if uerr != nil {
+		return files, uerr
+	}
+	files = dat.Results
+	return files, nil
 }

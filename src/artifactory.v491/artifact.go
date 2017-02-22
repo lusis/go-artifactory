@@ -12,18 +12,20 @@ type Artifact struct {
 	Client *ArtifactoryClient
 }
 
+type ArtifactProperties map[string][]string
 type FileInfo struct {
-	Uri          string `json:"uri"`
-	DownloadUri  string `json:"downloadUri"`
-	Repo         string `json:"repo"`
-	Path         string `json:"path"`
-	RemoteUrl    string `json:"remoteUrl,omitempty"`
-	Created      string `json:"created"`
-	CreatedBy    string `json:"createdBy"`
-	LastModified string `json:"lastModified"`
-	ModifiedBy   string `json:"modifiedBy"`
-	MimeType     string `json:"mimeType"`
-	Size         string `json:"size"`
+	Uri          string             `json:"uri"`
+	DownloadUri  string             `json:"downloadUri"`
+	Repo         string             `json:"repo"`
+	Path         string             `json:"path"`
+	RemoteUrl    string             `json:"remoteUrl,omitempty"`
+	Created      string             `json:"created"`
+	CreatedBy    string             `json:"createdBy"`
+	LastModified string             `json:"lastModified"`
+	ModifiedBy   string             `json:"modifiedBy"`
+	MimeType     string             `json:"mimeType"`
+	Size         string             `json:"size"`
+	Properties   ArtifactProperties `json:"properties"`
 	Checksums    struct {
 		SHA1 string `json:"sha1"`
 		MD5  string `json:"md5"`

@@ -127,9 +127,13 @@ func (c *ArtifactoryClient) makeRequest(method string, path string, options map[
 			var ej ErrorsJson
 			uerr := json.Unmarshal(data, &ej)
 			if uerr != nil {
-				emsg := fmt.Sprintf("Non-2xx code returned: %d. Message follows:\n%s", r.StatusCode, string(data))
+				emsg := fmt.Sprintf("Unable to parse error json. Non-2xx code returned: %d. Message follows:\n%s", r.StatusCode, string(data))
 				return data, errors.New(emsg)
 			} else {
+				// here we catch the {"error":"foo"} oddity in things like security/apiKey
+				if ej.Error != "" {
+					return data, errors.New(ej.Error)
+				}
 				var emsgs []string
 				for _, i := range ej.Errors {
 					emsgs = append(emsgs, i.Message)

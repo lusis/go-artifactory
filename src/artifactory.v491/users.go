@@ -117,3 +117,20 @@ func (c *ArtifactoryClient) GetUserApiKey() (s string, err error) {
 		}
 	}
 }
+
+func (c *ArtifactoryClient) CreateUserApiKey() (s string, err error) {
+	var res UserApiKey
+	d, err := c.HttpRequest(ArtifactoryRequest{
+		Verb: "POST",
+		Path: "/api/security/apiKey",
+	})
+	if err != nil {
+		return s, err
+	} else {
+		err := json.Unmarshal(d, &res)
+		if err != nil {
+			return s, err
+		}
+		return res.ApiKey, nil
+	}
+}

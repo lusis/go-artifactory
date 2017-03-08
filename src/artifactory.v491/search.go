@@ -1,6 +1,7 @@
 package artifactory
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"strings"
@@ -60,6 +61,41 @@ func (c *ArtifactoryClient) DockerSearch(name string) (files []FileInfo, e error
 		return files, err
 	}
 	var dat GavcSearchResults
+	uerr := json.Unmarshal(data, &dat)
+	if uerr != nil {
+		return files, uerr
+	}
+	files = dat.Results
+	return files, nil
+}
+
+func (c *ArtifactoryClient) VagrantSearch(name string) (files []AQLFileInfo, e error) {
+	var request ArtifactoryRequest
+	request.Verb = "POST"
+	request.Path = "/api/search/aql"
+	aqlString := fmt.Sprintf(`items.find(
+  {
+    "$and":[
+      {"$or":[
+        {"@box_name":{"$match":"*%s*"}}
+      ]},
+      {"$rf":[
+        {"$or":[
+          {"property.key":{"$eq":"box_name"}},
+          {"property.key":{"$eq":"box_version"}},
+          {"property.key":{"$eq":"box_provider"}}
+        ]}
+      ]}
+    ]
+  }
+).include("updated","created_by","repo","type","actual_md5","property.key","size","original_sha1","name","modified_by","original_md5","property.value","path","modified","id","actual_sha1","created","depth")`, name)
+	request.Body = bytes.NewReader([]byte(aqlString))
+	request.ContentType = "text/plain"
+	data, err := c.HttpRequest(request)
+	if err != nil {
+		return files, err
+	}
+	var dat AQLResults
 	uerr := json.Unmarshal(data, &dat)
 	if uerr != nil {
 		return files, uerr

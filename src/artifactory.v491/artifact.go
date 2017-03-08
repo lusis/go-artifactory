@@ -13,6 +13,10 @@ type Artifact struct {
 }
 
 type ArtifactProperties map[string][]string
+type AQLPropertes struct {
+	Key   string `json:"key"`
+	Value string `json:"value,omitempty"`
+}
 type FileInfo struct {
 	Uri          string             `json:"uri"`
 	DownloadUri  string             `json:"downloadUri"`
@@ -34,6 +38,32 @@ type FileInfo struct {
 		SHA1 string `json:"sha1"`
 		MD5  string `json:"md5"`
 	} `json:"originalChecksums,omitempty"`
+}
+
+type AQLResults struct {
+	Results []AQLFileInfo `json:"results"`
+	Range   struct {
+		StartPos int `json:"start_pos"`
+		EndPos   int `json:"end_pos"`
+		Total    int `json:"total"`
+		Limit    int `json:"limit"`
+	} `json:"range"`
+}
+type AQLFileInfo struct {
+	Repo         string         `json:"repo,omitempty"`
+	Path         string         `json:"path,omitempty"`
+	Name         string         `json:"name,omitempty"`
+	Type         string         `json:"type,omitempty"`
+	Created      string         `json:"created,omitempty"`
+	CreatedBy    string         `json:"created_by,omitempty"`
+	Modified     string         `json:"modified,omitempty"`
+	ModifiedBy   string         `json:"modified_by,omitempty"`
+	Depth        int            `json:"depth,omitempty"`
+	Size         int64          `json:"size,omitempty"`
+	Properties   []AQLPropertes `json:"properties,omitempty"`
+	ActualMD5    string         `json:"actual_md5,omitempty"`
+	ActualSHA1   string         `json:"actual_sha1,omitempty"`
+	OriginalSHA1 string         `json:"original_sha1,omitempty"`
 }
 
 func (c *Artifact) Download() ([]byte, error) {

@@ -1,0 +1,8 @@
+package: github.com/lusis/go-artifactory
+import:
+- package: github.com/olekukonko/tablewriter
+- package: gopkg.in/alecthomas/kingpin.v2
+testImport:
+- package: github.com/stretchr/testify
+  subpackages:
+  - assert

@@ -33,5 +33,18 @@ func TestNewClientCustomTransport(t *testing.T) {
 	client := NewClient(conf)
 	res, err := client.Get("/ping", make(map[string]string))
 	assert.Nil(t, err, "should not return an error")
+	assert.NotNil(t, client.Transport)
 	assert.Equal(t, "pong", string(res), "should return the testmsg")
+}
+
+func TestClientHTTPVerifySSLTrue(t *testing.T) {
+	conf := &ClientConfig{VerifySSL: true}
+	client := NewClient(conf)
+	assert.False(t, client.Transport.TLSClientConfig.InsecureSkipVerify)
+}
+
+func TestClientHTTPVerifySSLFalse(t *testing.T) {
+	conf := &ClientConfig{VerifySSL: false}
+	client := NewClient(conf)
+	assert.True(t, client.Transport.TLSClientConfig.InsecureSkipVerify)
 }

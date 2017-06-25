@@ -39,7 +39,7 @@ func NewClient(config *ClientConfig) (c Client) {
 		config.Client = &http.Client{}
 	}
 	config.Client.Transport = config.Transport
-	return Client{Client: config.Client, Config: config}
+	return Client{Client: config.Client, Config: config, Transport: config.Transport}
 }
 
 func clientConfigFrom(from string) (c *ClientConfig) {

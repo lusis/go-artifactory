@@ -1,6 +1,7 @@
 package artifactory
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 )
@@ -164,4 +165,34 @@ func (client *Client) GetRepo(key string) (RepoConfig, error) {
 		fmt.Printf("fallthrough to default\n")
 		return dat, nil
 	}
+}
+
+// CreateRepo creates the named repo
+func (client *Client) CreateRepo(key string, r RepoConfig, q map[string]string) error {
+	j, err := json.Marshal(r)
+	if err != nil {
+		return err
+	}
+	_, err = client.HTTPRequest(Request{
+		Verb:        "PUT",
+		Path:        "/api/repositories/" + key,
+		Body:        bytes.NewReader(j),
+		QueryParams: q,
+	})
+	return err
+}
+
+// UpdateRepo updates the named repo
+func (client *Client) UpdateRepo(key string, r RepoConfig, q map[string]string) error {
+	j, err := json.Marshal(r)
+	if err != nil {
+		return err
+	}
+	_, err = client.HTTPRequest(Request{
+		Verb:        "POST",
+		Path:        "/api/repositories/" + key,
+		Body:        bytes.NewReader(j),
+		QueryParams: q,
+	})
+	return err
 }

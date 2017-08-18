@@ -40,7 +40,7 @@ func (c *Client) HTTPRequest(ar Request) ([]byte, error) {
 		return data.Bytes(), err
 	}
 
-	return c.parseRequest(r)
+	return c.parseResponse(r)
 }
 
 // HTTPRequestWithResponse performs an HTTP request to artifactory and returns
@@ -65,7 +65,7 @@ func (c *Client) Get(path string, options map[string]string) ([]byte, error) {
 		return data.Bytes(), err
 	}
 
-	return c.parseRequest(r)
+	return c.parseResponse(r)
 }
 
 // Post performs an http POST to artifactory
@@ -77,7 +77,7 @@ func (c *Client) Post(path string, data string, options map[string]string) ([]by
 		return data.Bytes(), err
 	}
 
-	return c.parseRequest(r)
+	return c.parseResponse(r)
 }
 
 // Put performs an http PUT to artifactory
@@ -89,12 +89,18 @@ func (c *Client) Put(path string, data string, options map[string]string) ([]byt
 		return data.Bytes(), err
 	}
 
-	return c.parseRequest(r)
+	return c.parseResponse(r)
 }
 
 // Delete performs an http DELETE to artifactory
 func (c *Client) Delete(path string) error {
-	_, err := c.makeRequest("DELETE", path, make(map[string]string), nil)
+	r, err := c.makeRequest("DELETE", path, make(map[string]string), nil)
+	if err != nil {
+		return err
+	}
+
+	_, err = c.parseResponse(r)
+
 	return err
 }
 
@@ -154,7 +160,7 @@ func (c *Client) makeRequest(method string, path string, options map[string]stri
 	return r, err
 }
 
-func (c *Client) parseRequest(r *http.Response) ([]byte, error) {
+func (c *Client) parseResponse(r *http.Response) ([]byte, error) {
 	defer func() { _ = r.Body.Close() }()
 	data, err := ioutil.ReadAll(r.Body)
 	if r.StatusCode < 200 || r.StatusCode > 299 {

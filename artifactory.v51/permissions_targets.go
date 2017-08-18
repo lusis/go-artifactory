@@ -1,6 +1,7 @@
 package artifactory
 
 import (
+	"bytes"
 	"encoding/json"
 )
 
@@ -51,4 +52,19 @@ func (c *Client) GetPermissionTargetDetails(u string) (PermissionTargetDetails, 
 		return res, err
 	}
 	return res, e
+}
+
+// CreatePermissionTarget creates the named permission target
+func (c *Client) CreatePermissionTarget(u string, p PermissionTargetDetails, q map[string]string) error {
+	j, err := json.Marshal(p)
+	if err != nil {
+		return err
+	}
+	_, err = c.HTTPRequest(Request{
+		Verb:        "PUT",
+		Path:        "/api/security/permissions/" + u,
+		Body:        bytes.NewReader(j),
+		QueryParams: q,
+	})
+	return err
 }

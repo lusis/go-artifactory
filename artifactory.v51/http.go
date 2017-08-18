@@ -150,15 +150,12 @@ func (c *Client) makeRequest(method string, path string, options map[string]stri
 	}
 
 	r, err := c.Client.Do(req)
-	if err != nil {
-		return r, err
-	}
 
-	return r, nil
+	return r, err
 }
 
 func (c *Client) parseRequest(r *http.Response) ([]byte, error) {
-	defer r.Body.Close()
+	defer func() { _ = r.Body.Close() }()
 	data, err := ioutil.ReadAll(r.Body)
 	if r.StatusCode < 200 || r.StatusCode > 299 {
 		var ej ErrorsJSON

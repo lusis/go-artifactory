@@ -2,6 +2,7 @@ package artifactory
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -148,12 +149,17 @@ func TestCreateGroupDetails(t *testing.T) {
 	}
 
 	client := NewClient(conf)
-	var details = GroupDetails{
-		Description: "test group desc",
-		AutoJoin:    true,
+
+	details := GroupDetails{
+		Name:            "docker-readers",
+		Description:     "Can read from Docker repositories",
+		AutoJoin:        false,
+		Realm:           "artifactory",
+		RealmAttributes: "Realm attributes for use by LDAP",
 	}
-	expectedJSON := `{"description":"test group desc","autoJoin":true}`
+
+	expectedJSON, _ := json.Marshal(details)
 	err := client.CreateGroup("testgroup", details, make(map[string]string))
 	assert.NoError(t, err, "should not return an error")
-	assert.Equal(t, expectedJSON, string(buf.Bytes()), "should send empty json")
+	assert.Equal(t, string(expectedJSON), string(buf.Bytes()), "should send group json")
 }

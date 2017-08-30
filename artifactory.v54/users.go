@@ -49,7 +49,7 @@ func (c *Client) GetUserDetails(key string, q map[string]string) (UserDetails, e
 
 // CreateUser creates a user with the specified details
 func (c *Client) CreateUser(key string, u UserDetails, q map[string]string) error {
-	if &u.Email == nil || &u.Password == nil {
+	if u.Email == "" || u.Password == "" {
 		return errors.New("Email and password are required to create users")
 	}
 	j, err := json.Marshal(u)
@@ -70,32 +70,4 @@ func (c *Client) DeleteUser(key string) error {
 func (c *Client) GetUserEncryptedPassword() (string, error) {
 	d, err := c.Get("/api/security/encryptedPassword", make(map[string]string))
 	return string(d), err
-}
-
-// GetUserAPIKey returns the current user's api key
-func (c *Client) GetUserAPIKey() (string, error) {
-	var res UserAPIKey
-	d, err := c.Get("/api/security/apiKey", make(map[string]string))
-	if err != nil {
-		return "", err
-	}
-	err = json.Unmarshal(d, &res)
-	if err != nil {
-		return "", err
-	}
-	return res.APIKey, nil
-}
-
-// CreateUserAPIKey creates an apikey for the current user
-func (c *Client) CreateUserAPIKey() (string, error) {
-	var res UserAPIKey
-	d, err := c.Post("/api/security/apiKey", nil, make(map[string]string))
-	if err != nil {
-		return "", err
-	}
-	err = json.Unmarshal(d, &res)
-	if err != nil {
-		return "", err
-	}
-	return res.APIKey, nil
 }

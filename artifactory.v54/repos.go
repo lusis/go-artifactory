@@ -31,7 +31,7 @@ type GenericRepoConfig struct {
 	HandleReleases               bool     `json:"handleReleases,omitempty"`
 	HandleSnapshots              bool     `json:"handleSnapshots,omitempty"`
 	MaxUniqueSnapshots           int      `json:"maxUniqueSnapshots,omitempty"`
-	SuppressPomConsistencyChecks bool     `json:"supressPomConsistencyChecks,omitempty"`
+	SuppressPomConsistencyChecks bool     `json:"suppressPomConsistencyChecks,omitempty"`
 	BlackedOut                   bool     `json:"blackedOut,omitempty"`
 	PropertySets                 []string `json:"propertySets,omitempty"`
 }
@@ -107,7 +107,7 @@ type VirtualRepoConfig struct {
 	DebianTrivialLayout                           bool     `json:"debianTrivialLayout,omitempty"`
 	ArtifactoryRequestsCanRetrieveRemoteArtifacts bool     `json:"artifactoryRequestsCanRetrieveRemoteArtifacts,omitempty"`
 	KeyPair                                       string   `json:"keyPair,omitempty"`
-	PomRepositoryReferenceCleanupPolicy           string   `json:"pomRepositoryReferenceCleanupPolicy,omitempty"`
+	PomRepositoryReferencesCleanupPolicy          string   `json:"pomRepositoryReferencesCleanupPolicy,omitempty"`
 	DefaultDeploymentRepo                         string   `json:"defaultDeploymentRepo,omitempty"`
 }
 
@@ -136,14 +136,14 @@ func (c *Client) GetRepos(rtype string) ([]Repo, error) {
 
 // GetRepo returns the named repo
 func (c *Client) GetRepo(key string, q map[string]string) (RepoConfig, error) {
-	dat := new(GenericRepoConfig)
+	var dat GenericRepoConfig
 	d, err := c.Get("/api/repositories/"+key, q)
 	if err != nil {
-		return *dat, err
+		return dat, err
 	}
 	err = json.Unmarshal(d, &dat)
 	if err != nil {
-		return *dat, err
+		return dat, err
 	}
 	switch dat.RClass {
 	case "local":

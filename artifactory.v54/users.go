@@ -2,7 +2,6 @@ package artifactory
 
 import (
 	"encoding/json"
-	"errors"
 )
 
 // User represents a user in artifactory
@@ -49,9 +48,6 @@ func (c *Client) GetUserDetails(key string, q map[string]string) (UserDetails, e
 
 // CreateUser creates a user with the specified details
 func (c *Client) CreateUser(key string, u UserDetails, q map[string]string) error {
-	if u.Email == "" || u.Password == "" {
-		return errors.New("Email and password are required to create users")
-	}
 	j, err := json.Marshal(u)
 	if err != nil {
 		return err

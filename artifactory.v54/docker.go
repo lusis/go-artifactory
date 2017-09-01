@@ -38,6 +38,7 @@ func (c *Client) GetDockerRepoImageTags(key, image string, q map[string]string) 
 	if err != nil {
 		return dat.Tags, err
 	}
+
 	err = json.Unmarshal(d, &dat)
 	if err != nil {
 		return dat.Tags, err

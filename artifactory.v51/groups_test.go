@@ -119,7 +119,7 @@ func TestCreateGroupNoDetails(t *testing.T) {
 	var details = GroupDetails{}
 	err := client.CreateGroup("testgroup", details)
 	assert.NoError(t, err, "should not return an error")
-	assert.Equal(t, "{}", string(buf.Bytes()), "should send empty json")
+	assert.Equal(t, "{}", buf.String(), "should send empty json")
 }
 
 func TestCreateGroupDetails(t *testing.T) {
@@ -155,5 +155,5 @@ func TestCreateGroupDetails(t *testing.T) {
 	expectedJSON := `{"description":"test group desc","autoJoin":true}`
 	err := client.CreateGroup("testgroup", details)
 	assert.NoError(t, err, "should not return an error")
-	assert.Equal(t, expectedJSON, string(buf.Bytes()), "should send empty json")
+	assert.Equal(t, expectedJSON, buf.String(), "should send empty json")
 }

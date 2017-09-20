@@ -153,7 +153,7 @@ func (c *Client) makeRequest(method string, path string, options map[string]stri
 	if os.Getenv("ARTIFACTORY_DEBUG") != "" {
 		log.Printf("Headers: %#v", req.Header)
 		if len(buf.Bytes()) > 0 {
-			log.Printf("Body: %#v", string(buf.Bytes()))
+			log.Printf("Body: %#v", buf.String())
 		}
 	}
 

@@ -122,5 +122,5 @@ func TestPromoteDockerImage(t *testing.T) {
 	expectedJSON, _ := json.Marshal(imagePromotion)
 	err := client.PromoteDockerImage("docker", imagePromotion, make(map[string]string))
 	assert.NoError(t, err, "should not return an error")
-	assert.Equal(t, string(expectedJSON), string(buf.Bytes()), "should send docker image promotion json")
+	assert.Equal(t, string(expectedJSON), buf.String(), "should send docker image promotion json")
 }

@@ -13,6 +13,7 @@ type DockerImageTags struct {
 	Tags []string `json:"tags,omitempty"`
 }
 
+// DockerImagePromotion represents the image promotion payload we send to Artifactory
 type DockerImagePromotion struct {
 	TargetRepo             string `json:"targetRepo"`                       // The target repository for the move or copy
 	DockerRepository       string `json:"dockerRepository"`                 // The docker repository name to promote

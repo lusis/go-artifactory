@@ -39,9 +39,6 @@ func (c *Client) GetLicenseInfo() (LicenseInfo, error) {
 	}
 
 	err = json.Unmarshal(d, &res)
-	if err != nil {
-		return res, err
-	}
 
 	return res, err
 }
@@ -66,9 +63,6 @@ func (c *Client) GetHALicenseInfo() (HALicenseInfo, error) {
 	}
 
 	err = json.Unmarshal(d, &res)
-	if err != nil {
-		return res, err
-	}
 
 	return res, err
 }

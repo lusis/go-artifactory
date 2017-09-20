@@ -340,7 +340,7 @@ func TestCreateRepository(t *testing.T) {
 	expectedJSON, _ := json.Marshal(repoConf)
 	err := client.CreateRepo("libs-release-local", repoConf, make(map[string]string))
 	assert.NoError(t, err, "should not return an error")
-	assert.Equal(t, string(expectedJSON), string(buf.Bytes()), "should send repos json")
+	assert.Equal(t, string(expectedJSON), buf.String(), "should send repos json")
 }
 
 func TestUpdateRepository(t *testing.T) {
@@ -392,5 +392,5 @@ func TestUpdateRepository(t *testing.T) {
 	expectedJSON, _ := json.Marshal(repoConf)
 	err := client.UpdateRepo("libs-release-local", repoConf, make(map[string]string))
 	assert.NoError(t, err, "should not return an error")
-	assert.Equal(t, string(expectedJSON), string(buf.Bytes()), "should send repo json")
+	assert.Equal(t, string(expectedJSON), buf.String(), "should send repo json")
 }

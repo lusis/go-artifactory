@@ -51,10 +51,10 @@ func TestClientHTTPVerifySSLFalse(t *testing.T) {
 }
 
 func TestClientFromEnvWithBasicAuth(t *testing.T) {
-	os.Setenv("ARTIFACTORY_URL", "http://artifactory.server.com")
-	os.Setenv("ARTIFACTORY_USERNAME", "admin")
-	os.Setenv("ARTIFACTORY_PASSWORD", "password")
-	os.Setenv("ARTIFACTORY_TOKEN", "")
+	os.Setenv("ARTIFACTORY_URL", "http://artifactory.server.com") //nolint
+	os.Setenv("ARTIFACTORY_USERNAME", "admin")                    //nolint
+	os.Setenv("ARTIFACTORY_PASSWORD", "password")                 //nolint
+	os.Setenv("ARTIFACTORY_TOKEN", "")                            //nolint
 	client := NewClientFromEnv()
 	assert.NotNil(t, client)
 	assert.Equal(t, "http://artifactory.server.com", client.Config.BaseURL)
@@ -64,8 +64,8 @@ func TestClientFromEnvWithBasicAuth(t *testing.T) {
 }
 
 func TestClientFromEnvWithTokenAuth(t *testing.T) {
-	os.Setenv("ARTIFACTORY_URL", "http://artifactory.server.com")
-	os.Setenv("ARTIFACTORY_TOKEN", "someToken")
+	os.Setenv("ARTIFACTORY_URL", "http://artifactory.server.com") //nolint
+	os.Setenv("ARTIFACTORY_TOKEN", "someToken")                   //nolint
 	client := NewClientFromEnv()
 	assert.NotNil(t, client)
 	assert.Equal(t, "http://artifactory.server.com", client.Config.BaseURL)

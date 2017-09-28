@@ -2,6 +2,7 @@ package artifactory
 
 import "encoding/json"
 
+// VersionInfo represents the version information about Artifactory
 type VersionInfo struct {
 	Version  string   `json:"version"`
 	Revision string   `json:"revision"`
@@ -34,8 +35,6 @@ func (c *Client) GetVersionAndAddOnInfo() (VersionInfo, error) {
 		return res, err
 	}
 	err = json.Unmarshal(d, &res)
-	if err != nil {
-		return res, err
-	}
+
 	return res, err
 }

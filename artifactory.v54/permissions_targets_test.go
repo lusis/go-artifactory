@@ -145,5 +145,5 @@ func TestCreatePermissionTarget(t *testing.T) {
 	expectedJSON, _ := json.Marshal(permTarget)
 	err := client.CreatePermissionTarget("release-commiter", permTarget, make(map[string]string))
 	assert.NoError(t, err, "should not return an error")
-	assert.Equal(t, string(expectedJSON), string(buf.Bytes()), "should send permission target json")
+	assert.Equal(t, string(expectedJSON), buf.String(), "should send permission target json")
 }

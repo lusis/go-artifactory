@@ -1,6 +1,8 @@
 package artifactory
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -80,4 +82,45 @@ func TestGetDockerRepoImageTags(t *testing.T) {
 	assert.NoError(t, err, "should not return an error")
 	assert.Len(t, tags, 5, "should have five tags")
 	assert.Equal(t, "0.1.0", tags[0], "Should have the 0.1.0 image")
+}
+
+func TestPromoteDockerImage(t *testing.T) {
+	var buf bytes.Buffer
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(200)
+		w.Header().Set("Content-Type", "application/json")
+		req, _ := ioutil.ReadAll(r.Body)
+		buf.Write(req)
+		fmt.Fprintf(w, "")
+	}))
+	defer server.Close()
+
+	transport := &http.Transport{
+		Proxy: func(req *http.Request) (*url.URL, error) {
+			return url.Parse(server.URL)
+		},
+	}
+
+	conf := &ClientConfig{
+		BaseURL:   "http://127.0.0.1:8080/",
+		Username:  "username",
+		Password:  "password",
+		VerifySSL: false,
+		Transport: transport,
+	}
+
+	client := NewClient(conf)
+
+	imagePromotion := DockerImagePromotion{
+		TargetRepo:       "docker-prod",
+		DockerRepository: "docker",
+		Tag:              "test",
+		TargetTag:        "latest",
+		Copy:             true,
+	}
+
+	expectedJSON, _ := json.Marshal(imagePromotion)
+	err := client.PromoteDockerImage("docker", imagePromotion, make(map[string]string))
+	assert.NoError(t, err, "should not return an error")
+	assert.Equal(t, string(expectedJSON), buf.String(), "should send docker image promotion json")
 }

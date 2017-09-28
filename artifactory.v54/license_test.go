@@ -84,7 +84,7 @@ func TestInstallLicense(t *testing.T) {
 	expectedJSON, _ := json.Marshal(license)
 	err := client.InstallLicense(license, make(map[string]string))
 	assert.NoError(t, err, "should not return an error")
-	assert.Equal(t, string(expectedJSON), string(buf.Bytes()), "should send license json")
+	assert.Equal(t, string(expectedJSON), buf.String(), "should send license json")
 }
 
 func TestGetHALicenseInfo(t *testing.T) {
@@ -163,5 +163,5 @@ func TestInstallHALicense(t *testing.T) {
 	expectedJSON, _ := json.Marshal(licenses)
 	err := client.InstallHALicenses(licenses, make(map[string]string))
 	assert.NoError(t, err, "should not return an error")
-	assert.Equal(t, string(expectedJSON), string(buf.Bytes()), "should send license json")
+	assert.Equal(t, string(expectedJSON), buf.String(), "should send license json")
 }

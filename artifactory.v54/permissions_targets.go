@@ -33,9 +33,7 @@ func (c *Client) GetPermissionTargets() ([]PermissionTarget, error) {
 		return res, err
 	}
 	err = json.Unmarshal(d, &res)
-	if err != nil {
-		return res, err
-	}
+
 	return res, err
 }
 
@@ -47,9 +45,7 @@ func (c *Client) GetPermissionTargetDetails(key string, q map[string]string) (Pe
 		return res, err
 	}
 	err = json.Unmarshal(d, &res)
-	if err != nil {
-		return res, err
-	}
+
 	return res, err
 }
 

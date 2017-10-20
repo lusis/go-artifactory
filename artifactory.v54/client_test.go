@@ -55,7 +55,8 @@ func TestClientFromEnvWithBasicAuth(t *testing.T) {
 	os.Setenv("ARTIFACTORY_USERNAME", "admin")                    //nolint
 	os.Setenv("ARTIFACTORY_PASSWORD", "password")                 //nolint
 	os.Setenv("ARTIFACTORY_TOKEN", "")                            //nolint
-	client := NewClientFromEnv()
+	client, err := NewClientFromEnv()
+	assert.Nil(t, err)
 	assert.NotNil(t, client)
 	assert.Equal(t, "http://artifactory.server.com", client.Config.BaseURL)
 	assert.Equal(t, "basic", client.Config.AuthMethod)
@@ -66,8 +67,9 @@ func TestClientFromEnvWithBasicAuth(t *testing.T) {
 func TestClientFromEnvWithTokenAuth(t *testing.T) {
 	os.Setenv("ARTIFACTORY_URL", "http://artifactory.server.com") //nolint
 	os.Setenv("ARTIFACTORY_TOKEN", "someToken")                   //nolint
-	client := NewClientFromEnv()
+	client, err := NewClientFromEnv()
 	assert.NotNil(t, client)
+	assert.Nil(t, err)
 	assert.Equal(t, "http://artifactory.server.com", client.Config.BaseURL)
 	assert.Equal(t, "token", client.Config.AuthMethod)
 	assert.Equal(t, "someToken", client.Config.Token)

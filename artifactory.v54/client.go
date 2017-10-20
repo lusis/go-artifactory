@@ -2,7 +2,7 @@ package artifactory
 
 import (
 	"crypto/tls"
-	"fmt"
+	"errors"
 	"net/http"
 	"os"
 )
@@ -26,8 +26,20 @@ type Client struct {
 	Transport *http.Transport
 }
 
+// NewClientFromEnv returns a new ArtifactoryClient the is automatically configured from environment variables
+func NewClientFromEnv() (*Client, error) {
+	config, err := clientConfigFrom("environment")
+	if err != nil {
+		return nil, err
+	}
+
+	client := NewClient(config)
+
+	return &client, nil
+}
+
 // NewClient returns a new ArtifactoryClient with the provided ClientConfig
-func NewClient(config *ClientConfig) (c Client) {
+func NewClient(config *ClientConfig) Client {
 	verifySSL := func() bool {
 		return !config.VerifySSL
 	}
@@ -42,23 +54,21 @@ func NewClient(config *ClientConfig) (c Client) {
 	return Client{Client: config.Client, Config: config, Transport: config.Transport}
 }
 
-func clientConfigFrom(from string) (c *ClientConfig) {
+func clientConfigFrom(from string) (*ClientConfig, error) {
 	conf := ClientConfig{}
 	switch from {
 	case "environment":
 		if os.Getenv("ARTIFACTORY_URL") == "" {
-			fmt.Printf("You must set the environment variable ARTIFACTORY_URL")
-			os.Exit(1)
-		} else {
-			conf.BaseURL = os.Getenv("ARTIFACTORY_URL")
+			return nil, errors.New("You must set the environment variable ARTIFACTORY_URL")
 		}
+
+		conf.BaseURL = os.Getenv("ARTIFACTORY_URL")
 		if os.Getenv("ARTIFACTORY_TOKEN") == "" {
 			if os.Getenv("ARTIFACTORY_USERNAME") == "" || os.Getenv("ARTIFACTORY_PASSWORD") == "" {
-				fmt.Printf("You must set the environment variables ARTIFACTORY_USERNAME/ARTIFACTORY_PASSWORD\n")
-				os.Exit(1)
-			} else {
-				conf.AuthMethod = "basic"
+				return nil, errors.New("You must set the environment variables ARTIFACTORY_USERNAME/ARTIFACTORY_PASSWORD")
 			}
+
+			conf.AuthMethod = "basic"
 		} else {
 			conf.AuthMethod = "token"
 		}
@@ -69,12 +79,5 @@ func clientConfigFrom(from string) (c *ClientConfig) {
 		conf.Username = os.Getenv("ARTIFACTORY_USERNAME")
 		conf.Password = os.Getenv("ARTIFACTORY_PASSWORD")
 	}
-	return &conf
-}
-
-// NewClientFromEnv returns a new ArtifactoryClient the is automatically configured from environment variables
-func NewClientFromEnv() (c Client) {
-	config := clientConfigFrom("environment")
-	client := NewClient(config)
-	return client
+	return &conf, nil
 }

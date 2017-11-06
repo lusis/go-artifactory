@@ -1,8 +1,10 @@
 # go-artifactory
+
 [![Build Status](https://travis-ci.org/lusis/go-artifactory.svg?branch=master)](https://travis-ci.org/lusis/go-artifactory)
 Go library and utilities for interacting with [Artifactory](http://jfrog.com)
 
 ## Structure change notice
+
 This was one of the first big golang libraries I wrote. I fought GOPATH for a long time. I finally "gave up" after having worked on go projects with other people.
 This means that going forward, the library will now be much more approachable to other folks. 
 
@@ -16,14 +18,18 @@ I've also used this reorg to implement some linting standards which has cleaned 
 Long story short, if you use this library you should upgrade to the new path for import (github.com/lusis/go-artifactory/artifactory.vXX) going forward.
 
 ## Breaking API changes due to move starting with `v51`
+
 Additionally as of `v51`, the reorg and subsequent linting addition there were breaking API changes. These were mainly around stuttering and case changes on struct fields. The older versions are still valid and work in `v401` and `v491`.
 
 ## Usage
+
 There are two ways to use this:
+
 - as a library
 - via the bundled utilities
 
 ### configuration
+
 The following four environment variables are supported for configuring the artifactory client:
 
 - `ARTIFACTORY_URL`
@@ -38,13 +44,14 @@ Note that `ARTIFACTORY_URL` should be the base path to artifactory. This will be
 You can read more about how artifactory authenticates the API [here](https://www.jfrog.com/confluence/display/RTF/Artifactory+REST+API)
 
 ### as a library
+
 ```go
 package main
 
 import (
-	"fmt"
+    "fmt"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
+    artifactory "github.com/lusis/go-artifactory/artifactory.v51"
 )
 
 func main() {
@@ -71,15 +78,16 @@ func main() {
 ```
 
 ### bundled utilities
+
 All individual utilities are now go-gettable:
 
-```
+```text
 go get github.com/lusis/go-artifactory/cmd/artif-list-repos
 ```
 
 or you can clone the entire repo and build them with the `Makefile`
-```
 
+```text
 git clone https://github.com/lusis/go-artifactory.git
 cd go-artifactory
 make all
@@ -88,7 +96,7 @@ or
 ARTIFACTORY_URL=https://artifactory.domain.com/artifactory ARTIFACTORY_TOKEN=XXXXXXX bin/artif-list-repos
 ```
 
-```
+```text
 +---------------------------------+---------+--------------------------------+------------------------------------------------------------------------+
 |               KEY               |  TYPE   |          DESCRIPTION           |                                  URL                                   |
 +---------------------------------+---------+--------------------------------+------------------------------------------------------------------------+
@@ -123,7 +131,7 @@ ARTIFACTORY_URL=https://artifactory.domain.com/artifactory ARTIFACTORY_TOKEN=XXX
 ```
 
 ## TODO
+
 - Flesh out more tests
 - More utilities
 - Wrapper cli for sub-utilities
-

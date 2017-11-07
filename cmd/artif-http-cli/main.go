@@ -6,7 +6,7 @@ import (
 
 	"os"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
+	artifactory "github.com/lusis/go-artifactory/artifactory.v54"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -35,7 +35,11 @@ var (
 )
 
 func main() {
-	client := artifactory.NewClientFromEnv()
+	client, clientErr := artifactory.NewClientFromEnv()
+	if clientErr != nil {
+		fmt.Printf("%s\n", clientErr.Error())
+		os.Exit(1)
+	}
 	var request artifactory.Request
 
 	switch kingpin.MustParse(app.Parse(os.Args[1:])) {

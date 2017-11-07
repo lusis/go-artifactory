@@ -8,7 +8,7 @@ import (
 
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
+	artifactory "github.com/lusis/go-artifactory/artifactory.v54"
 )
 
 var (
@@ -30,29 +30,33 @@ func randPass() string {
 
 func main() {
 	kingpin.Parse()
-	client := artifactory.NewClientFromEnv()
-
-	password := randPass()
-
-	var details artifactory.UserDetails = artifactory.UserDetails{
-		Email:    *email,
-		Password: password,
-	}
-	if group != nil {
-		details.Groups = *group
-	}
-
-	if updatable != nil {
-		details.ProfileUpdatable = *updatable
-	}
-	err := client.CreateUser(*username, details)
-	if err != nil {
-		fmt.Printf("%s\n", err)
-		os.Exit(1)
+	client, clientErr := artifactory.NewClientFromEnv()
+	if clientErr != nil {
+		fmt.Printf("%s\n", clientErr.Error())
 	} else {
-		if *showpass {
-			fmt.Printf("User created. Random password is: %s\n", password)
+
+		password := randPass()
+
+		var details = artifactory.UserDetails{
+			Email:    *email,
+			Password: password,
 		}
-		os.Exit(0)
+		if group != nil {
+			details.Groups = *group
+		}
+
+		if updatable != nil {
+			details.ProfileUpdatable = *updatable
+		}
+		err := client.CreateUser(*username, details, make(map[string]string))
+		if err != nil {
+			fmt.Printf("%s\n", err)
+			os.Exit(1)
+		} else {
+			if *showpass {
+				fmt.Printf("User created. Random password is: %s\n", password)
+			}
+			os.Exit(0)
+		}
 	}
 }

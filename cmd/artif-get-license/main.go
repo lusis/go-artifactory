@@ -4,22 +4,33 @@ import (
 	"fmt"
 	"os"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
-	"github.com/olekukonko/tablewriter"
+	artifactory "github.com/lusis/go-artifactory/artifactory.v54"
+	"github.com/lusis/outputter"
+	kingpin "gopkg.in/alecthomas/kingpin.v2"
+)
+
+var (
+	format = kingpin.Flag("format", "format to display output").
+		Default("table").
+		Enum("table", "json", "tabular")
 )
 
 func main() {
-	client := artifactory.NewClientFromEnv()
-	data, err := client.GetLicenseInformation()
+	kingpin.Parse()
+	output, _ := outputter.NewOutputter(*format)
+	client, clientErr := artifactory.NewClientFromEnv()
+	if clientErr != nil {
+		fmt.Printf("%s\n", clientErr.Error())
+		os.Exit(1)
+	}
+	data, err := client.GetLicenseInfo()
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	} else {
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"Type", "Expires", "Owner"})
-		table.SetAutoWrapText(false)
-		table.Append([]string{data.LicenseType, data.ValidThrough, data.LicensedTo})
-		table.Render()
+		output.SetHeaders([]string{"Type", "Expires", "Owner"})
+		_ = output.AddRow([]string{data.LicenseType, data.ValidThrough, data.LicensedTo})
+		output.Draw()
 		os.Exit(0)
 	}
 }

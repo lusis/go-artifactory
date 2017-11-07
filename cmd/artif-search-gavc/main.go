@@ -1,18 +1,20 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
 	"os"
 	"strings"
 
-	"github.com/olekukonko/tablewriter"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
+	artifactory "github.com/lusis/go-artifactory/artifactory.v54"
+	"github.com/lusis/outputter"
 )
 
 var (
+	format = kingpin.Flag("format", "format to display output").
+		Default("table").
+		Enum(outputter.GetOutputters()...)
 	groupid    = kingpin.Flag("groupid", "groupid coordinate").String()
 	artifactid = kingpin.Flag("artifactid", "artifactid coordinate").String()
 	version    = kingpin.Flag("version", "version coordinate").String()
@@ -22,7 +24,12 @@ var (
 
 func main() {
 	kingpin.Parse()
-	client := artifactory.NewClientFromEnv()
+	output, _ := outputter.NewOutputter(*format)
+	client, clientErr := artifactory.NewClientFromEnv()
+	if clientErr != nil {
+		fmt.Printf("%s\n", clientErr.Error())
+		os.Exit(1)
+	}
 	var coords artifactory.GAVC
 	if groupid != nil {
 		coords.GroupID = *groupid
@@ -44,30 +51,24 @@ func main() {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	} else {
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetAutoWrapText(false)
-		table.SetBorder(false)
-		table.SetAlignment(tablewriter.ALIGN_LEFT)
-
+		output.SetHeaders([]string{
+			"File",
+			"Repo",
+			"RemoteUrl",
+			"Created",
+			"Last Modified",
+			"Created By",
+			"Modified By",
+			"SHA1",
+			"MD5",
+			"Size",
+			"MimeType",
+			"Download",
+		})
 		for _, r := range data {
-			var innerBuf bytes.Buffer
-			innerTable := tablewriter.NewWriter(&innerBuf)
-			innerTable.SetHeader([]string{
-				"File",
-				"Repo",
-				"RemoteUrl",
-				"Created",
-				"Last Modified",
-				"Created By",
-				"Modified By",
-				"SHA1",
-				"MD5",
-				"Size",
-				"MimeType",
-			})
 			elems := strings.Split(r.Path, "/")
 			fileName := elems[len(elems)-1]
-			innerTable.Append([]string{
+			_ = output.AddRow([]string{
 				fileName,
 				r.Repo,
 				r.RemoteURL,
@@ -79,17 +80,10 @@ func main() {
 				r.Checksums.MD5,
 				r.Size,
 				r.MimeType,
+				r.DownloadURI,
 			})
-			innerTable.Render()
-			table.Append([]string{
-				innerBuf.String(),
-			})
-			table.Append([]string{
-				fmt.Sprintf("Download: %s\n", r.DownloadURI),
-			})
-
 		}
-		table.Render()
+		output.Draw()
 		os.Exit(0)
 	}
 }

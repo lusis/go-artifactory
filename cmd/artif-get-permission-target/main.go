@@ -5,25 +5,32 @@ import (
 	"os"
 	"strings"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
-	"github.com/olekukonko/tablewriter"
+	"github.com/lusis/outputter"
+
+	artifactory "github.com/lusis/go-artifactory/artifactory.v54"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
 var (
+	format = kingpin.Flag("format", "format to display output").
+		Default("table").
+		Enum("table", "json", "tabular")
 	target = kingpin.Arg("target", "permission target to show").Required().String()
 )
 
 func main() {
 	kingpin.Parse()
-	client := artifactory.NewClientFromEnv()
-	u, err := client.GetPermissionTargetDetails(*target)
+	output, _ := outputter.NewOutputter(*format)
+	client, clientErr := artifactory.NewClientFromEnv()
+	if clientErr != nil {
+		fmt.Printf("unable to get artifactory client: %s\n", clientErr.Error())
+	}
+	u, err := client.GetPermissionTargetDetails(*target, make(map[string]string))
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	} else {
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"Name", "Includes", "Excludes", "Repositories", "Users", "Groups"})
+		output.SetHeaders([]string{"Name", "Includes", "Excludes", "Repositories", "Users", "Groups"})
 		row := []string{
 			u.Name,
 			u.IncludesPattern,
@@ -42,8 +49,8 @@ func main() {
 		}
 		row = append(row, strings.Join(users, "\n"))
 		row = append(row, strings.Join(groups, "\n"))
-		table.Append(row)
-		table.Render()
+		_ = output.AddRow(row)
+		output.Draw()
 		fmt.Println("Legend: m=admin; d=delete; w=deploy; n=annotate; r=read")
 		os.Exit(0)
 	}

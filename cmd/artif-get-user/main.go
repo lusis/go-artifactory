@@ -6,56 +6,55 @@ import (
 	"strconv"
 	"strings"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
-	"github.com/olekukonko/tablewriter"
+	artifactory "github.com/lusis/go-artifactory/artifactory.v54"
+	"github.com/lusis/outputter"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
 var (
-	formatUsage = fmt.Sprintf("Format to show results [table]")
-	user        = kingpin.Arg("user", "User name to show").Required().String()
-	format      = kingpin.Flag("format", formatUsage).Short('F').Default("table").Enum("table")
-	attrs       = kingpin.Flag("attrs", "Columns to display. Cumulative last argument (i.e. -A name email)").Short('A').Strings()
+	format = kingpin.Flag("format", "format to display output").
+		Default("table").
+		Enum(outputter.GetOutputters()...)
+	user = kingpin.Arg("user", "User name to show").Required().String()
 )
 
 func main() {
 	kingpin.Parse()
-	fmt.Printf("%s\n", *attrs)
-	client := artifactory.NewClientFromEnv()
-	u, err := client.GetUserDetails(*user)
+	output, _ := outputter.NewOutputter(*format)
+	client, clientErr := artifactory.NewClientFromEnv()
+	if clientErr != nil {
+		fmt.Printf("%s\n", clientErr.Error())
+		os.Exit(1)
+	}
+	u, err := client.GetUserDetails(*user, make(map[string]string))
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	} else {
-		if *format == "table" {
-			table := tablewriter.NewWriter(os.Stdout)
-			table.SetHeader([]string{
-				"Name",
-				"Email",
-				"Password",
-				"Admin?",
-				"Updatable?",
-				"Last Logged In",
-				"Internal Password Disabled?",
-				"Realm",
-				"Groups",
-			})
-			table.SetAutoWrapText(false)
-			table.Append([]string{
-				u.Name,
-				u.Email,
-				"<hidden>",
-				strconv.FormatBool(u.Admin),
-				strconv.FormatBool(u.ProfileUpdatable),
-				u.LastLoggedIn,
-				strconv.FormatBool(u.InternalPasswordDisabled),
-				u.Realm,
-				strings.Join(u.Groups, "\n"),
-			})
-			table.Render()
-		} else {
-			fmt.Printf("Unknown format: %s", *format)
-		}
+
+		output.SetHeaders([]string{
+			"Name",
+			"Email",
+			"Password",
+			"Admin?",
+			"Updatable?",
+			"Last Logged In",
+			"Internal Password Disabled?",
+			"Realm",
+			"Groups",
+		})
+		_ = output.AddRow([]string{
+			u.Name,
+			u.Email,
+			"<hidden>",
+			strconv.FormatBool(u.Admin),
+			strconv.FormatBool(u.ProfileUpdatable),
+			u.LastLoggedIn,
+			strconv.FormatBool(u.InternalPasswordDisabled),
+			u.Realm,
+			strings.Join(u.Groups, ","),
+		})
+		output.Draw()
 		os.Exit(0)
 	}
 }

@@ -4,24 +4,35 @@ import (
 	"fmt"
 	"os"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
-	"github.com/olekukonko/tablewriter"
+	artifactory "github.com/lusis/go-artifactory/artifactory.v54"
+	"github.com/lusis/outputter"
+	kingpin "gopkg.in/alecthomas/kingpin.v2"
+)
+
+var (
+	format = kingpin.Flag("format", "format to display output").
+		Default("table").
+		Enum(outputter.GetOutputters()...)
 )
 
 func main() {
-	client := artifactory.NewClientFromEnv()
+	kingpin.Parse()
+	client, clientErr := artifactory.NewClientFromEnv()
+	if clientErr != nil {
+		fmt.Printf("%s\n", clientErr.Error())
+		os.Exit(1)
+	}
+	output, _ := outputter.NewOutputter(*format)
 	data, err := client.GetGroups()
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	} else {
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"Name", "Uri"})
-		table.SetAutoWrapText(false)
+		output.SetHeaders([]string{"Name", "Uri"})
 		for _, u := range data {
-			table.Append([]string{u.Name, u.URI})
+			_ = output.AddRow([]string{u.Name, u.URI})
 		}
-		table.Render()
+		output.Draw()
 		os.Exit(0)
 	}
 }

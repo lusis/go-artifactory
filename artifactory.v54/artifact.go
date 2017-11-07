@@ -24,18 +24,19 @@ type AQLProperties struct {
 
 // FileInfo represents the json returned by the artifactory API for a file
 type FileInfo struct {
-	URI          string `json:"uri"`
-	DownloadURI  string `json:"downloadUri"`
-	Repo         string `json:"repo"`
-	Path         string `json:"path"`
-	RemoteURL    string `json:"remoteUrl,omitempty"`
-	Created      string `json:"created"`
-	CreatedBy    string `json:"createdBy"`
-	LastModified string `json:"lastModified"`
-	ModifiedBy   string `json:"modifiedBy"`
-	LastUpdated  string `json:"lastUpdated"`
-	Size         string `json:"size"`
-	MimeType     string `json:"mimeType"`
+	URI          string             `json:"uri"`
+	DownloadURI  string             `json:"downloadUri"`
+	Repo         string             `json:"repo"`
+	Path         string             `json:"path"`
+	RemoteURL    string             `json:"remoteUrl,omitempty"`
+	Created      string             `json:"created"`
+	CreatedBy    string             `json:"createdBy"`
+	LastModified string             `json:"lastModified"`
+	ModifiedBy   string             `json:"modifiedBy"`
+	LastUpdated  string             `json:"lastUpdated"`
+	Size         string             `json:"size"`
+	MimeType     string             `json:"mimeType"`
+	Properties   ArtifactProperties `json:"properties"`
 	Checksums    struct {
 		MD5    string `json:"md5"`
 		SHA1   string `json:"sha1"`

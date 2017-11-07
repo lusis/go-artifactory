@@ -4,11 +4,15 @@ import (
 	"fmt"
 	"os"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
+	artifactory "github.com/lusis/go-artifactory/artifactory.v54"
 )
 
 func main() {
-	client := artifactory.NewClientFromEnv()
+	client, clientErr := artifactory.NewClientFromEnv()
+	if clientErr != nil {
+		fmt.Printf("%s\n", clientErr.Error())
+		os.Exit(1)
+	}
 	p, err := client.GetSystemSecurityConfiguration()
 	if err != nil {
 		fmt.Printf("%s\n", err)

@@ -6,7 +6,7 @@ import (
 
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
+	artifactory "github.com/lusis/go-artifactory/artifactory.v54"
 )
 
 var (
@@ -19,7 +19,11 @@ var (
 
 func main() {
 	kingpin.Parse()
-	client := artifactory.NewClientFromEnv()
+	client, clientErr := artifactory.NewClientFromEnv()
+	if clientErr != nil {
+		fmt.Printf("%s\n", clientErr.Error())
+		os.Exit(1)
+	}
 
 	i, err := client.DeployArtifact(*repo, *file, *path, *property)
 	if err != nil {

@@ -4,27 +4,31 @@ import (
 	"fmt"
 	"os"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
-	"github.com/olekukonko/tablewriter"
+	artifactory "github.com/lusis/go-artifactory/artifactory.v54"
+	"github.com/lusis/outputter"
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
 var (
+	format = kingpin.Flag("format", "format to display output").
+		Default("table").
+		Enum(outputter.GetOutputters()...)
 	criteria = kingpin.Arg("criteria", "what to search for").Required().String()
 )
 
 func main() {
 	kingpin.Parse()
-	client := artifactory.NewClientFromEnv()
+	output, _ := outputter.NewOutputter(*format)
+	client, clientErr := artifactory.NewClientFromEnv()
+	if clientErr != nil {
+		fmt.Printf("%s\n", clientErr.Error())
+		os.Exit(1)
+	}
 	data, err := client.VagrantSearch(*criteria)
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	}
-	table := tablewriter.NewWriter(os.Stdout)
-	table.SetAutoWrapText(false)
-	table.SetBorder(true)
-	table.SetAlignment(tablewriter.ALIGN_LEFT)
 	theaders := []string{
 		"NAME",
 		"VERSION",
@@ -32,7 +36,7 @@ func main() {
 		"MODIFIED",
 		"MODIFIED BY",
 	}
-	table.SetHeader(theaders)
+	output.SetHeaders(theaders)
 
 	for _, d := range data {
 		props := make(map[string]string)
@@ -40,14 +44,14 @@ func main() {
 			props[prop.Key] = prop.Value
 		}
 		tdata := []string{
-			fmt.Sprintf("%s/%s\n", d.Repo, props["box_name"]),
+			fmt.Sprintf("%s/%s", d.Repo, props["box_name"]),
 			props["box_version"],
 			props["box_provider"],
 			d.Modified,
 			d.ModifiedBy,
 		}
-		table.Append(tdata)
+		_ = output.AddRow(tdata)
 	}
-	table.Render()
+	output.Draw()
 	os.Exit(0)
 }

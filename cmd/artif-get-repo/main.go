@@ -7,13 +7,17 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/lusis/outputter"
+
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 
-	artifactory "github.com/lusis/go-artifactory/artifactory.v51"
-	"github.com/olekukonko/tablewriter"
+	artifactory "github.com/lusis/go-artifactory/artifactory.v54"
 )
 
 var (
+	format = kingpin.Flag("format", "format to display output").
+		Default("table").
+		Enum("table", "json", "tabular")
 	repo = kingpin.Arg("repo", "Repo to show").Required().String()
 )
 
@@ -36,14 +40,17 @@ func makeBaseRow(b artifactory.RepoConfig) []string {
 
 func main() {
 	kingpin.Parse()
-	client := artifactory.NewClientFromEnv()
-	data, err := client.GetRepo(*repo)
+	output, _ := outputter.NewOutputter(*format)
+	client, clientErr := artifactory.NewClientFromEnv()
+	if clientErr != nil {
+		fmt.Printf("%s\n", clientErr.Error())
+		os.Exit(1)
+	}
+	data, err := client.GetRepo(*repo, make(map[string]string))
 	if err != nil {
 		fmt.Printf("%s\n", err)
 		os.Exit(1)
 	} else {
-		table := tablewriter.NewWriter(os.Stdout)
-		table.SetAutoWrapText(false)
 		baseHeaders := []string{
 			"Key",
 			"Type",
@@ -64,26 +71,26 @@ func main() {
 		case artifactory.RemoteRepoMimeType:
 			d := data.(artifactory.RemoteRepoConfig)
 			baseHeaders = append(baseHeaders, "Url")
-			table.SetHeader(baseHeaders)
+			output.SetHeaders(baseHeaders)
 			baseRow = append(baseRow, d.URL)
-			table.Append(baseRow)
+			_ = output.AddRow(baseRow)
 		case artifactory.LocalRepoMimeType:
 			d := data.(artifactory.LocalRepoConfig)
 			baseHeaders = append(baseHeaders, "Layout")
 			baseRow = append(baseRow, d.LayoutRef)
-			table.SetHeader(baseHeaders)
-			table.Append(baseRow)
+			output.SetHeaders(baseHeaders)
+			_ = output.AddRow(baseRow)
 		case artifactory.VirtualRepoMimeType:
 			d := data.(artifactory.VirtualRepoConfig)
 			baseHeaders = append(baseHeaders, "Repositories")
 			baseRow = append(baseRow, strings.Join(d.Repositories, "\n"))
-			table.SetHeader(baseHeaders)
-			table.Append(baseRow)
+			output.SetHeaders(baseHeaders)
+			_ = output.AddRow(baseRow)
 		default:
-			table.SetHeader(baseHeaders)
-			table.Append(baseRow)
+			output.SetHeaders(baseHeaders)
+			_ = output.AddRow(baseRow)
 		}
-		table.Render()
+		output.Draw()
 		os.Exit(0)
 	}
 }

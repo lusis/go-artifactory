@@ -168,7 +168,7 @@ func TestGetRepositoryWithRemoteRepoConfig(t *testing.T) {
 	assert.Equal(t, true, repo.(RemoteRepoConfig).StoreArtifactsLocally, "Repo store artifacts locally should be true")
 	assert.Equal(t, 15000, repo.(RemoteRepoConfig).SocketTimeoutMillis, "Repo socket timeout millis should be 15000")
 	assert.Equal(t, "", repo.(RemoteRepoConfig).LocalAddress, "Repo local address should be empty")
-	assert.Equal(t, 43200, repo.(RemoteRepoConfig).RetrivialCachePeriodSecs, "Repo retrieval cache period secs should be 43200")
+	assert.Equal(t, 43200, repo.(RemoteRepoConfig).RetrievalCachePeriodSecs, "Repo retrieval cache period secs should be 43200")
 	assert.Equal(t, 7200, repo.(RemoteRepoConfig).FailedRetrievalCachePeriodSecs, "Repo failed retrieval cache period secs should be 7200")
 	assert.Equal(t, 7200, repo.(RemoteRepoConfig).MissedRetrievalCachePeriodSecs, "Repo missed retrieval cache period secs should be 7200")
 	assert.Equal(t, false, repo.(RemoteRepoConfig).UnusedArtifactsCleanupEnabled, "Repo unused artifact cleanup enabled should be false")

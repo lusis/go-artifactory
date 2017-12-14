@@ -75,11 +75,11 @@ type RemoteRepoConfig struct {
 	StoreArtifactsLocally             bool   `json:"storeArtifactsLocally,omitempty"`
 	SocketTimeoutMillis               int    `json:"socketTimeoutMillis,omitempty"`
 	LocalAddress                      string `json:"localAddress,omitempty"`
-	RetrivialCachePeriodSecs          int    `json:"retrievalCachePeriodSecs,omitempty"`
+	RetrievalCachePeriodSecs          int    `json:"retrievalCachePeriodSecs,omitempty"`
 	FailedRetrievalCachePeriodSecs    int    `json:"failedRetrievalCachePeriodSecs,omitempty"`
 	MissedRetrievalCachePeriodSecs    int    `json:"missedRetrievalCachePeriodSecs,omitempty"`
-	UnusedArtifactsCleanupEnabled     bool   `json:"unusedArtifactCleanupEnabled,omitempty"`
-	UnusedArtifactsCleanupPeriodHours int    `json:"unusedArtifactCleanupPeriodHours,omitempty"`
+	UnusedArtifactsCleanupEnabled     bool   `json:"unusedArtifactsCleanupEnabled,omitempty"`
+	UnusedArtifactsCleanupPeriodHours int    `json:"unusedArtifactsCleanupPeriodHours,omitempty"`
 	FetchJarsEagerly                  bool   `json:"fetchJarsEagerly,omitempty"`
 	FetchSourcesEagerly               bool   `json:"fetchSourcesEagerly,omitempty"`
 	ShareConfiguration                bool   `json:"shareConfiguration,omitempty"`

@@ -5,13 +5,13 @@ import (
 )
 
 // User represents a user in artifactory
-type User struct {
+type UserShort struct {
 	Name string `json:"name"`
 	URI  string `json:"uri"`
 }
 
-// UserDetails represents the details of a user in artifactory
-type UserDetails struct {
+// User represents the details of a user in artifactory
+type User struct {
 	Name                     string   `json:"name,omitempty"`
 	Email                    string   `json:"email"`
 	Password                 string   `json:"password"`
@@ -24,9 +24,8 @@ type UserDetails struct {
 	Groups                   []string `json:"groups,omitempty"`
 }
 
-// GetUsers returns all users
-func (c *Client) GetUsers() ([]User, error) {
-	var res []User
+func (c *Client) GetUsers() ([]UserShort, error) {
+	var res []UserShort
 	d, err := c.Get("/api/security/users", make(map[string]string))
 	if err != nil {
 		return res, err
@@ -35,19 +34,7 @@ func (c *Client) GetUsers() ([]User, error) {
 	return res, err
 }
 
-// GetUserDetails returns details for the named user
-func (c *Client) GetUserDetails(key string, q map[string]string) (UserDetails, error) {
-	var res UserDetails
-	d, err := c.Get("/api/security/users/"+key, q)
-	if err != nil {
-		return res, err
-	}
-	err = json.Unmarshal(d, &res)
-	return res, err
-}
-
-// CreateUser creates a user with the specified details
-func (c *Client) CreateUser(key string, u UserDetails, q map[string]string) error {
+func (c *Client) CreateUser(key string, u User, q map[string]string) error {
 	j, err := json.Marshal(u)
 	if err != nil {
 		return err
@@ -56,14 +43,27 @@ func (c *Client) CreateUser(key string, u UserDetails, q map[string]string) erro
 	return err
 }
 
-// DeleteUser deletes a user
-func (c *Client) DeleteUser(key string) error {
-	err := c.Delete("/api/security/users/" + key)
+func (c *Client) GetUser(key string, q map[string]string) (User, error) {
+	var res User
+	d, err := c.Get("/api/security/users/"+key, q)
+	if err != nil {
+		return res, err
+	}
+	err = json.Unmarshal(d, &res)
+	return res, err
+}
+
+
+func (c *Client) UpdateUser(key string, u User, q map[string]string) error {
+	j, err := json.Marshal(u)
+	if err != nil {
+		return err
+	}
+	_, err = c.Post("/api/security/users/"+key, j, q)
 	return err
 }
 
-// GetUserEncryptedPassword returns the current user's encrypted password
-func (c *Client) GetUserEncryptedPassword() (string, error) {
-	d, err := c.Get("/api/security/encryptedPassword", make(map[string]string))
-	return string(d), err
+func (c *Client) DeleteUser(key string) error {
+	err := c.Delete("/api/security/users/" + key)
+	return err
 }

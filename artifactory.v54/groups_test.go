@@ -83,7 +83,7 @@ func TestGetGroupDetails(t *testing.T) {
 	}
 
 	client := NewClient(conf)
-	group, err := client.GetGroupDetails("docker-readers", make(map[string]string))
+	group, err := client.GetGroup("docker-readers", make(map[string]string))
 	assert.NoError(t, err, "should not return an error")
 	assert.Equal(t, group.Name, "docker-readers", "name should be docker-readers")
 	assert.Equal(t, group.Description, "Can read from Docker repositories", "description should match")
@@ -117,7 +117,7 @@ func TestCreateGroupNoDetails(t *testing.T) {
 	}
 
 	client := NewClient(conf)
-	var details = GroupDetails{}
+	var details = Group{}
 	err := client.CreateGroup("testgroup", details, make(map[string]string))
 	assert.NoError(t, err, "should not return an error")
 	assert.Equal(t, "{}", buf.String(), "should send empty json")
@@ -150,7 +150,7 @@ func TestCreateGroupDetails(t *testing.T) {
 
 	client := NewClient(conf)
 
-	details := GroupDetails{
+	details := Group{
 		Name:            "docker-readers",
 		Description:     "Can read from Docker repositories",
 		AutoJoin:        false,

@@ -77,7 +77,7 @@ func TestGetUserDetails(t *testing.T) {
 	}
 
 	client := NewClient(conf)
-	user, err := client.GetUserDetails("admin", make(map[string]string))
+	user, err := client.GetUser("admin", make(map[string]string))
 	assert.NoError(t, err, "should not return an error")
 	assert.Equal(t, user.Name, "admin", "name should be admin")
 	assert.Equal(t, user.Email, "admin@admin.com", "should have email of admin@admin.com")
@@ -117,7 +117,7 @@ func TestCreateUser(t *testing.T) {
 
 	client := NewClient(conf)
 
-	user := UserDetails{
+	user := User{
 		Name:                     "admin",
 		Email:                    "test@test.com",
 		Password:                 "somepass",
@@ -145,7 +145,7 @@ func TestCreateUserFailure(t *testing.T) {
 	}
 
 	client := NewClient(conf)
-	var details = UserDetails{}
+	var details = User{}
 	err := client.CreateUser("testuser", details, make(map[string]string))
 	assert.Error(t, err, "should return an error")
 }
@@ -175,32 +175,4 @@ func TestDeleteUser(t *testing.T) {
 	client := NewClient(conf)
 	err := client.DeleteUser("testuser")
 	assert.NoError(t, err, "should not return an error")
-}
-
-func TestGetUserEncryptedPassword(t *testing.T) {
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(200)
-		w.Header().Set("Content-Type", "text/plain")
-		fmt.Fprintf(w, "ABCDEFGH")
-	}))
-	defer server.Close()
-
-	transport := &http.Transport{
-		Proxy: func(req *http.Request) (*url.URL, error) {
-			return url.Parse(server.URL)
-		},
-	}
-
-	conf := &ClientConfig{
-		BaseURL:   "http://127.0.0.1:8080/",
-		Username:  "username",
-		Password:  "password",
-		VerifySSL: false,
-		Transport: transport,
-	}
-
-	client := NewClient(conf)
-	d, err := client.GetUserEncryptedPassword()
-	assert.NoError(t, err, "should not return an error")
-	assert.Equal(t, d, "ABCDEFGH", "encrypted password should be returned")
 }

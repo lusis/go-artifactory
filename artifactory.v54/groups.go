@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 )
 
-// Group represents the json response for a group in Artifactory
-type Group struct {
+// GroupShort represents the json response for a list of groups in Artifactory
+type GroupShort struct {
 	Name string `json:"name"`
 	URI  string `json:"uri"`
 }
 
-// GroupDetails represents the json response for a group's details in artifactory
-type GroupDetails struct {
+// Group represents the json response for a group in artifactory
+type Group struct {
 	Name            string `json:"name,omitempty"`
 	Description     string `json:"description,omitempty"`
 	AutoJoin        bool   `json:"autoJoin,omitempty"`
@@ -20,9 +20,8 @@ type GroupDetails struct {
 	RealmAttributes string `json:"realmAttributes,omitempty"`
 }
 
-// GetGroups gets a list of groups from artifactory
-func (c *Client) GetGroups() ([]Group, error) {
-	var res []Group
+func (c *Client) GetGroups() ([]GroupShort, error) {
+	var res []GroupShort
 	d, err := c.Get("/api/security/groups", make(map[string]string))
 	if err != nil {
 		return res, err
@@ -31,9 +30,8 @@ func (c *Client) GetGroups() ([]Group, error) {
 	return res, err
 }
 
-// GetGroupDetails returns details for a Group
-func (c *Client) GetGroupDetails(key string, q map[string]string) (GroupDetails, error) {
-	var res GroupDetails
+func (c *Client) GetGroup(key string, q map[string]string) (Group, error) {
+	var res Group
 	d, err := c.Get("/api/security/groups/"+key, q)
 	if err != nil {
 		return res, err
@@ -42,12 +40,24 @@ func (c *Client) GetGroupDetails(key string, q map[string]string) (GroupDetails,
 	return res, err
 }
 
-// CreateGroup creates a group in artifactory
-func (c *Client) CreateGroup(key string, g GroupDetails, q map[string]string) error {
+func (c *Client) CreateGroup(key string, g Group, q map[string]string) error {
 	j, err := json.Marshal(g)
 	if err != nil {
 		return err
 	}
 	_, err = c.Put("/api/security/groups/"+key, j, q)
+	return err
+}
+
+func (c *Client) UpdateGroup(key string, g Group, q map[string]string) error {
+	j, err := json.Marshal(g)
+	if err != nil {
+		return err
+	}
+	_, err = c.Post("/api/security/groups/"+key, j, q)
+	return err
+}
+func (c *Client) DeleteGroup(key string) error {
+	err := c.Delete("/api/security/groups/"+key)
 	return err
 }

@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"golang.org/x/net/publicsuffix"
 )
 
@@ -31,6 +32,11 @@ type testHTPPBinResponse struct {
 
 type testHTTPBinCookieResponse struct {
 	Cookies map[string]string `json:"cookies"`
+}
+
+type testHTTPBinAuthResponse struct {
+	Authenticated bool   `json:"authenticated"`
+	User          string `json:"user"`
 }
 
 func TestNew(t *testing.T) {
@@ -158,6 +164,16 @@ func TestGetWithOption(t *testing.T) {
 	assert.NoError(t, jErr)
 	assert.Equal(t, "bar", res.Args["foo"])
 	assert.Equal(t, "https://httpbin.org/get?foo=bar", res.URL)
+}
+
+func TestGetWithBasicAuth(t *testing.T) {
+	response, err := Get("https://httpbin.org/basic-auth/user/pass", BasicAuth("user", "pass"))
+	require.NoError(t, err)
+	res := &testHTTPBinAuthResponse{}
+	err = json.Unmarshal(response.Body, &res)
+	require.NoError(t, err)
+	require.True(t, res.Authenticated)
+	require.Equal(t, "user", res.User)
 }
 
 func TestGetWithMultipleOptions(t *testing.T) {

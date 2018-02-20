@@ -32,6 +32,8 @@ type Request struct {
 	queryParams        map[string]string
 	body               io.Reader
 	headers            map[string]string
+	basicAuthUser      string
+	basicAuthPass      string
 	allowedStatusCodes []int
 	sync.RWMutex
 }
@@ -135,6 +137,15 @@ func ExpectStatus(codes ...int) RequestOption {
 func WithBody(reader io.Reader) RequestOption {
 	return func(r *Request) error {
 		r.body = reader
+		return nil
+	}
+}
+
+// BasicAuth sets basic auth to perform with request
+func BasicAuth(user, pass string) RequestOption {
+	return func(r *Request) error {
+		r.basicAuthUser = user
+		r.basicAuthPass = pass
 		return nil
 	}
 }
@@ -249,6 +260,9 @@ func (cr *Request) httpRequest() (*http.Request, error) {
 		req.Header.Add("Content-Type", cr.contentType)
 	}
 	req.Header.Add("Accept", cr.accept)
+	if cr.basicAuthUser != "" && cr.basicAuthPass != "" {
+		req.SetBasicAuth(cr.basicAuthUser, cr.basicAuthPass)
+	}
 	return req, nil
 }
 

@@ -3,6 +3,24 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/alecthomas/assert"
+  packages = ["."]
+  revision = "405dbfeb8e38effee6e723317226e93fff912d06"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/alecthomas/colour"
+  packages = ["."]
+  revision = "60882d9e27213e8552dcff6328914fe4c2b44bc9"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/alecthomas/repr"
+  packages = ["."]
+  revision = "37578405c47fe4f23cb672045b825fa4145a0816"
+
+[[projects]]
+  branch = "master"
   name = "github.com/alecthomas/template"
   packages = [
     ".",
@@ -42,15 +60,33 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/hashicorp/go-version"
+  packages = ["."]
+  revision = "4fe82ae3040f80a03d04d2cccb5606a626b8e1ee"
+
+[[projects]]
+  branch = "master"
   name = "github.com/lusis/outputter"
   packages = ["."]
   revision = "6a36c1d04ef3d5fcf98096a83ddded6f6ebf87d2"
+
+[[projects]]
+  name = "github.com/mattn/go-isatty"
+  packages = ["."]
+  revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
+  version = "v0.0.3"
 
 [[projects]]
   name = "github.com/mattn/go-runewidth"
   packages = ["."]
   revision = "9e777a8366cce605130a531d2cd6363d07ad7317"
   version = "v0.0.2"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/mitchellh/mapstructure"
+  packages = ["."]
+  revision = "a4e142e9c047c904fa2f1e144d9a84e6133024bc"
 
 [[projects]]
   branch = "master"
@@ -65,8 +101,17 @@
   version = "v1.0.0"
 
 [[projects]]
+  name = "github.com/sergi/go-diff"
+  packages = ["diffmatchpatch"]
+  revision = "1744e2970ca51c86172c8190fadad617561ed6e7"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/stretchr/testify"
-  packages = ["assert"]
+  packages = [
+    "assert",
+    "require"
+  ]
   revision = "69483b4bd14f5845b5a1e55bca19e954e827f1d0"
   version = "v1.1.4"
 
@@ -78,6 +123,12 @@
     "publicsuffix"
   ]
   revision = "cbe0f9307d0156177f9dd5dc85da1a31abc5f2fb"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "37707fdb30a5b38865cfb95e5aab41707daec7fd"
 
 [[projects]]
   branch = "master"
@@ -109,6 +160,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "b12e9a394d2fd355403f5cf8a410f494233a7d10626729dcb9ff74fba535821a"
+  inputs-digest = "dfd8828df3062b85e27c62fee8478a1733bb38ae6aeb888d16159279e8690bf1"
   solver-name = "gps-cdcl"
   solver-version = 1

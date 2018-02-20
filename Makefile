@@ -7,7 +7,7 @@ else
 	GOPATH := $(GOPATH):$(TRAVIS_BUILD_DIR)
 endif
 
-all: clean lint test artifactory $(BINLIST)
+all: bindata clean lint test artifactory $(BINLIST)
 
 linux: export GOOS=linux
 linux: all linux-zip
@@ -37,8 +37,11 @@ linux-zip:
 	@mkdir target || echo "directory already exists"
 	@zip -j target/artifactory-tools-linux-`date +%s`.zip bin/*
 
-	
+bindata:
+	@go get -u github.com/jteeuwen/go-bindata/...
+	@cd ./pkg/artifactory/responses/testdata;  go-bindata -pkg testdata -o testdata.go *.json *.txt; cd -
+
 clean:
 	@rm -rf bin/ pkg/
 
-.PHONY: all clean lint test artifactory osx-zip linux-zip osx linux $(BINLIST)
+.PHONY: all clean lint test artifactory osx-zip linux-zip osx linux bindata $(BINLIST)

@@ -1,2 +1,2 @@
 #!/bin/bash
-go test -v ./artifactory.v51 ./artifactory.v54
+go test -v ./artifactory.v51 ./artifactory.v54 ./pkg/httpclient

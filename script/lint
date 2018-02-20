@@ -18,4 +18,4 @@ gometalinter \
     --tests \
     --deadline=30s \
     --exclude=/usr/local/go/src/ \
-    ./artifactory.v51 ./artifactory.v54
+    ./artifactory.v51 ./artifactory.v54 ./pkg/httpclient

@@ -1,0 +1,39 @@
+{
+  "results" : [ {
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/example-repo-local/files/file.mp4",
+    "downloadCount" : 0,
+    "lastDownloaded" : "2018-02-21T18:01:40.574Z",
+    "remoteDownloadCount" : 0,
+    "remoteLastDownloaded" : "1970-01-01T00:00:00.000Z"
+  }, {
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/example-repo-local/foodir",
+    "downloadCount" : 0,
+    "lastDownloaded" : "2018-02-23T14:33:20.952Z",
+    "remoteDownloadCount" : 0,
+    "remoteLastDownloaded" : "1970-01-01T00:00:00.000Z"
+  }, {
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/example-repo-local/bardir/artif-http-cli",
+    "downloadCount" : 0,
+    "lastDownloaded" : "2018-02-23T14:36:50.178Z",
+    "remoteDownloadCount" : 0,
+    "remoteLastDownloaded" : "1970-01-01T00:00:00.000Z"
+  }, {
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/example-repo-local/artif-http-cli-copy",
+    "downloadCount" : 0,
+    "lastDownloaded" : "2018-02-23T14:36:50.178Z",
+    "remoteDownloadCount" : 0,
+    "remoteLastDownloaded" : "1970-01-01T00:00:00.000Z"
+  }, {
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/maven-local/click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar",
+    "downloadCount" : 0,
+    "lastDownloaded" : "2018-02-27T21:45:01.199Z",
+    "remoteDownloadCount" : 0,
+    "remoteLastDownloaded" : "1970-01-01T00:00:00.000Z"
+  }, {
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/maven-upstream-cache/click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar",
+    "downloadCount" : 1,
+    "lastDownloaded" : "2018-02-27T21:45:01.300Z",
+    "remoteDownloadCount" : 0,
+    "remoteLastDownloaded" : "1970-01-01T00:00:00.000Z"
+  } ]
+}

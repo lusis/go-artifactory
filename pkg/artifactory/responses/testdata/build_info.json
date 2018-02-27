@@ -1,0 +1,28 @@
+{
+  "buildInfo" : {
+    "version" : "37",
+    "name" : "reinhardt",
+    "number" : "37",
+    "buildAgent" : {
+      "name" : "travis"
+    },
+    "started" : "2016-12-16T02:36:51.000+0000",
+    "durationMillis" : 0,
+    "artifactoryPrincipal" : "build-write",
+    "url" : "https://travis/lusis/reinhardt/builds/101379",
+    "vcsUrl" : "https://git/lusis/reinhardt",
+    "modules" : [ {
+      "id" : "org.lusis.reinhardt:reinhardt:37",
+      "artifacts" : [ {
+        "sha1" : "1d3adae34651fe1a0f46abf70b1fc5524130f25c",
+        "md5" : "b27d2186c0621e5a80d71e9ff0a7063e",
+        "name" : "reinhardt"
+      }, {
+        "sha1" : "a0a32b56aa2977a8e4f4b4f5e2f9d0806ad94f0a",
+        "md5" : "9f8772f2888291a497b545852b7f576d",
+        "name" : "simplepermtester"
+      } ]
+    } ]
+  },
+  "uri" : "https://artifactory/artifactory/api/build/reinhardt/37"
+}

@@ -1,0 +1,5 @@
+{
+  "repoUri" : "https://lusis.jfrog.io/lusis/maven-local",
+  "sourcePattern" : "maven-local:click/*/*/*/*",
+  "files" : [ "click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar" ]
+}

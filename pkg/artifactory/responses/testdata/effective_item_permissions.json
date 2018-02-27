@@ -1,0 +1,26 @@
+{
+  "uri": "https://lusis.jfrog.io/lusis/api/storage/example-repo-local",
+  "principals": {
+    "users": {
+      "super": [
+        "r",
+        "d",
+        "w",
+        "m",
+        "n"
+      ],
+      "admin": [
+        "r",
+        "d",
+        "w",
+        "m",
+        "n"
+      ]
+    },
+    "groups": {
+      "readers": [
+        "r"
+      ]
+    }
+  }
+}

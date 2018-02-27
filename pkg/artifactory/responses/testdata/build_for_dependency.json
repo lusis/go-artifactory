@@ -1,0 +1,47 @@
+{
+  "results" : [ {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20jenkinstesting/1"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20jenkinstesting/11"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20jenkinstesting/17"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20jenkinstesting/20"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20jenkinstesting/21"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20jenkinstesting/22"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20jenkinstesting/23"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20jenkinstesting/25"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20jenkinstesting/26"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20jenkinstesting/27"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20jenkinstesting/28"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20master/1"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20master/2"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20master/3"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20master/4"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/Product%20GHE%20Jobs%20::%20requestmapper-thrift%20::%20master/5"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/product%20::%20ephemera-thrift%20::%20master/2"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/product%20::%20ephemera-thrift%20::%20master/3"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/product%20::%20ephemera-thrift%20::%20master/4"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/product%20::%20ephemera-thrift%20::%20master/5"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/product%20::%20requestmapper-thrift%20::%20master/6"
+  }, {
+    "uri" : "https://artifactory/artifactory/api/build/product%20::%20requestmapper-thrift%20::%20master/7"
+  } ]
+}

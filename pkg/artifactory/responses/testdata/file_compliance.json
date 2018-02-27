@@ -1,0 +1,4 @@
+{
+  "licenses" : [ {"name":"LGPL v3", "url": "http://"}, {"name":"APL v2", "url": "http://"}],
+  "vulnerabilities" : [ {"name":"CVE-13427", "url": "http://"}, {"name":"CVE-1041", "url": "http://"} ]
+}

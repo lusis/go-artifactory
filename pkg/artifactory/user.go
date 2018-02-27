@@ -90,7 +90,7 @@ func (c *Client) DeleteUser(u string) error {
 
 // GetUserEncryptedPassword returns the encrypted password for the current user
 func (c *Client) GetUserEncryptedPassword() (string, error) {
-	if err := c.checkRequiredResponseVersion(responses.EncryptedPasswordResponse{}); err != nil {
+	if err := c.checkRequiredResponseVersion(responses.GetEncryptedPasswordResponse{}); err != nil {
 		return "", err
 	}
 	res, err := c.httpGet("security/encryptedPassword", requestExpects(200))

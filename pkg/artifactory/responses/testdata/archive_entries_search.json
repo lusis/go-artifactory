@@ -1,0 +1,6 @@
+{
+  "results" : [ {
+    "entry" : "com/hbakkum/rundeck/plugins/hipchat/HipChatNotificationPluginException.class",
+    "archiveUris" : [ "https://artifactory.rsglab.com:443/artifactory/api/storage/libs-snapshot-local/com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.6.1-SNAPSHOT/rundeck-hipchat-plugin-1.6.1-20161012.160619-1.jar", "https://artifactory.rsglab.com:443/artifactory/api/storage/libs-release-local/com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.6.2-RSG/rundeck-hipchat-plugin-1.6.2-RSG.jar" ]
+  } ]
+}

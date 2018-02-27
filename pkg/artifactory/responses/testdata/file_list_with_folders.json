@@ -1,0 +1,34 @@
+{
+  "uri": "https://lusis.jfrog.io/lusis/api/storage/example-repo-local",
+  "created": "2018-02-23T15:39:12.515Z",
+  "files": [
+    {
+      "uri": "/bardir",
+      "size": -1,
+      "lastModified": "2018-02-23T14:36:44.230Z",
+      "folder": true
+    },
+    {
+      "uri": "/files",
+      "size": -1,
+      "lastModified": "2018-02-22T17:04:40.148Z",
+      "folder": true
+    },
+    {
+      "uri": "/artif-http-cli-copy",
+      "size": 9272853,
+      "lastModified": "2018-02-23T14:36:49.848Z",
+      "folder": false,
+      "sha1": "eb7170e14c2e604600e3d50c70b96a7b55a7fea0",
+      "sha2": "72286039227546a6db49117ced1d2a49dcb3270b477652af52b11c2a5cfcbd0a"
+    },
+    {
+      "uri": "/foodir",
+      "size": 0,
+      "lastModified": "2018-02-23T14:33:20.924Z",
+      "folder": false,
+      "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "sha2": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

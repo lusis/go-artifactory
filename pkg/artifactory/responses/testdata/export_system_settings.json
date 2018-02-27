@@ -1,0 +1,12 @@
+{
+  "exportPath": "/export/path",
+  "includeMetadata": true,
+  "createArchive": false,
+  "bypassFiltering": false,
+  "verbose": false,
+  "failOnError": false,
+  "failIfEmpty": true,
+  "m2": false,
+  "incremental": false,
+  "excludeContent": false
+}

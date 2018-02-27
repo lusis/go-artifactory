@@ -1,0 +1,33 @@
+[
+  {
+    "key": "example-repo-local",
+    "description": "Example Repository",
+    "type": "LOCAL",
+    "url": "https://lusis.jfrog.io/lusis/example-repo-local"
+  },
+  {
+    "key": "pypi-local",
+    "type": "LOCAL",
+    "url": "https://lusis.jfrog.io/lusis/pypi-local"
+  },
+  {
+    "key": "test-vagrant",
+    "type": "LOCAL",
+    "url": "https://lusis.jfrog.io/lusis/test-vagrant"
+  },
+  {
+    "key": "pypi-upstream",
+    "type": "REMOTE",
+    "url": "https://pypi.python.org"
+  },
+  {
+    "key": "ubuntu-upstream",
+    "type": "REMOTE",
+    "url": "http://archive.ubuntu.com/ubuntu/"
+  },
+  {
+    "key": "pypi",
+    "type": "VIRTUAL",
+    "url": "https://lusis.jfrog.io/lusis/pypi"
+  }
+]

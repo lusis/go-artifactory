@@ -1,0 +1,23 @@
+{
+    "defaultModuleVersion":
+    {
+        "moduleId": "moduleId",
+        "nextRelease": "nextRelease",
+        "nextDevelopment": "nextDevelopment"
+    },
+    "vcsConfig":
+    {
+        "useReleaseBranch": true,
+        "releaseBranchName": "branchName",
+        "createTag": true,
+        "tagUrlOrName": "tagUrl",
+        "tagComment": "comment",
+        "nextDevelopmentVersionComment": "comment"       
+    },
+    "promotionConfig":
+    {
+        "targetRepository": "repoKey",
+        "comment": "comment",
+        "status": "statusName"
+    }
+}

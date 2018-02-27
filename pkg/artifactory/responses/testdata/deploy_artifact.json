@@ -1,0 +1,19 @@
+{
+  "repo": "example-repo-local",
+  "path": "/bardir/artif-http-cli",
+  "created": "2018-02-23T14:36:50.178Z",
+  "createdBy": "admin",
+  "downloadUri": "https://lusis.jfrog.io/lusis/example-repo-local/bardir/artif-http-cli",
+  "mimeType": "application/octet-stream",
+  "size": "9272853",
+  "checksums": {
+    "sha1": "eb7170e14c2e604600e3d50c70b96a7b55a7fea0",
+    "md5": "efae258ca4e5d14c031d02f2ce8bc3b0",
+    "sha256": "72286039227546a6db49117ced1d2a49dcb3270b477652af52b11c2a5cfcbd0a"
+  },
+  "originalChecksums": {
+    "sha1": "eb7170e14c2e604600e3d50c70b96a7b55a7fea0",
+    "sha256": "72286039227546a6db49117ced1d2a49dcb3270b477652af52b11c2a5cfcbd0a"
+  },
+  "uri": "https://lusis.jfrog.io/lusis/example-repo-local/bardir/artif-http-cli"
+}

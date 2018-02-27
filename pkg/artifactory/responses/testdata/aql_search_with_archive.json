@@ -1,0 +1,86 @@
+
+{
+"results" : [ {
+  "repo" : "libs-snapshot-local",
+  "path" : "com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.6.1-SNAPSHOT",
+  "name" : "rundeck-hipchat-plugin-1.6.1-20161012.160619-1.jar",
+  "type" : "file",
+  "size" : 1903090,
+  "created" : "2016-10-12T16:06:21.098Z",
+  "created_by" : "jvincent",
+  "modified" : "2016-10-12T16:06:21.064Z",
+  "modified_by" : "jvincent",
+  "updated" : "2016-10-12T16:06:21.064Z",
+  "archives" : [ {
+    "entries" : [ {
+      "entry.name" : "MANIFEST.MF",
+      "entry.path" : "META-INF"
+    }, {
+      "entry.name" : "hipchat-message.ftl",
+      "entry.path" : "templates"
+    }, {
+      "entry.name" : "HipChatNotificationPluginException.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat"
+    }, {
+      "entry.name" : "HipChatApiVersion1RoomNotifier.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat/roomnotifier"
+    }, {
+      "entry.name" : "HipChatApiAuthTokenManager.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat"
+    }, {
+      "entry.name" : "HttpResponse.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat/http"
+    }, {
+      "entry.name" : "HipChatApiVersion1RoomNotifier$HipChatAPIResponse.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat/roomnotifier"
+    }, {
+      "entry.name" : "HipChatApiVersion2RoomNotifier.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat/roomnotifier"
+    }, {
+      "entry.name" : "RestyHttpRequestExecutor.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat/http"
+    }, {
+      "entry.name" : "HttpRequestExecutor.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat/http"
+    }, {
+      "entry.name" : "HipChatNotificationPlugin.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat"
+    }, {
+      "entry.name" : "jackson-mapper-asl-1.9.12.jar",
+      "entry.path" : "lib"
+    }, {
+      "entry.name" : "pom.xml",
+      "entry.path" : "META-INF/maven/com.hbakkum.rundeck.plugins/rundeck-hipchat-plugin"
+    }, {
+      "entry.name" : "HipChatRoomNotifierFactory.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat/roomnotifier"
+    }, {
+      "entry.name" : "pom.properties",
+      "entry.path" : "META-INF/maven/com.hbakkum.rundeck.plugins/rundeck-hipchat-plugin"
+    }, {
+      "entry.name" : "resty-0.3.2.jar",
+      "entry.path" : "lib"
+    }, {
+      "entry.name" : "HipChatNotificationMessageGenerator.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat"
+    }, {
+      "entry.name" : "freemarker-2.3.19.jar",
+      "entry.path" : "lib"
+    }, {
+      "entry.name" : "jackson-core-asl-1.9.12.jar",
+      "entry.path" : "lib"
+    }, {
+      "entry.name" : "HipChatRoomNotifier.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat/roomnotifier"
+    }, {
+      "entry.name" : "HipChatNotificationPluginUtils.class",
+      "entry.path" : "com/hbakkum/rundeck/plugins/hipchat"
+    } ]
+  } ]
+} ],
+"range" : {
+  "start_pos" : 0,
+  "end_pos" : 1,
+  "total" : 1
+}
+}

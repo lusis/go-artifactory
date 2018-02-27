@@ -1,0 +1,23 @@
+{
+  "results" : [ {
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/example-repo-local/bardir/artif-http-cli",
+    "serverMd5" : "efae258ca4e5d14c031d02f2ce8bc3b0",
+    "clientMd5" : ""
+  }, {
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/example-repo-local/artif-http-cli-copy",
+    "serverMd5" : "efae258ca4e5d14c031d02f2ce8bc3b0",
+    "clientMd5" : ""
+  }, {
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/example-repo-local/foodir",
+    "serverMd5" : "d41d8cd98f00b204e9800998ecf8427e",
+    "clientMd5" : ""
+  }, {
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/maven-upstream-cache/click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar",
+    "serverMd5" : "2a2672f24ec7dee82e889cc872299bbc",
+    "clientMd5" : ""
+  }, {
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/maven-local/click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar",
+    "serverMd5" : "2a2672f24ec7dee82e889cc872299bbc",
+    "clientMd5" : ""
+  } ]
+}

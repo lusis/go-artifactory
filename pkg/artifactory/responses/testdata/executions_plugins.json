@@ -1,0 +1,226 @@
+{
+  "executions" : [ {
+    "name" : "deleteLdapGroup",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "DELETE"
+  }, {
+    "name" : "getProxy",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "getProxiesList",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "getLdapSettingsList",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "deleteProxy",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "DELETE"
+  }, {
+    "name" : "deleteLayout",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "DELETE"
+  }, {
+    "name" : "getLdapGroupsList",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "addProxy",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "getPropertySetsList",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "getLayout",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "getLayoutsList",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "getPropertySet",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "updateProxy",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "getLdapGroup",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "addPropertySet",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "routedGet",
+    "version" : "undefined",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "deletePropertySet",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "DELETE"
+  }, {
+    "name" : "getVersion",
+    "version" : "undefined",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "addLdapGroup",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "listPlugins",
+    "version" : "undefined",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "updateLdapSetting",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "updateLdapGroup",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "updateLayout",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "setHttpSso",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "getHttpSso",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "deleteLdapSetting",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "DELETE"
+  }, {
+    "name" : "addLdapSetting",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "getLicense",
+    "version" : "undefined",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "haClusterDump",
+    "version" : "undefined",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "getLdapSetting",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "updatePropertySet",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "addLayout",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "setPackageMetadataCacheTime",
+    "version" : "undefined",
+    "params" : {
+      "cache_millis" : "1800"
+    },
+    "httpMethod" : "POST"
+  }, {
+    "name" : "storageSummary",
+    "version" : "undefined",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "downloadPlugin",
+    "version" : "undefined",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "getSystemInfo",
+    "version" : "undefined",
+    "params" : {
+    },
+    "httpMethod" : "GET"
+  }, {
+    "name" : "updateLicense",
+    "version" : "1.0",
+    "params" : {
+    },
+    "httpMethod" : "POST"
+  } ]
+}

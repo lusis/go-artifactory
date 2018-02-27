@@ -1,0 +1,10 @@
+[
+  {
+    "name": "Anything",
+    "uri": "https://lusis.jfrog.io/lusis/api/security/permissions/Anything"
+  },
+  {
+    "name": "Any Remote",
+    "uri": "https://lusis.jfrog.io/lusis/api/security/permissions/Any%20Remote"
+  }
+]

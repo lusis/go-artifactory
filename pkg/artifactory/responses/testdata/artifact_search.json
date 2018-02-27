@@ -1,0 +1,9 @@
+{
+"results": [
+{
+            "uri": "http://localhost:8081/artifactory/api/storage/libs-release-local/org/acme/lib/ver/lib-ver.pom"
+        },{
+            "uri": "http://localhost:8081/artifactory/api/storage/libs-release-local/org/acme/lib/ver2/lib-ver2.pom"
+        }
+]
+}

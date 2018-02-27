@@ -1,0 +1,32 @@
+{
+  "artifacts" : {
+    "updated" : [ ],
+    "unchanged" : [ ],
+    "removed" : [ ],
+    "new" : [ {
+      "name" : "simplepermtester",
+      "module" : "org.lusis.reinhardt:reinhardt:33",
+      "sha1" : "d4d804ba9b190991f0b35c465c248cdaaf4a7eb0",
+      "md5" : "dd790de63e7bb73a281614240b7593f7",
+      "uri" : "https://artifactory/artifactory/tools-local/reinhardt-release/33/simplepermtester"
+    }, {
+      "name" : "reinhardt",
+      "module" : "org.lusis.reinhardt:reinhardt:33",
+      "sha1" : "97b6e59e2cbeaf075e419fa32b05e42e44a9d3bf",
+      "md5" : "63bda7cd8f9d01ab14e76dd0faecfa29",
+      "uri" : "https://artifactory/artifactory/tools-local/reinhardt-release/33/reinhardt"
+    } ]
+  },
+  "dependencies" : {
+    "updated" : [ ],
+    "unchanged" : [ ],
+    "removed" : [ ],
+    "new" : [ ]
+  },
+  "properties" : {
+    "updated" : [ ],
+    "unchanged" : [ ],
+    "removed" : [ ],
+    "new" : [ ]
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "storageSummary": {
+    "binariesSummary": {
+      "binariesCount": "1",
+      "binariesSize": "134 bytes",
+      "artifactsSize": "134 bytes",
+      "optimization": "100%",
+      "itemsCount": "1",
+      "artifactsCount": "1"
+    },
+    "fileStoreSummary": {
+      "storageType": "google-storage",
+      "storageDirectory": "/data/aolback/homes/lusis/data/cache",
+      "totalSpace": "359.91 GB",
+      "usedSpace": "265.34 GB (73.72%)",
+      "freeSpace": "94.57 GB (26.28%)"
+    },
+    "repositoriesSummaryList": [
+      {
+        "repoKey": "example-repo-local",
+        "repoType": "LOCAL",
+        "foldersCount": 0,
+        "filesCount": 1,
+        "usedSpace": "134 bytes",
+        "itemsCount": 1,
+        "packageType": "Generic",
+        "percentage": "100%"
+      },
+      {
+        "repoKey": "test-vagrant",
+        "repoType": "LOCAL",
+        "foldersCount": 0,
+        "filesCount": 0,
+        "usedSpace": "0 bytes",
+        "itemsCount": 0,
+        "packageType": "Vagrant",
+        "percentage": "0%"
+      },
+      {
+        "repoKey": "auto-trashcan",
+        "repoType": "NA",
+        "foldersCount": 0,
+        "filesCount": 0,
+        "usedSpace": "0 bytes",
+        "itemsCount": 0,
+        "packageType": "NA",
+        "percentage": "0%"
+      },
+      {
+        "repoKey": "TOTAL",
+        "repoType": "NA",
+        "foldersCount": 0,
+        "filesCount": 1,
+        "usedSpace": "134 bytes",
+        "itemsCount": 1
+      }
+    ]
+  },
+  "binariesSummary": {
+    "binariesCount": "1",
+    "binariesSize": "134 bytes",
+    "artifactsSize": "134 bytes",
+    "optimization": "100%",
+    "itemsCount": "1",
+    "artifactsCount": "1"
+  },
+  "fileStoreSummary": {
+    "storageType": "google-storage",
+    "storageDirectory": "/data/aolback/homes/lusis/data/cache",
+    "totalSpace": "359.91 GB",
+    "usedSpace": "265.34 GB (73.72%)",
+    "freeSpace": "94.57 GB (26.28%)"
+  },
+  "repositoriesSummaryList": [
+    {
+      "repoKey": "example-repo-local",
+      "repoType": "LOCAL",
+      "foldersCount": 0,
+      "filesCount": 1,
+      "usedSpace": "134 bytes",
+      "itemsCount": 1,
+      "packageType": "Generic",
+      "percentage": "100%"
+    },
+    {
+      "repoKey": "test-vagrant",
+      "repoType": "LOCAL",
+      "foldersCount": 0,
+      "filesCount": 0,
+      "usedSpace": "0 bytes",
+      "itemsCount": 0,
+      "packageType": "Vagrant",
+      "percentage": "0%"
+    },
+    {
+      "repoKey": "auto-trashcan",
+      "repoType": "NA",
+      "foldersCount": 0,
+      "filesCount": 0,
+      "usedSpace": "0 bytes",
+      "itemsCount": 0,
+      "packageType": "NA",
+      "percentage": "0%"
+    },
+    {
+      "repoKey": "TOTAL",
+      "repoType": "NA",
+      "foldersCount": 0,
+      "filesCount": 1,
+      "usedSpace": "134 bytes",
+      "itemsCount": 1
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+    "uri": "http://localhost:8081/artifactory/api/build",
+    "builds" : [
+    {
+        "uri" : "/my-build",
+        "lastStarted" : "2018-02-21T21:30:41.838+0000"
+    },
+    {
+        "uri" : "/jackrabbit",
+        "lastStarted" : "2018-02-21T21:30:41.838+0000"
+    }
+]
+}

@@ -1,0 +1,52 @@
+{
+  "results" : [ {
+    "repo" : "maven-upstream-cache",
+    "path" : "/click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar",
+    "created" : "2018-02-27T21:45:01.199Z",
+    "createdBy" : "admin",
+    "lastModified" : "2017-09-26T01:08:00.000Z",
+    "modifiedBy" : "admin",
+    "lastUpdated" : "2018-02-27T21:45:01.287Z",
+    "properties" : {
+      "artifactory.internal.etag" : [ "50e28608a89f2c192dc81518dde1bb265f1115f612c3ce95b6abfdc6920e6d7c" ]
+    },
+    "downloadUri" : "https://lusis.jfrog.io/lusis/maven-upstream-cache/click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar",
+    "remoteUrl" : "https://jcenter.bintray.com/click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar",
+    "mimeType" : "application/java-archive",
+    "size" : "1068",
+    "checksums" : {
+      "sha1" : "241aab8472d1d3109c5140648babe251765bef05",
+      "md5" : "2a2672f24ec7dee82e889cc872299bbc",
+      "sha256" : "50e28608a89f2c192dc81518dde1bb265f1115f612c3ce95b6abfdc6920e6d7c"
+    },
+    "originalChecksums" : {
+      "sha1" : "241aab8472d1d3109c5140648babe251765bef05",
+      "sha256" : "50e28608a89f2c192dc81518dde1bb265f1115f612c3ce95b6abfdc6920e6d7c"
+    },
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/maven-upstream-cache/click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar"
+  }, {
+    "repo" : "maven-local",
+    "path" : "/click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar",
+    "created" : "2018-02-27T21:45:01.199Z",
+    "createdBy" : "admin",
+    "lastModified" : "2017-09-26T01:08:00.000Z",
+    "modifiedBy" : "admin",
+    "lastUpdated" : "2018-02-27T21:45:01.287Z",
+    "properties" : {
+      "artifactory.internal.etag" : [ "50e28608a89f2c192dc81518dde1bb265f1115f612c3ce95b6abfdc6920e6d7c" ]
+    },
+    "downloadUri" : "https://lusis.jfrog.io/lusis/maven-local/click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar",
+    "mimeType" : "application/java-archive",
+    "size" : "1068",
+    "checksums" : {
+      "sha1" : "241aab8472d1d3109c5140648babe251765bef05",
+      "md5" : "2a2672f24ec7dee82e889cc872299bbc",
+      "sha256" : "50e28608a89f2c192dc81518dde1bb265f1115f612c3ce95b6abfdc6920e6d7c"
+    },
+    "originalChecksums" : {
+      "sha1" : "241aab8472d1d3109c5140648babe251765bef05",
+      "sha256" : "50e28608a89f2c192dc81518dde1bb265f1115f612c3ce95b6abfdc6920e6d7c"
+    },
+    "uri" : "https://lusis.jfrog.io/lusis/api/storage/maven-local/click/simone/simplelogger/1.0.0/simplelogger-1.0.0-sources.jar"
+  } ]
+}

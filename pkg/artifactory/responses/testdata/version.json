@@ -1,0 +1,6 @@
+{
+  "version" : "5.8.4-m001",
+  "revision" : "50804001",
+  "addons" : [ "aol", "build", "docker", "vagrant", "replication", "filestore", "plugins", "gems", "composer", "npm", "bower", "git-lfs", "nuget", "debian", "opkg", "rpm", "cocoapods", "conan", "vcs", "pypi", "release-bundle", "chef", "helm", "rest", "license", "puppet", "ldap", "sso", "layouts", "properties", "search", "filtered-resources", "p2", "watch", "webstart", "support", "xray" ],
+  "license" : "XXXXXXXXX"
+}

@@ -1,0 +1,17 @@
+{
+  "key" : "nginx",
+  "webServerType" : "NGINX",
+  "artifactoryAppContext" : "artifactory",
+  "publicAppContext" : "artifactory",
+  "serverName" : "jfrog.com",
+  "serverNameExpression" : "*.jfrog.com",
+  "artifactoryServerName" : "localhost",
+  "artifactoryPort" : 8081,
+  "sslCertificate" : "/etc/ssl/myKey.cert",
+  "sslKey" : "/etc/ssl/myKey.key",
+  "dockerReverseProxyMethod" : "SUBDOMAIN",
+  "useHttps" : true,
+  "useHttp" : true,
+  "sslPort" : 443,
+  "httpPort" : 76
+}

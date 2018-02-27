@@ -1,0 +1,7 @@
+{
+  "importPath" : "/import/path",
+  "includeMetadata" : true,
+  "verbose" : false,
+  "failOnError" : false,
+  "failIfEmpty" : true
+}

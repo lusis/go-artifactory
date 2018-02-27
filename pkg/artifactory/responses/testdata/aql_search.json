@@ -1,0 +1,53 @@
+
+{
+"results" : [ {
+  "repo" : "libs-snapshot-local",
+  "path" : "com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin",
+  "name" : "maven-metadata.xml",
+  "type" : "file",
+  "size" : 345,
+  "created" : "2016-10-12T16:06:21.256Z",
+  "created_by" : "jvincent",
+  "modified" : "2016-10-12T16:06:21.300Z",
+  "modified_by" : "jvincent",
+  "updated" : "2016-10-12T16:06:21.300Z"
+},{
+  "repo" : "libs-snapshot-local",
+  "path" : "com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.6.1-SNAPSHOT",
+  "name" : "maven-metadata.xml",
+  "type" : "file",
+  "size" : 778,
+  "created" : "2016-10-12T16:06:21.241Z",
+  "created_by" : "jvincent",
+  "modified" : "2016-10-12T16:06:21.237Z",
+  "modified_by" : "jvincent",
+  "updated" : "2016-10-12T16:06:21.237Z"
+},{
+  "repo" : "libs-snapshot-local",
+  "path" : "com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.6.1-SNAPSHOT",
+  "name" : "rundeck-hipchat-plugin-1.6.1-20161012.160619-1.jar",
+  "type" : "file",
+  "size" : 1903090,
+  "created" : "2016-10-12T16:06:21.098Z",
+  "created_by" : "jvincent",
+  "modified" : "2016-10-12T16:06:21.064Z",
+  "modified_by" : "jvincent",
+  "updated" : "2016-10-12T16:06:21.064Z"
+},{
+  "repo" : "libs-snapshot-local",
+  "path" : "com/hbakkum/rundeck/plugins/rundeck-hipchat-plugin/1.6.1-SNAPSHOT",
+  "name" : "rundeck-hipchat-plugin-1.6.1-20161012.160619-1.pom",
+  "type" : "file",
+  "size" : 9813,
+  "created" : "2016-10-12T16:06:21.196Z",
+  "created_by" : "jvincent",
+  "modified" : "2016-10-12T16:06:21.191Z",
+  "modified_by" : "jvincent",
+  "updated" : "2016-10-12T16:06:21.191Z"
+} ],
+"range" : {
+  "start_pos" : 0,
+  "end_pos" : 1289,
+  "total" : 1289
+}
+}

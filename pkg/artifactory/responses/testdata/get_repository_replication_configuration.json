@@ -1,0 +1,14 @@
+{
+    "url" : "http://localhost:8081/artifactory/remote-repo",
+    "socketTimeoutMillis" : 15000,
+    "username" : "admin",
+    "password" : "password",
+    "enableEventReplication" : false,
+    "enabled" : true,
+    "cronExp" : "0 0 12 * * ?",
+    "syncDeletes" : true,
+    "syncProperties" : true,
+    "syncStatistics" : false,
+    "repoKey" : "libs-release-local",
+    "pathPrefix" : "/path/to/repo"
+  }

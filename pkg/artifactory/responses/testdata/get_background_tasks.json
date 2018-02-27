@@ -1,0 +1,106 @@
+{
+  "tasks": [
+    {
+      "id": "artifactory.UpdateIndicesJob#c834fd7f-bd00-4a98-900e-2cb97c18ed06",
+      "type": "org.artifactory.addon.gems.index.GemsLocalIndexHandler$UpdateIndicesJob",
+      "state": "scheduled",
+      "description": "Gems Local Repositories Index Calculator"
+    },
+    {
+      "id": "artifactory.PasswordExpireNotificationJob#72377d7e-0731-4aef-8056-be83cdebaa09",
+      "type": "org.artifactory.security.jobs.PasswordExpireNotificationJob",
+      "state": "scheduled",
+      "description": "Password expire notification job"
+    },
+    {
+      "id": "artifactory.StatsPersistingServiceFlushJob#c963832b-92a5-4416-8270-06c192b6a4ac",
+      "type": "org.artifactory.storage.jobs.StatsPersistingServiceFlushJob",
+      "state": "scheduled",
+      "description": "Download Statistics Flushing"
+    },
+    {
+      "id": "artifactory.ArtifactCleanupJob#8b2a752a-c5b0-4706-bdf8-cae723f6fe9d",
+      "type": "org.artifactory.repo.cleanup.ArtifactCleanupJob",
+      "state": "scheduled",
+      "description": "Remote Repositories Cached Artifacts Cleanup"
+    },
+    {
+      "id": "artifactory.BinaryStoreErrorNotificationJob#c5136df2-9d06-4087-bdab-44bc09f64c63",
+      "type": "org.artifactory.storage.binary.BinaryStoreManagerServiceImpl$BinaryStoreErrorNotificationJob",
+      "state": "scheduled",
+      "description": "binary store error notification"
+    },
+    {
+      "id": "artifactory.XrayIndexEventJob#f1bbbb98-7087-4a85-a621-4bc811635a2b",
+      "type": "org.artifactory.addon.xray.indexer.XrayIndexEventJob",
+      "state": "scheduled",
+      "description": "Xray Indexing Events"
+    },
+    {
+      "id": "artifactory.DockerV2TagCleanupJob#4c6deac6-4f06-4816-bba6-296b72450607",
+      "type": "org.artifactory.addon.docker.rest.v2.repo.cleanup.DockerV2TagCleanupJob",
+      "state": "scheduled",
+      "description": "Docker V2 Tags Cleanup"
+    },
+    {
+      "id": "artifactory.CredentialsWatchJob#666881c3-7b4b-4f72-a9db-da5ede56957a",
+      "type": "org.artifactory.security.jobs.CredentialsWatchJob",
+      "state": "scheduled",
+      "description": "Credentials watch job"
+    },
+    {
+      "id": "artifactory.StatsDelegatingServiceFlushJob#bd637d43-de9c-4387-a694-236ddb1c9b51",
+      "type": "org.artifactory.storage.jobs.StatsDelegatingServiceFlushJob",
+      "state": "scheduled",
+      "description": "Download Statistics Flushing Delegator"
+    },
+    {
+      "id": "artifactory.VirtualCacheCleanupJob#228b7ed0-dd79-4225-b770-cf1b04871dba",
+      "type": "org.artifactory.repo.cleanup.VirtualCacheCleanupJob",
+      "state": "scheduled",
+      "description": "Virtual Repositories Cache Cleanup"
+    },
+    {
+      "id": "artifactory.UpdateIndicesJob#5fa850ac-3d8c-4659-b25c-7c6c0fad3828",
+      "type": "org.artifactory.addon.gems.index.GemsVirtualIndexHandler$UpdateIndicesJob",
+      "state": "scheduled",
+      "description": "Gems Virtual Repositories Index Calculator"
+    },
+    {
+      "id": "artifactory.ArchiveIndexJob#ee90ab49-197c-4f37-bf78-93dcdb1f84c8",
+      "type": "org.artifactory.search.archive.ArchiveIndexerImpl$ArchiveIndexJob",
+      "state": "scheduled",
+      "description": "Archive Files Indexer"
+    },
+    {
+      "id": "artifactory.HeartbeatJob#e2703df2-1def-41e4-9718-64d1d8e468df",
+      "type": "org.artifactory.storage.db.servers.service.ArtifactoryHeartbeatServiceImpl$HeartbeatJob",
+      "state": "scheduled",
+      "description": "Database Heartbeat"
+    },
+    {
+      "id": "artifactory.CallHomeJob#23f24edc-7419-4d9a-8c84-8bcf0ec8add1",
+      "type": "org.artifactory.post.jobs.CallHomeJob",
+      "state": "scheduled",
+      "description": "Artifactory Version Checker"
+    },
+    {
+      "id": "artifactory.IntegrationCleanupJob#e910c368-dc33-4a9a-aea6-747f4b2bf2ca",
+      "type": "org.artifactory.repo.cleanup.IntegrationCleanupJob",
+      "state": "scheduled",
+      "description": "Integration/Snapshot Versions Cleanup"
+    },
+    {
+      "id": "artifactory.FolderPruningJob#b86dfe66-c9a4-48fe-b90f-59bbe7486461",
+      "type": "org.artifactory.repo.cleanup.FolderPruningJob",
+      "state": "scheduled",
+      "description": "Empty Folders Pruning Job"
+    },
+    {
+      "id": "artifactory.BinaryStoreGarbageCollectorJob#36408385-9518-4f83-8cc3-3ef4d7a757f3",
+      "type": "org.artifactory.storage.binstore.service.BinaryStoreGarbageCollectorJob",
+      "state": "scheduled",
+      "description": "Binaries Garbage Collector"
+    }
+  ]
+}

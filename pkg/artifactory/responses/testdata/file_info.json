@@ -1,0 +1,23 @@
+{
+  "repo": "example-repo-local",
+  "path": "/files/file.mp4",
+  "created": "2018-02-21T18:01:40.574Z",
+  "createdBy": "admin",
+  "lastModified": "2018-02-21T18:01:39.000Z",
+  "modifiedBy": "admin",
+  "lastUpdated": "2018-02-21T18:01:39.000Z",
+  "downloadUri": "https://lusis.jfrog.io/lusis/example-repo-local/files/file.mp4",
+  "mimeType": "application/octet-stream",
+  "size": "134",
+  "checksums": {
+    "sha1": "9912d23320f72855b6e749fc0b5b699dac5fdfea",
+    "md5": "d75e5c69caa66ce757c6d0284efdf717",
+    "sha256": "a41075ed62a94bf42f51ea14d99aaa2a6dc55a54d23b50b1d08aa254f220650a"
+  },
+  "originalChecksums": {
+    "sha1": "9912d23320f72855b6e749fc0b5b699dac5fdfea",
+    "md5": "d75e5c69caa66ce757c6d0284efdf717",
+    "sha256": "a41075ed62a94bf42f51ea14d99aaa2a6dc55a54d23b50b1d08aa254f220650a"
+  },
+  "uri": "https://lusis.jfrog.io/lusis/api/storage/example-repo-local/files/file.mp4"
+}

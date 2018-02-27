@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "testprop": [
+      "testpropval"
+    ]
+  },
+  "uri": "https://lusis.jfrog.io/lusis/api/storage/example-repo-local/files/file.mp4"
+}

@@ -1,0 +1,14 @@
+{
+    "status" : "ok",
+    "lastCompleted" : "2015-12-27T15:08:49.050+0200",
+    "targets":
+    [
+        { "url": "http://remote_host/remote-libs1", "repoKey": "remote-libs1", "status" : "ok", "lastCompleted" : "2015-12-27T15:07:49.050+0200" },
+        { "url" : "http://remote_host/remote-libs2", "repoKey": "remote-libs2", "status" : "incomplete", "lastCompleted" : "2015-12-27T15:07:49.050+0200" }
+    ],
+    "repositories":
+        {
+            "remote-libs1" : { "status" : "never_run", "lastCompleted" : null },
+            "remote-libs2" : { "status" : "ok", "lastCompleted" : "2015-12-27T15:07:49.050+0200" }
+        }
+}

@@ -1,0 +1,6 @@
+{
+    "scope" : "member-of-groups:readers api:*",
+    "access_token" : "XXXXXXX",
+    "expires_in" : 3600,
+    "token_type" : "Bearer"
+}

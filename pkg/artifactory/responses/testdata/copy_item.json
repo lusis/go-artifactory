@@ -1,0 +1,6 @@
+{
+    "messages" : [ {
+      "level" : "INFO",
+      "message" : "copying example-repo-local:bardir/artif-http-cli to example-repo-local:artif-http-cli-copy completed successfully, 1 artifacts and 0 folders were copied"
+    } ]
+  }

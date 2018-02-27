@@ -1,0 +1,38 @@
+{
+  "uri": "https://lusis.jfrog.io/lusis/api/storage/example-repo-local",
+  "created": "2018-02-23T15:38:37.187Z",
+  "files": [
+    {
+      "uri": "/bardir/artif-http-cli",
+      "size": 9272853,
+      "lastModified": "2018-02-23T14:36:49.848Z",
+      "folder": false,
+      "sha1": "eb7170e14c2e604600e3d50c70b96a7b55a7fea0",
+      "sha2": "72286039227546a6db49117ced1d2a49dcb3270b477652af52b11c2a5cfcbd0a"
+    },
+    {
+      "uri": "/files/file.mp4",
+      "size": 134,
+      "lastModified": "2018-02-21T18:01:39.000Z",
+      "folder": false,
+      "sha1": "9912d23320f72855b6e749fc0b5b699dac5fdfea",
+      "sha2": "a41075ed62a94bf42f51ea14d99aaa2a6dc55a54d23b50b1d08aa254f220650a"
+    },
+    {
+      "uri": "/artif-http-cli-copy",
+      "size": 9272853,
+      "lastModified": "2018-02-23T14:36:49.848Z",
+      "folder": false,
+      "sha1": "eb7170e14c2e604600e3d50c70b96a7b55a7fea0",
+      "sha2": "72286039227546a6db49117ced1d2a49dcb3270b477652af52b11c2a5cfcbd0a"
+    },
+    {
+      "uri": "/foodir",
+      "size": 0,
+      "lastModified": "2018-02-23T14:33:20.924Z",
+      "folder": false,
+      "sha1": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+      "sha2": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

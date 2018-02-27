@@ -1,0 +1,7 @@
+{
+  "name": "readers",
+  "description": "A group for read-only users",
+  "autoJoin": true,
+  "realm": "internal",
+  "adminPrivileges": false
+}

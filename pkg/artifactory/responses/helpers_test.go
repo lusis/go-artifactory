@@ -26,16 +26,24 @@ func newMSDecoderConfig() *mapstructure.DecoderConfig {
 		if f.Kind() != reflect.String {
 			return data, nil
 		}
-		if t != reflect.TypeOf(&JSONTime{time.Now()}) {
-			return data, nil
+		if t == reflect.TypeOf(&JSONTime{time.Now()}) {
+			// Convert it by parsing
+			tTime, tErr := time.Parse(artifTime, data.(string))
+			if tErr != nil {
+				return nil, tErr
+			}
+			return JSONTime{tTime}, nil
 		}
+		if t == reflect.TypeOf(&ISO8601Time{time.Now()}) {
+			// Convert it by parsing
+			tTime, tErr := time.Parse(iso8601Time, data.(string))
+			if tErr != nil {
+				return nil, tErr
+			}
+			return ISO8601Time{tTime}, nil
+		}
+		return data, nil
 
-		// Convert it by parsing
-		tTime, tErr := time.Parse(artifTime, data.(string))
-		if tErr != nil {
-			return nil, tErr
-		}
-		return JSONTime{tTime}, nil
 	}
 	return &mapstructure.DecoderConfig{
 		ErrorUnused:      true,

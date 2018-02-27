@@ -1,0 +1,9 @@
+{
+"results" : [
+    {
+        "downloadUri": "http://localhost:8081/artifactory/libs-release-local/org/acme/lib/ver/lib-sources.jar"
+    },{
+        "downloadUri": "http://localhost:8081/artifactory/ext-release-local/org/acme/lib/ver/lib-ver-javadoc.jar"
+    }
+]
+}

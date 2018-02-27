@@ -1,0 +1,14 @@
+{
+  "repo": "example-repo-local",
+  "path": "/",
+  "created": "2018-02-20T03:14:46.156Z",
+  "lastModified": "2018-02-20T03:14:46.156Z",
+  "lastUpdated": "2018-02-20T03:14:46.156Z",
+  "children": [
+    {
+      "uri": "/files",
+      "folder": true
+    }
+  ],
+  "uri": "https://lusis.jfrog.io/lusis/api/storage/example-repo-local"
+}

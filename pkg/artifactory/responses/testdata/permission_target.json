@@ -1,0 +1,16 @@
+{
+  "name": "Any Remote",
+  "includesPattern": "**",
+  "excludesPattern": "",
+  "repositories": [
+    "ANY REMOTE"
+  ],
+  "principals": {
+    "users": {
+      "anonymous": [
+        "r",
+        "w"
+      ]
+    }
+  }
+}

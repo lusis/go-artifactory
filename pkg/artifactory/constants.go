@@ -9,3 +9,4 @@ const tokenAuthType = "token"
 var MaxArtifactoryVersion = versionMustParse("5.5")
 
 var errDecoding = errors.New("Could not parse response from the Artifactory server")
+var errEncoding = errors.New("Could not marshal request to JSON")

@@ -40,6 +40,8 @@
 // folder_info.json
 // gavc_search.json
 // get_background_tasks.json
+// get_certificates.json
+// get_locked_out_users.json
 // get_repositories.json
 // get_repository_replication_configuration.json
 // global_system_replication_configuration.json
@@ -175,7 +177,7 @@ func aql_searchJson() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "aql_search.json", size: 1630, mode: os.FileMode(420), modTime: time.Unix(1519673502, 0)}
+	info := bindataFileInfo{name: "aql_search.json", size: 1630, mode: os.FileMode(420), modTime: time.Unix(1519771738, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -940,6 +942,46 @@ func get_background_tasksJson() (*asset, error) {
 	return a, nil
 }
 
+var _get_certificatesJson = []byte("\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\x84\xca\xb1\x4e\x84\x30\x1c\x07\xe0\x9d\xa7\x68\x3a\x0b\x69\x0b\x6d\xe1\xb7\xb5\x1c\xac\x2e\xe7\xa2\x71\x20\x77\xe5\xf2\x37\x04\x0c\x2d\x26\xc6\xf8\xee\x06\x8c\x89\x8b\x71\xfe\xbe\x27\xf6\x91\x31\xc6\x2f\x61\x4d\x34\xd2\x65\x48\xc1\x4d\x34\x44\xce\xc0\x78\x0a\x31\xe5\xbb\xf0\xbb\xfd\x50\x8c\x5b\xb8\x9e\x97\xc3\xa6\x2d\x52\x2c\x5e\xc6\x75\xb9\x15\xb4\xfc\x0e\xfe\xfd\x9f\x70\x3f\x1f\x41\x09\x59\xe7\x42\xe5\xaa\x3e\x2b\x05\xa9\xa1\x4d\x21\x84\x78\xfc\xae\x6f\xc3\x44\xd7\x87\x39\xd1\xf4\x93\x9b\xbf\xf3\x48\xf3\x2d\xac\xaf\x2b\xcd\xe9\xd8\xa5\x87\x90\x38\x59\xf4\x0e\x46\xc1\x39\x94\x16\x9d\x45\xe5\xa0\x35\x9a\x1a\xbd\x80\xb3\xe8\x6b\x94\x2d\xac\x81\x6f\x51\x7a\x54\x0a\x95\x81\xb7\xfb\x6f\x1a\x9c\x34\x5a\x0b\x2b\xa1\x0c\x5c\x05\xd5\xa1\x13\x90\x1e\xc6\xf2\xec\x93\x3d\x67\x5f\x01\x00\x00\xff\xff\x31\x02\x57\x55\x3a\x01\x00\x00")
+
+func get_certificatesJsonBytes() ([]byte, error) {
+	return bindataRead(
+		_get_certificatesJson,
+		"get_certificates.json",
+	)
+}
+
+func get_certificatesJson() (*asset, error) {
+	bytes, err := get_certificatesJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "get_certificates.json", size: 314, mode: os.FileMode(420), modTime: time.Unix(1519856327, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _get_locked_out_usersJson = []byte("\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\x8a\x56\x4a\xcb\xcf\x57\xd2\x51\x4a\x4a\x2c\x52\x8a\xe5\x02\x04\x00\x00\xff\xff\x59\xb6\xa8\xe0\x0e\x00\x00\x00")
+
+func get_locked_out_usersJsonBytes() ([]byte, error) {
+	return bindataRead(
+		_get_locked_out_usersJson,
+		"get_locked_out_users.json",
+	)
+}
+
+func get_locked_out_usersJson() (*asset, error) {
+	bytes, err := get_locked_out_usersJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "get_locked_out_users.json", size: 14, mode: os.FileMode(420), modTime: time.Unix(1519854532, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
 var _get_repositoriesJson = []byte("\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff\xa4\x91\xc1\x4a\x03\x31\x10\x86\xef\x79\x8a\x61\xcf\x6d\x72\xdf\x9b\xc8\x1e\x84\x4a\x61\xa9\x5e\xc4\x43\x5c\xc7\xdd\x68\x76\x67\x48\x26\xc5\x20\xbe\xbb\xac\xa1\x60\x6b\x5b\xa8\xde\x92\xe1\xcb\xff\xcd\x4f\x1e\x14\xc0\x87\x02\x00\xa8\xde\x30\x57\x35\x54\xf8\x6e\x47\xf6\xb8\x0c\xc8\xb4\xf4\xd4\x59\x5f\x2d\x0a\xf0\x8c\xb1\x0b\x8e\xc5\xd1\x34\x83\x4d\x01\xa1\x45\xa6\xe8\x84\x42\xde\x81\x92\x19\x67\x62\xb5\xbe\xbe\x5a\xed\x86\x29\xf8\x79\x36\x88\x70\xac\x8d\xf1\x29\xba\xa8\x5f\x5f\x02\xf5\xda\x51\xb9\x9a\x23\x6e\x05\xf0\xb9\xf8\xb5\x24\x67\x76\xfb\xcb\xfd\xd9\xf9\x23\xea\xb8\x4b\x30\xca\x72\x6b\xfb\x60\x27\xf9\xb7\x6d\x2f\xec\x4c\xb7\xc4\x51\x02\xda\xf1\x50\xd8\x36\xb7\xeb\x4d\x73\xc2\x38\xbf\xd4\x9c\x65\xa0\x49\x53\xe8\x4f\xe4\xa7\xa7\x34\x49\xba\xdc\x50\x1b\x63\x43\x37\xb8\x2d\xea\x12\xa1\x3b\x1a\x4d\x39\x9a\x33\x5d\x0e\x05\xf7\x37\xed\xe6\xee\xf2\x3f\xfa\x36\xa8\x47\xf5\x15\x00\x00\xff\xff\xae\xa6\x3f\xd9\xb2\x02\x00\x00")
 
 func get_repositoriesJsonBytes() ([]byte, error) {
@@ -1692,6 +1734,8 @@ var _bindata = map[string]func() (*asset, error){
 	"folder_info.json": folder_infoJson,
 	"gavc_search.json": gavc_searchJson,
 	"get_background_tasks.json": get_background_tasksJson,
+	"get_certificates.json": get_certificatesJson,
+	"get_locked_out_users.json": get_locked_out_usersJson,
 	"get_repositories.json": get_repositoriesJson,
 	"get_repository_replication_configuration.json": get_repository_replication_configurationJson,
 	"global_system_replication_configuration.json": global_system_replication_configurationJson,
@@ -1807,6 +1851,8 @@ var _bintree = &bintree{nil, map[string]*bintree{
 	"folder_info.json": &bintree{folder_infoJson, map[string]*bintree{}},
 	"gavc_search.json": &bintree{gavc_searchJson, map[string]*bintree{}},
 	"get_background_tasks.json": &bintree{get_background_tasksJson, map[string]*bintree{}},
+	"get_certificates.json": &bintree{get_certificatesJson, map[string]*bintree{}},
+	"get_locked_out_users.json": &bintree{get_locked_out_usersJson, map[string]*bintree{}},
 	"get_repositories.json": &bintree{get_repositoriesJson, map[string]*bintree{}},
 	"get_repository_replication_configuration.json": &bintree{get_repository_replication_configurationJson, map[string]*bintree{}},
 	"global_system_replication_configuration.json": &bintree{global_system_replication_configurationJson, map[string]*bintree{}},

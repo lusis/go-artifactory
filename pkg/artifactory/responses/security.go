@@ -116,11 +116,14 @@ func (r GetAPIKeyResponse) minVersion() Version { return versionMustParse("4.3.0
 func (r GetAPIKeyResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
 func (r GetAPIKeyResponse) deprecated() bool    { return false }
 
-// GetGroupsResponse represents a GetGroups response
-type GetGroupsResponse []struct {
+// GroupResponse is an entry in a GetGroupsResponse
+type GroupResponse struct {
 	Name string `json:"name"`
 	URI  string `json:"uri"`
 }
+
+// GetGroupsResponse represents a GetGroups response
+type GetGroupsResponse []GroupResponse
 
 // GetGroupsResponseTestData is test data for GetGroupsResponse
 const GetGroupsResponseTestData = "groups.json"
@@ -145,11 +148,14 @@ func (r GetGroupDetailsResponse) minVersion() Version { return versionMustParse(
 func (r GetGroupDetailsResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
 func (r GetGroupDetailsResponse) deprecated() bool    { return false }
 
-// GetPermissionTargetsResponse represents a GetPermissionTargets response
-type GetPermissionTargetsResponse struct {
+// PermissionTargetEntry is an individual entry for GetPermissionTargetsResponse
+type PermissionTargetEntry struct {
 	Name string `json:"name"`
 	URI  string `json:"uri"`
 }
+
+// GetPermissionTargetsResponse represents a GetPermissionTargets response
+type GetPermissionTargetsResponse []PermissionTargetEntry
 
 // GetPermissionTargetsResponseTestData is test data for GetPermissionTargetsResponse
 const GetPermissionTargetsResponseTestData = "permission_targets.json"
@@ -193,7 +199,16 @@ func (r CreateTokenResponse) maxVersion() Version { return versionMustParse(Curr
 func (r CreateTokenResponse) deprecated() bool    { return false }
 
 // RefreshTokenResponse represents a RefreshToken response
-type RefreshTokenResponse struct{}
+type RefreshTokenResponse struct {
+	Scope        string `json:"scope"`
+	ExpiresIn    int    `json:"expires_in"`
+	AccessToken  string `json:"access_token"`
+	TokenType    string `json:"token_type"`
+	RefreshToken string `json:"refresh_token,omitempty"`
+}
+
+// RefreshTokenResponseTestData is test data for RefreshTokenResponse
+const RefreshTokenResponseTestData = "create_token.json"
 
 func (r RefreshTokenResponse) minVersion() Version { return versionMustParse("5.0.0") }
 func (r RefreshTokenResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
@@ -205,3 +220,78 @@ type RevokeTokenResponse struct{}
 func (r RevokeTokenResponse) minVersion() Version { return versionMustParse("5.0.0") }
 func (r RevokeTokenResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
 func (r RevokeTokenResponse) deprecated() bool    { return false }
+
+// GetUserEncryptedPasswordResponse represents a GetUserEncryptedPassword response
+type GetUserEncryptedPasswordResponse struct{}
+
+func (r GetUserEncryptedPasswordResponse) minVersion() Version { return versionMustParse("3.3.0") }
+func (r GetUserEncryptedPasswordResponse) maxVersion() Version {
+	return versionMustParse(CurrentVersion)
+}
+func (r GetUserEncryptedPasswordResponse) deprecated() bool { return false }
+
+// GetLockedOutUsersResponse represents a GetLockedOutUsers response
+type GetLockedOutUsersResponse []string
+
+// GetLockedOutUsersResponseTestData is test data for GetLockedOutUsersResponse
+const GetLockedOutUsersResponseTestData = "get_locked_out_users.json"
+
+func (r GetLockedOutUsersResponse) minVersion() Version { return versionMustParse("4.4") }
+func (r GetLockedOutUsersResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
+func (r GetLockedOutUsersResponse) deprecated() bool    { return false }
+
+// GetGPGPublicKeyResponse represents a GetGPGPublicKey response
+type GetGPGPublicKeyResponse struct{}
+
+func (r GetGPGPublicKeyResponse) minVersion() Version { return versionMustParse("3.3") }
+func (r GetGPGPublicKeyResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
+func (r GetGPGPublicKeyResponse) deprecated() bool    { return false }
+
+// GetServiceIDResponse represents a GetServiceID response
+type GetServiceIDResponse struct{}
+
+func (r GetServiceIDResponse) minVersion() Version { return versionMustParse("5.0.0") }
+func (r GetServiceIDResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
+func (r GetServiceIDResponse) deprecated() bool    { return false }
+
+// CertificateResponseEntry represents an individual cert entry in a GetCertificatesResponse
+type CertificateResponseEntry struct {
+	CertificateAlias string    `json:"certificateAlias"`
+	IssuedTo         string    `json:"issuedTo"`
+	IssuedBy         string    `json:"issuedBy"`
+	IssuedOn         *JSONTime `json:"issuedOn"`
+	ValidUntil       *JSONTime `json:"validUntil"`
+	Fingerprint      string    `json:"fingerPrint"`
+}
+
+// GetCertificatesResponse represents a GetCertificates response
+type GetCertificatesResponse []*CertificateResponseEntry
+
+// GetCertificatesResponseTestData is test data for GetCertificatesResponse
+const GetCertificatesResponseTestData = "get_certificates.json"
+
+func (r GetCertificatesResponse) minVersion() Version { return versionMustParse("5.4.0") }
+func (r GetCertificatesResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
+func (r GetCertificatesResponse) deprecated() bool    { return false }
+
+// EffectiveItemPermissionsResponse represents a EffectiveItemPermissions response
+type EffectiveItemPermissionsResponse struct {
+	URI        string                         `json:"uri"`
+	Principals map[string]map[string][]string `json:"principals"`
+}
+
+// EffectiveItemPermissionsResponseTestData is test data for EffectiveItemPermissionsResponse
+const EffectiveItemPermissionsResponseTestData = "effective_item_permissions.json"
+
+func (r EffectiveItemPermissionsResponse) minVersion() Version { return versionMustParse("2.3.4") }
+func (r EffectiveItemPermissionsResponse) maxVersion() Version {
+	return versionMustParse(CurrentVersion)
+}
+func (r EffectiveItemPermissionsResponse) deprecated() bool { return false }
+
+// SecurityConfigurationResponse represents a SecurityConfiguration response
+type SecurityConfigurationResponse struct{}
+
+func (r SecurityConfigurationResponse) minVersion() Version { return versionMustParse("2.2.0") }
+func (r SecurityConfigurationResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
+func (r SecurityConfigurationResponse) deprecated() bool    { return false }

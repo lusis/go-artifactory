@@ -11,6 +11,10 @@ import (
 	httpclient "github.com/lusis/go-artifactory/pkg/httpclient"
 )
 
+func addHeader(k, v string) httpclient.RequestOption {
+	return httpclient.AddHeaders(map[string]string{k: v})
+}
+
 // withBody sets the post/put body for a request
 // nolint: deadcode
 func withBody(body io.Reader) httpclient.RequestOption {

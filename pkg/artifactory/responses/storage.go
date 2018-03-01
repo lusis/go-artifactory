@@ -288,18 +288,3 @@ const FileListAllOptsResponseTestData = "file_list_all_opts.json"
 func (r FileListResponse) minVersion() Version { return versionMustParse("2.2.4") }
 func (r FileListResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
 func (r FileListResponse) deprecated() bool    { return false }
-
-// EffectiveItemPermissionsResponse represents a EffectiveItemPermissions response
-type EffectiveItemPermissionsResponse struct {
-	URI        string                         `json:"uri"`
-	Principals map[string]map[string][]string `json:"principals"`
-}
-
-// EffectiveItemPermissionsResponseTestData is test data for EffectiveItemPermissionsResponse
-const EffectiveItemPermissionsResponseTestData = "effective_item_permissions.json"
-
-func (r EffectiveItemPermissionsResponse) minVersion() Version { return versionMustParse("2.3.4") }
-func (r EffectiveItemPermissionsResponse) maxVersion() Version {
-	return versionMustParse(CurrentVersion)
-}
-func (r EffectiveItemPermissionsResponse) deprecated() bool { return false }

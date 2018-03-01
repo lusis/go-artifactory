@@ -10,11 +10,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestUserResponses(t *testing.T) {
+func TestSecurityResponses(t *testing.T) {
 	// Add any new test cases here
 	// in the form of
 	// {&FooResponse{}:FooResponseTestData}
-	systemResponsesTestCases := []map[VersionedResponse]string{
+	responsesTestCases := []map[VersionedResponse]string{
 		{&GetUsersResponse{}: GetUsersResponseTestData},
 		{&GetUserDetailsResponse{}: GetUserDetailsResponseTestData},
 		{&GetPasswordExpirationPolicyResponse{}: GetPasswordExpirationPolicyResponseTestData},
@@ -26,10 +26,14 @@ func TestUserResponses(t *testing.T) {
 		{&GetPermissionTargetsResponse{}: GetPermissionTargetsResponseTestData},
 		{&GetPermissionTargetDetailsResponse{}: GetPermissionTargetDetailsResponseTestData},
 		{&CreateTokenResponse{}: CreateTokenResponseTestData},
+		{&RefreshTokenResponse{}: RefreshTokenResponseTestData},
+		{&GetLockedOutUsersResponse{}: GetLockedOutUsersResponseTestData},
+		{&GetCertificatesResponse{}: GetCertificatesResponseTestData},
 	}
 
-	for _, testCase := range systemResponsesTestCases {
+	for _, testCase := range responsesTestCases {
 		for k, v := range testCase {
+			require.Implements(t, (*VersionedResponse)(nil), k)
 			data, err := testdata.GetBytes(v)
 			require.NoError(t, err)
 			placeholder := make(map[string]interface{})
@@ -40,7 +44,6 @@ func TestUserResponses(t *testing.T) {
 			require.NoError(t, newErr)
 			dErr := decoder.Decode(placeholder)
 			require.NoError(t, dErr, fmt.Sprintf("should parse %s", v))
-			require.Implements(t, (*VersionedResponse)(nil), k)
 		}
 	}
 }

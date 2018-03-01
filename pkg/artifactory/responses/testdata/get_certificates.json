@@ -1,0 +1,8 @@
+[ {
+  "certificateAlias" : "test-cert",
+  "issuedTo" : "lusis.jfrog.io",
+  "issuedBy" : "lusis.jfrog.io",
+  "issuedOn" : "2018-02-28T22:15:56.000Z",
+  "validUntil" : "2019-02-28T22:15:56.000Z",
+  "fingerprint" : "3B:01:D7:FA:62:AA:37:E7:4A:55:98:F0:A7:F8:3C:76:BC:3B:42:46:B7:AA:99:D5:C7:71:26:A4:2E:E0:1B:67"
+} ]

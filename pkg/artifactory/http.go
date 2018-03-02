@@ -64,7 +64,7 @@ func parseErrorBodytoError(b []byte) error {
 	compoundErr := errors.New("Artifactory error")
 	err := json.Unmarshal(b, e)
 	if err != nil {
-		return multierror.Append(err, fmt.Errorf("%s", b))
+		return multierror.Append(err, fmt.Errorf("Response Body: %s", b))
 	}
 	for _, res := range e.Errors {
 		if err := multierror.Append(compoundErr, fmt.Errorf("%d: %s", res.Status, res.Message)); err != nil {

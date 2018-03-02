@@ -69,13 +69,16 @@ func (r GetGlobalSystemReplicationConfigurationResponse) maxVersion() Version {
 }
 func (r GetGlobalSystemReplicationConfigurationResponse) deprecated() bool { return false }
 
-// GetRepositoriesResponse represents a GetRepositories response
-type GetRepositoriesResponse []struct {
+// RepositoryItemEntry is an entry in a GetRepositoriesResponse
+type RepositoryItemEntry struct {
 	Key         string `json:"key"`
 	Type        string `json:"type"`
 	Description string `json:"description"`
 	URL         string `json:"url"`
 }
+
+// GetRepositoriesResponse represents a GetRepositories response
+type GetRepositoriesResponse []RepositoryItemEntry
 
 // GetRepositoriesResponseTestData is test data for GetRepositoriesResponse
 const GetRepositoriesResponseTestData = "get_repositories.json"
@@ -84,49 +87,12 @@ func (r GetRepositoriesResponse) minVersion() Version { return versionMustParse(
 func (r GetRepositoriesResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
 func (r GetRepositoriesResponse) deprecated() bool    { return false }
 
-// RepositoryResponse is an interface for all repo types
-type RepositoryResponse interface {
-	GetType() string
-}
+// RepositoryConfigurationResponse represents a RepositoryConfiguration response
+type RepositoryConfigurationResponse struct{}
 
-// CommonRepositoryResponse represents the common elements in a repository  configuration response
-type CommonRepositoryResponse struct {
-	Key                      string `json:"key"`
-	PackageType              string `json:"packageType"`
-	RClass                   string `json:"rclass"`
-	Description              string `json:"description"`
-	Notes                    string `json:"notes"`
-	IncludesPattern          string `json:"includesPattern"`
-	ExcludesPattern          string `json:"excludesPattern"`
-	RepoLayoutRef            string `json:"repoLayoutRef"`
-	DebianTrivialLayout      bool   `json:"debianTrivialLayout,omitEmpty"`
-	EnableComposerSupport    bool   `json:"enableComposerSupport,omitempty"`
-	EnableNuGetSupport       bool   `json:"enableNuGetSupport,omitempty"`
-	EnableGemsSupport        bool   `json:"enableGemsSupport,omitempty"`
-	EnableNPMSupport         bool   `json:"enableNpmSupport,omitempty"`
-	EnableBowerSupport       bool   `json:"enableBowerSupport,omitempty"`
-	EnableCocoaPodsSupport   bool   `json:"enableCocoaPodsSupport,omitempty"`
-	EnableConanSupport       bool   `json:"enableConanSupport,omitempty"`
-	EnableDebianSupport      bool   `json:"enableDebianSupport,omitempty"`
-	EnablePyPiSupport        bool   `json:"enablePypiSupport,omitempty"`
-	EnablePuppetSupport      bool   `json:"enablePuppetSupport,omitempty"`
-	EnableDockerSupport      bool   `json:"enableDockerSupport,omitempty"`
-	EnableVagrantSupport     bool   `json:"enableVagrantSupport,omitempty"`
-	EnableGitLFSSupport      bool   `json:"enableGitLfsSupport,omitempty"`
-	EnableDistRepoSupport    bool   `json:"enableDistRepoSupport,omitempty"`
-	EnabledChefSupport       bool   `json:"enabledChefSupport,omitempty"`
-	DockerAPIVersion         string `json:"dockerApiVersion,omitempty"`
-	ForceNuGetAuthentication bool   `json:"forceNugetAuthentication,omitempty"`
-}
-
-// GetType returns the type of the repository
-func (r CommonRepositoryResponse) GetType() string {
-	return r.RClass
-}
-
-func (r CommonRepositoryResponse) minVersion() Version { return versionMustParse("2.3.0") }
-func (r CommonRepositoryResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
-func (r CommonRepositoryResponse) deprecated() bool    { return false }
+func (r RepositoryConfigurationResponse) minVersion() Version { return versionMustParse("2.3.0") }
+func (r RepositoryConfigurationResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
+func (r RepositoryConfigurationResponse) deprecated() bool    { return false }
 
 // LocalRepositoryConfigurationResponse represents a LocalRepositoryConfiguration response
 type LocalRepositoryConfigurationResponse struct {
@@ -305,3 +271,10 @@ func (r VirtualRepositoryConfigurationResponse) deprecated() bool { return false
 
 // VirtualRepositoryConfigurationResponseTestData is test data for VirtualRepositoryConfigurationResponse
 const VirtualRepositoryConfigurationResponseTestData = "virtual_repo.json"
+
+// DeleteRepositoryResponse represents a DeleteRepository response
+type DeleteRepositoryResponse struct{}
+
+func (r DeleteRepositoryResponse) minVersion() Version { return versionMustParse("2.3.0") }
+func (r DeleteRepositoryResponse) maxVersion() Version { return versionMustParse(CurrentVersion) }
+func (r DeleteRepositoryResponse) deprecated() bool    { return false }

@@ -31,8 +31,10 @@ func (c *Client) checkRequiredResponseVersion(r responses.VersionedResponse) err
 	if c.Config.APIVersion.GreaterThan(min.Version) && c.Config.APIVersion.LessThan(max.Version) {
 		return nil
 	}
-	return fmt.Errorf("Requested API version (%s) does not meet the requirements for this api call (min: %s, max: %s)",
-		c.Config.APIVersion.String(), min.String(), max.String())
+	return UnsupportedVersionError{
+		msg: fmt.Sprintf("Requested API version (%s) does not meet the requirements for this api call (min: %s, max: %s)",
+			c.Config.APIVersion.String(), min.String(), max.String()),
+	}
 }
 
 func (c *Client) checkRequiredRequestVersion(r requests.VersionedRequest) error {
@@ -45,6 +47,8 @@ func (c *Client) checkRequiredRequestVersion(r requests.VersionedRequest) error 
 	if c.Config.APIVersion.GreaterThan(min.Version) && c.Config.APIVersion.LessThan(max.Version) {
 		return nil
 	}
-	return fmt.Errorf("Requested API version (%s) does not meet the requirements for this api call (min: %s, max: %s)",
-		c.Config.APIVersion.String(), min.String(), max.String())
+	return UnsupportedVersionError{
+		msg: fmt.Sprintf("Requested API version (%s) does not meet the requirements for this api call (min: %s, max: %s)",
+			c.Config.APIVersion.String(), min.String(), max.String()),
+	}
 }

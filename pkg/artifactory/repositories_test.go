@@ -119,15 +119,103 @@ func TestGetRepositoryConfiguration(t *testing.T) {
 	}
 }
 
-func TestCreateRepository(t *testing.T) {}
+func TestCreateRepository(t *testing.T) {
+	badOpt := func() CreateOrUpdateRepositoryOption {
+		return func(m map[string]interface{}) error {
+			return fmt.Errorf("option setting failed")
+		}
+	}
+	testCases := map[string]struct {
+		code int
+		fail bool
+		opts []CreateOrUpdateRepositoryOption
+	}{
+		"pass no opts":      {200, false, nil},
+		"fail no opts":      {500, true, nil},
+		"fail with bad opt": {200, true, []CreateOrUpdateRepositoryOption{badOpt()}},
+		"pass with opt": {200, false, []CreateOrUpdateRepositoryOption{
+			RepositoryBoolOption("boolval", false),
+			RepositoryIntOption("intval", 1),
+			RepositoryStringOption("stringval", "string"),
+			RepositoryStringSliceOption("stringsliceval", []string{"foo", "bar"}),
+		}},
+		"fail with opt": {500, true, []CreateOrUpdateRepositoryOption{
+			RepositoryBoolOption("boolval", false),
+			RepositoryIntOption("intval", 1),
+			RepositoryStringOption("stringval", "string"),
+			RepositoryStringSliceOption("stringsliceval", []string{"foo", "bar"}),
+		}},
+	}
+	for desc, testCase := range testCases {
+		client, server, err := newTestClient([]byte(""), "application/json", testCase.code)
+		defer server.Close()
+		require.NoError(t, err)
+		err = client.CreateLocalRepository("testrepo", testCase.opts...)
+		if testCase.fail {
+			require.Error(t, err, desc)
+		} else {
+			require.NoError(t, err, desc)
+		}
+		err = client.CreateRemoteRepository("testrepo", "http://foo", testCase.opts...)
+		if testCase.fail {
+			require.Error(t, err, desc)
+		} else {
+			require.NoError(t, err, desc)
+		}
+		err = client.CreateVirtualRepository("testrepo", "generic", testCase.opts...)
+		if testCase.fail {
+			require.Error(t, err, desc)
+		} else {
+			require.NoError(t, err, desc)
+		}
+	}
+}
 
-func TestUpdateRepositoryConfiguration(t *testing.T) {}
+func TestUpdateRepositoryConfiguration(t *testing.T) {
+	badOpt := func() CreateOrUpdateRepositoryOption {
+		return func(m map[string]interface{}) error {
+			return fmt.Errorf("option setting failed")
+		}
+	}
+	testCases := map[string]struct {
+		code int
+		fail bool
+		opts []CreateOrUpdateRepositoryOption
+	}{
+		"pass no opts":      {200, false, nil},
+		"fail no opts":      {500, true, nil},
+		"fail with bad opt": {200, true, []CreateOrUpdateRepositoryOption{badOpt()}},
+		"pass with opt": {200, false, []CreateOrUpdateRepositoryOption{
+			RepositoryBoolOption("boolval", false),
+			RepositoryIntOption("intval", 1),
+			RepositoryStringOption("stringval", "string"),
+			RepositoryStringSliceOption("stringsliceval", []string{"foo", "bar"}),
+		}},
+		"fail with opt": {500, true, []CreateOrUpdateRepositoryOption{
+			RepositoryBoolOption("boolval", false),
+			RepositoryIntOption("intval", 1),
+			RepositoryStringOption("stringval", "string"),
+			RepositoryStringSliceOption("stringsliceval", []string{"foo", "bar"}),
+		}},
+	}
+	for desc, testCase := range testCases {
+		client, server, err := newTestClient([]byte(""), "application/json", testCase.code)
+		defer server.Close()
+		require.NoError(t, err)
+		err = client.UpdateRepositoryConfiguration("testrepo", testCase.opts...)
+		if testCase.fail {
+			require.Error(t, err, desc)
+		} else {
+			require.NoError(t, err, desc)
+		}
+	}
+}
 
 func TestDeleteRepository(t *testing.T) {
 	client, server, err := newTestClient([]byte(""), "text/plain", 200)
 	defer server.Close()
 	require.NoError(t, err)
-	failClient, failServer, failErr := newTestClient([]byte(""), "text/plain", 500)
+	failClient, failServer, failErr := newTestClient([]byte("error"), "text/plain", 500)
 	defer failServer.Close()
 	require.NoError(t, failErr)
 	err = client.DeleteRepository("foo")

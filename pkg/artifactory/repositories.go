@@ -1,6 +1,7 @@
 package artifactory
 
 import (
+	"bytes"
 	"encoding/json"
 
 	multierror "github.com/hashicorp/go-multierror"
@@ -47,7 +48,7 @@ func (c *Client) GetRepositories() (Repositories, error) {
 		return nil, err
 	}
 	r := Repositories{}
-	res, err := c.httpGet("/repositories", requestJSON(), requestExpects(200))
+	res, err := c.httpGet("/repositories", requestJSON())
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +71,7 @@ func (c *Client) GetRepositoryConfiguration(repo string) (RepositoryConfiguratio
 		"virtual": &VirtualRepository{},
 	}
 	r := unknownRepository{}
-	res, err := c.httpGet("repositories/"+repo, requestJSON(), requestExpects(200))
+	res, err := c.httpGet("repositories/"+repo, requestJSON())
 	if err != nil {
 		return nil, err
 	}
@@ -121,18 +122,132 @@ func (c *Client) GetVirtualRepositoryConfiguration(repo string) (*VirtualReposit
 	return i.(*VirtualRepository), nil
 }
 
-// CreateRepository creates a repository
-func (c *Client) CreateRepository() {}
+// CreateOrUpdateRepositoryOption is a functional option type for setting optional fields when creating a repository
+type CreateOrUpdateRepositoryOption func(map[string]interface{}) error
+
+// RepositoryIntOption sets a key's value to an int
+func RepositoryIntOption(k string, v int) CreateOrUpdateRepositoryOption {
+	return func(m map[string]interface{}) error {
+		m[k] = v
+		return nil
+	}
+}
+
+// RepositoryStringOption sets a key's value to a string
+func RepositoryStringOption(k, v string) CreateOrUpdateRepositoryOption {
+	return func(m map[string]interface{}) error {
+		m[k] = v
+		return nil
+	}
+}
+
+// RepositoryStringSliceOption sets a key's value to a slice of strings
+func RepositoryStringSliceOption(k string, v []string) CreateOrUpdateRepositoryOption {
+	return func(m map[string]interface{}) error {
+		m[k] = v
+		return nil
+	}
+}
+
+// RepositoryBoolOption sets a key's value to a bool
+func RepositoryBoolOption(k string, v bool) CreateOrUpdateRepositoryOption {
+	return func(m map[string]interface{}) error {
+		m[k] = v
+		return nil
+	}
+}
+
+// CreateLocalRepository creates a repository
+func (c *Client) CreateLocalRepository(repoName string, opts ...CreateOrUpdateRepositoryOption) error {
+	if err := c.checkRequiredRequestVersion(requests.CreateLocalRepositoryRequest{}); err != nil {
+		return err
+	}
+	repo := map[string]interface{}{}
+
+	for _, o := range opts {
+		if err := o(repo); err != nil {
+			return err
+		}
+	}
+	repo["rclass"] = "local"
+	data, err := json.Marshal(repo)
+	if err != nil {
+		return &MarshalError{msg: multierror.Append(errEncoding, err).Error()}
+	}
+	_, err = c.httpPut("repositories/"+repoName, contentType("application/json"), withBody(bytes.NewReader(data)))
+	return err
+}
+
+// CreateRemoteRepository creates a repository
+func (c *Client) CreateRemoteRepository(repoName, repoURL string, opts ...CreateOrUpdateRepositoryOption) error {
+	if err := c.checkRequiredRequestVersion(requests.CreateRemoteRepositoryRequest{}); err != nil {
+		return err
+	}
+	repo := map[string]interface{}{}
+
+	for _, o := range opts {
+		if err := o(repo); err != nil {
+			return err
+		}
+	}
+	repo["rclass"] = "remote"
+	repo["url"] = repoURL
+	data, err := json.Marshal(repo)
+	if err != nil {
+		return &MarshalError{msg: multierror.Append(errEncoding, err).Error()}
+	}
+	_, err = c.httpPut("repositories/"+repoName, contentType("application/json"), withBody(bytes.NewReader(data)))
+	return err
+}
+
+// CreateVirtualRepository creates a repository
+func (c *Client) CreateVirtualRepository(repoName, packageType string, opts ...CreateOrUpdateRepositoryOption) error {
+	if err := c.checkRequiredRequestVersion(requests.CreateVirtualRepositoryRequest{}); err != nil {
+		return err
+	}
+	repo := map[string]interface{}{}
+
+	for _, o := range opts {
+		if err := o(repo); err != nil {
+			return err
+		}
+	}
+	repo["rclass"] = "virtual"
+	repo["packageType"] = packageType
+	data, err := json.Marshal(repo)
+	if err != nil {
+		return &MarshalError{msg: multierror.Append(errEncoding, err).Error()}
+	}
+	_, err = c.httpPut("repositories/"+repoName, contentType("application/json"), withBody(bytes.NewReader(data)))
+	return err
+}
 
 // UpdateRepositoryConfiguration updates a repo configuration
-func (c *Client) UpdateRepositoryConfiguration() {}
+func (c *Client) UpdateRepositoryConfiguration(repoName string, opts ...CreateOrUpdateRepositoryOption) error {
+	if err := c.checkRequiredRequestVersion(requests.UpdateRepositoryConfigurationRequest{}); err != nil {
+		return err
+	}
+	repo := map[string]interface{}{}
+
+	for _, o := range opts {
+		if err := o(repo); err != nil {
+			return err
+		}
+	}
+	data, err := json.Marshal(repo)
+	if err != nil {
+		return &MarshalError{msg: multierror.Append(errEncoding, err).Error()}
+	}
+	_, err = c.httpPost("repositories/"+repoName, contentType("application/json"), withBody(bytes.NewReader(data)))
+	return err
+}
 
 // DeleteRepository deletes a repo
 func (c *Client) DeleteRepository(repo string) error {
 	if err := c.checkRequiredResponseVersion(responses.DeleteRepositoryResponse{}); err != nil {
 		return err
 	}
-	return c.httpDelete("repositories/"+repo, requestExpects(200))
+	return c.httpDelete("repositories/" + repo)
 }
 
 // CalculateOption is a functional option type for passing options to various Calculate requests
@@ -165,7 +280,7 @@ func (c *Client) CalculateYumRepositoryMetadata(repoKey string, additionalOpts .
 			return err
 		}
 	}
-	opts = append(opts, requestExpects(200))
+	opts = append(opts)
 	_, err := c.httpPost("yum/"+repoKey, opts...)
 	return err
 }
@@ -175,7 +290,7 @@ func (c *Client) CalculateNuGetRepositoryMetadata(repoKey string) error {
 	if err := c.checkRequiredRequestVersion(requests.CalculateNuGetMetadataRequest{}); err != nil {
 		return err
 	}
-	_, err := c.httpPost("nuget/"+repoKey+"/reindex", requestExpects(200))
+	_, err := c.httpPost("nuget/" + repoKey + "/reindex")
 	return err
 }
 
@@ -184,7 +299,7 @@ func (c *Client) CalculateNPMRepositoryMetadata(repoKey string) error {
 	if err := c.checkRequiredRequestVersion(requests.CalculateNPMMetadataRequest{}); err != nil {
 		return err
 	}
-	_, err := c.httpPost("npm/"+repoKey+"/reindex", requestExpects(200))
+	_, err := c.httpPost("npm/" + repoKey + "/reindex")
 	return err
 }
 
@@ -199,7 +314,7 @@ func (c *Client) CalculateMavenIndex(additionalOpts ...CalculateOption) error {
 			return err
 		}
 	}
-	opts = append(opts, requestExpects(200))
+	opts = append(opts)
 	_, err := c.httpPost("maven", opts...)
 	return err
 }
@@ -215,7 +330,7 @@ func (c *Client) CalculateMavenMetadata(path string, additionalOpts ...Calculate
 			return err
 		}
 	}
-	opts = append(opts, requestExpects(200))
+	opts = append(opts)
 	_, err := c.httpPost("maven/calculateMetadata/"+path, opts...)
 	return err
 }
@@ -231,7 +346,7 @@ func (c *Client) CalculateDebianRepositoryMetadata(repoKey string, additionalOpt
 			return err
 		}
 	}
-	opts = append(opts, requestExpects(200))
+	opts = append(opts)
 	_, err := c.httpPost("deb/reindex/"+repoKey, opts...)
 	return err
 }
@@ -247,7 +362,7 @@ func (c *Client) CalculateOpkgRepostitoryMetadata(repoKey string, additionalOpts
 			return err
 		}
 	}
-	opts = append(opts, requestExpects(200))
+	opts = append(opts)
 	_, err := c.httpPost("opkg/reindex/"+repoKey, opts...)
 	return err
 }
@@ -257,7 +372,7 @@ func (c *Client) CalculateBowerIndex(repoKey string) error {
 	if err := c.checkRequiredRequestVersion(requests.CalculateBowerIndexRequest{}); err != nil {
 		return err
 	}
-	_, err := c.httpPost("bower/"+repoKey+"/reindex", requestExpects(200))
+	_, err := c.httpPost("bower/" + repoKey + "/reindex")
 	return err
 }
 
@@ -266,6 +381,6 @@ func (c *Client) CalculateHelmChartIndex(repoKey string) error {
 	if err := c.checkRequiredRequestVersion(requests.CalculateHelmChartIndexRequest{}); err != nil {
 		return err
 	}
-	_, err := c.httpPost("helm/"+repoKey+"/reindex", requestExpects(200))
+	_, err := c.httpPost("helm/" + repoKey + "/reindex")
 	return err
 }

@@ -104,7 +104,7 @@ type LocalRepositoryConfigurationResponse struct {
 	IncludesPattern              string   `json:"includesPattern"`
 	ExcludesPattern              string   `json:"excludesPattern"`
 	RepoLayoutRef                string   `json:"repoLayoutRef"`
-	DebianTrivialLayout          bool     `json:"debianTrivialLayout,omitEmpty"`
+	DebianTrivialLayout          bool     `json:"debianTrivialLayout,omitempty"`
 	EnableComposerSupport        bool     `json:"enableComposerSupport,omitempty"`
 	EnableNuGetSupport           bool     `json:"enableNuGetSupport,omitempty"`
 	EnableGemsSupport            bool     `json:"enableGemsSupport,omitempty"`
@@ -159,7 +159,7 @@ type RemoteRepositoryConfigurationResponse struct {
 	IncludesPattern                   string                 `json:"includesPattern"`
 	ExcludesPattern                   string                 `json:"excludesPattern"`
 	RepoLayoutRef                     string                 `json:"repoLayoutRef"`
-	DebianTrivialLayout               bool                   `json:"debianTrivialLayout,omitEmpty"`
+	DebianTrivialLayout               bool                   `json:"debianTrivialLayout,omitempty"`
 	EnableComposerSupport             bool                   `json:"enableComposerSupport,omitempty"`
 	EnableNuGetSupport                bool                   `json:"enableNuGetSupport,omitempty"`
 	EnableGemsSupport                 bool                   `json:"enableGemsSupport,omitempty"`
@@ -209,7 +209,7 @@ type RemoteRepositoryConfigurationResponse struct {
 	PropagateQueryParams              bool                   `json:"propagateQueryParams"`
 	PropertySets                      []string               `json:"propertySets"`
 	RejectInvalidJars                 bool                   `json:"rejectInvalidJars"`
-	RetrievalCAchePeriodSecs          int                    `json:"retrievalCachePeriodSecs"`
+	RetrievalCachePeriodSecs          int                    `json:"retrievalCachePeriodSecs"`
 	ShareConfiguration                bool                   `json:"shareConfiguration"`
 	SocketTimeoutMillis               int                    `json:"socketTimeoutMillis"`
 	StoreArtifactsLocally             bool                   `json:"storeArtifactsLocally"`
@@ -237,7 +237,7 @@ type VirtualRepositoryConfigurationResponse struct {
 	IncludesPattern                               string   `json:"includesPattern"`
 	ExcludesPattern                               string   `json:"excludesPattern"`
 	RepoLayoutRef                                 string   `json:"repoLayoutRef"`
-	DebianTrivialLayout                           bool     `json:"debianTrivialLayout,omitEmpty"`
+	DebianTrivialLayout                           bool     `json:"debianTrivialLayout,omitempty"`
 	EnableComposerSupport                         bool     `json:"enableComposerSupport,omitempty"`
 	EnableNuGetSupport                            bool     `json:"enableNuGetSupport,omitempty"`
 	EnableGemsSupport                             bool     `json:"enableGemsSupport,omitempty"`
@@ -261,6 +261,7 @@ type VirtualRepositoryConfigurationResponse struct {
 	ExternalDependenciesEnabled                   bool     `json:"externalDependenciesEnabled"`
 	ArtifactoryRequestsCanRetrieveRemoteArtifacts bool     `json:"artifactoryRequestsCanRetrieveRemoteArtifacts"`
 	PomRepositoryReferencesCleanupPolicy          string   `json:"pomRepositoryReferencesCleanupPolicy"`
+	DefaultDeploymentRepo                         string   `json:"defaultDeploymentRepo,omitempty"`
 }
 
 func (r VirtualRepositoryConfigurationResponse) minVersion() Version { return versionMustParse("2.3.0") }

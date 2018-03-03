@@ -2,3 +2,5 @@
 .env.local.leave
 xmlfiles/
 bin/
+debug
+debug.test

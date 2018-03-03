@@ -11,6 +11,8 @@ import (
 	httpclient "github.com/lusis/go-artifactory/pkg/httpclient"
 )
 
+const contentTypeJSON = "application/json"
+
 func addHeader(k, v string) httpclient.RequestOption {
 	return httpclient.AddHeaders(map[string]string{k: v})
 }
@@ -64,29 +66,48 @@ func parseErrorBodytoError(b []byte) error {
 	compoundErr := errors.New("Artifactory error")
 	err := json.Unmarshal(b, e)
 	if err != nil {
-		return multierror.Append(err, fmt.Errorf("Response Body: %s", b))
+		return multierror.Append(err, fmt.Errorf("Error parsing response body: %s", b))
 	}
+	errs := []error{}
 	for _, res := range e.Errors {
-		if err := multierror.Append(compoundErr, fmt.Errorf("%d: %s", res.Status, res.Message)); err != nil {
-			return err
+		errs = append(errs, fmt.Errorf("%d: %s", res.Status, res.Message))
+	}
+	return multierror.Append(compoundErr, errs...)
+}
+
+func parseHTTPresp(r *httpclient.Response, e error) ([]byte, error) {
+	// if we have an explict error here, return it
+	if e != nil {
+		return nil, e
+	}
+	// this parsing logic is artifactory specific
+	if r.Status >= 400 {
+		if r.Body == nil || len(r.Body) == 0 {
+			// so we have no body but we got a non-2xx/3xx response code.
+			// lets report as much information as possible
+			return nil, multierror.Append(e, fmt.Errorf("Got an error but no body"),
+				fmt.Errorf("Status code: %d", r.Status))
+
+		}
+		if r.Headers.Get("Content-Type") != contentTypeJSON {
+			// okay we don't have a content type of json so let's return the body
+
+			return nil, multierror.Append(e, fmt.Errorf("Status code: %d", r.Status), fmt.Errorf("Body: %s", r.Body))
+		}
+		if r.Body != nil {
+			return nil, parseErrorBodytoError(r.Body)
 		}
 	}
-	return compoundErr
+	return r.Body, nil
 }
+
 func (rc *Client) httpGet(path string, opts ...httpclient.RequestOption) ([]byte, error) {
 	authOpt, authErr := rc.authWrap()
 	if authErr != nil {
 		return nil, authErr
 	}
 	authOpt = append(authOpt, opts...)
-	resp, err := httpclient.Get(rc.makeAPIPath(path), authOpt...)
-	if err != nil {
-		if resp.Body != nil {
-			return nil, parseErrorBodytoError(resp.Body)
-		}
-		return nil, err
-	}
-	return resp.Body, nil
+	return parseHTTPresp(httpclient.Get(rc.makeAPIPath(path), authOpt...))
 }
 
 func (rc *Client) httpPost(path string, opts ...httpclient.RequestOption) ([]byte, error) {
@@ -95,14 +116,7 @@ func (rc *Client) httpPost(path string, opts ...httpclient.RequestOption) ([]byt
 		return nil, authErr
 	}
 	opts = append(opts, authOpt...)
-	resp, err := httpclient.Post(rc.makeAPIPath(path), opts...)
-	if err != nil {
-		if resp.Body != nil {
-			return nil, parseErrorBodytoError(resp.Body)
-		}
-		return nil, err
-	}
-	return resp.Body, nil
+	return parseHTTPresp(httpclient.Post(rc.makeAPIPath(path), opts...))
 }
 
 func (rc *Client) httpPut(path string, opts ...httpclient.RequestOption) ([]byte, error) {
@@ -111,15 +125,7 @@ func (rc *Client) httpPut(path string, opts ...httpclient.RequestOption) ([]byte
 		return nil, authErr
 	}
 	opts = append(opts, authOpt...)
-	resp, err := httpclient.Put(rc.makeAPIPath(path), opts...)
-	if err != nil {
-		if resp.Body != nil {
-			return nil, parseErrorBodytoError(resp.Body)
-		}
-		return nil, err
-	}
-
-	return resp.Body, err
+	return parseHTTPresp(httpclient.Put(rc.makeAPIPath(path), opts...))
 }
 
 func (rc *Client) httpDelete(path string, opts ...httpclient.RequestOption) error {
@@ -128,14 +134,8 @@ func (rc *Client) httpDelete(path string, opts ...httpclient.RequestOption) erro
 		return authErr
 	}
 	opts = append(opts, authOpt...)
-	resp, err := httpclient.Delete(rc.makeAPIPath(path), opts...)
-	if err != nil {
-		if resp.Body != nil {
-			return parseErrorBodytoError(resp.Body)
-		}
-		return err
-	}
-	return nil
+	_, err := parseHTTPresp(httpclient.Delete(rc.makeAPIPath(path), opts...))
+	return err
 }
 
 func (rc *Client) authWrap() ([]httpclient.RequestOption, error) {

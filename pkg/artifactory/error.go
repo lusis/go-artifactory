@@ -39,3 +39,13 @@ type AuthError struct {
 func (e *AuthError) Error() string {
 	return e.msg
 }
+
+// UnsupportedVersionError is an error type for api calls using an unsupported version
+type UnsupportedVersionError struct {
+	msg string
+}
+
+// Error returns the error message
+func (e UnsupportedVersionError) Error() string {
+	return e.msg
+}

@@ -114,7 +114,7 @@ func (c *Client) AQLSearch(query string) (*AQLSearchResults, error) {
 		return nil, err
 	}
 	body := strings.NewReader(query)
-	res, err := c.httpPost("search/aql", requestExpects(200), accept("application/json"), withBody(body), contentType("text/plain"))
+	res, err := c.httpPost("search/aql", accept("application/json"), withBody(body), contentType("text/plain"))
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +133,7 @@ func (c *Client) ArtifactSearch(p map[string]string) (*ArtifactSearchResults, er
 	if err := c.checkRequiredResponseVersion(responses.ArtifactSearchResponse{}); err != nil {
 		return nil, err
 	}
-	res, err := c.httpGet("search/artifact", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/artifact", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +152,7 @@ func (c *Client) ArchiveEntriesSearch(p map[string]string) (*ArchiveEntriesSearc
 	if err := c.checkRequiredResponseVersion(responses.ArchiveEntriesSearchResponse{}); err != nil {
 		return nil, err
 	}
-	res, err := c.httpGet("search/archive", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/archive", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +172,7 @@ func (c *Client) GAVCSearch(p map[string]string) (*GAVCSearchResults, error) {
 	if err := c.checkRequiredResponseVersion(responses.GAVCSearchResponse{}); err != nil {
 		return nil, err
 	}
-	res, err := c.httpGet("search/gavc", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/gavc", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +192,7 @@ func (c *Client) PropertySearch(p map[string]string) (*PropertySearchResults, er
 	if err := c.checkRequiredResponseVersion(responses.PropertySearchResponse{}); err != nil {
 		return nil, err
 	}
-	res, err := c.httpGet("search/prop", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/prop", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -212,7 +212,7 @@ func (c *Client) ChecksumSearch(p map[string]string) (*ChecksumSearchResults, er
 	if err := c.checkRequiredResponseVersion(responses.ChecksumSearchResponse{}); err != nil {
 		return nil, err
 	}
-	res, err := c.httpGet("search/checksum", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/checksum", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func (c *Client) BadChecksumSearch(p map[string]string) (*BadChecksumSearchResul
 	if err := c.checkRequiredResponseVersion(responses.BadChecksumSearchResponse{}); err != nil {
 		return nil, err
 	}
-	res, err := c.httpGet("search/badChecksum", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/badChecksum", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -252,7 +252,7 @@ func (c *Client) ArtifactsNotDownloadedSinceSearch(p map[string]string) (*Artifa
 	if err := c.checkRequiredResponseVersion(responses.ArtifactsNotDownloadedSinceSearchResponse{}); err != nil {
 		return nil, err
 	}
-	res, err := c.httpGet("search/usage", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/usage", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -272,7 +272,7 @@ func (c *Client) ArtifactsWithDateInRangeSearch(p map[string]string) (*Artifacts
 	if err := c.checkRequiredResponseVersion(responses.ArtifactsWithDataInRangeSearchResponse{}); err != nil {
 		return nil, err
 	}
-	res, err := c.httpGet("search/dates", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/dates", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -292,7 +292,7 @@ func (c *Client) ArtifactsCreatedInDateRangeSearch(p map[string]string) (*Artifa
 	if err := c.checkRequiredResponseVersion(responses.ArtifactsCreatedInDateRangeSearchResponse{}); err != nil {
 		return nil, err
 	}
-	res, err := c.httpGet("search/created", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/created", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -313,7 +313,7 @@ func (c *Client) PatternSearch(p string) (*PatternSearchResults, error) {
 	qp := map[string]string{
 		"pattern": p,
 	}
-	res, err := c.httpGet("search/pattern", requestExpects(200), requestJSON(), queryParams(qp))
+	res, err := c.httpGet("search/pattern", requestJSON(), queryParams(qp))
 	if err != nil {
 		return nil, err
 	}
@@ -333,7 +333,7 @@ func (c *Client) BuildsForDependencySearch(p map[string]string) (*BuildsForDepen
 		return nil, err
 	}
 
-	res, err := c.httpGet("search/dependency", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/dependency", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -353,7 +353,7 @@ func (c *Client) LicenseSearch(p map[string]string) (*LicenseSearchResults, erro
 		return nil, err
 	}
 
-	res, err := c.httpGet("search/license", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/license", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -373,7 +373,7 @@ func (c *Client) ArtifactVersionSearch(p map[string]string) (*ArtifactVersionSea
 		return nil, err
 	}
 
-	res, err := c.httpGet("search/versions", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/versions", requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -393,7 +393,7 @@ func (c *Client) ArtifactLatestVersionBasedOnLayoutSearch(p map[string]string) (
 		return "", err
 	}
 
-	res, err := c.httpGet("search/versions", requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/versions", requestJSON(), queryParams(p))
 	if err != nil {
 		return "", err
 	}
@@ -409,7 +409,7 @@ func (c *Client) ArtifactLatestBasedOnPropertiesSearch(path string, p map[string
 		return nil, err
 	}
 
-	res, err := c.httpGet("search/versions/"+path, requestExpects(200), requestJSON(), queryParams(p))
+	res, err := c.httpGet("search/versions/"+path, requestJSON(), queryParams(p))
 	if err != nil {
 		return nil, err
 	}
@@ -463,7 +463,7 @@ func (c *Client) BuildArtifactsSearch(buildname, buildnumber string, opts ...Bui
 	if err != nil {
 		return nil, &MarshalError{msg: multierror.Append(errEncoding, err).Error()}
 	}
-	res, err := c.httpPost("search/buildArtifacts", requestExpects(200), requestJSON(), withBody(bytes.NewReader(data)))
+	res, err := c.httpPost("search/buildArtifacts", requestJSON(), withBody(bytes.NewReader(data)))
 	if err != nil {
 		return nil, err
 	}
@@ -482,7 +482,7 @@ func (c *Client) ListDockerRepositories(r string) (*ListDockerRepositoriesResult
 		return nil, err
 	}
 	searchResults := &ListDockerRepositoriesResults{}
-	res, err := c.httpGet("api/docker/"+r+"/v2/_catalog", requestExpects(200), requestJSON())
+	res, err := c.httpGet("api/docker/"+r+"/v2/_catalog", requestJSON())
 	if err != nil {
 		return nil, err
 	}
@@ -501,7 +501,7 @@ func (c *Client) ListDockerTags(r, i string) (*ListDockerTagsSearchResults, erro
 		return nil, err
 	}
 	searchResults := &ListDockerTagsSearchResults{}
-	res, err := c.httpGet("api/docker/"+r+"/v2/"+i+"/tags/list", requestExpects(200), requestJSON())
+	res, err := c.httpGet("api/docker/"+r+"/v2/"+i+"/tags/list", requestJSON())
 	if err != nil {
 		return nil, err
 	}

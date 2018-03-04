@@ -19,6 +19,6 @@ func testShouldRunIntegrationTests() bool {
 }
 
 func TestShouldRun(t *testing.T) {
-	spew.Dump(os.Environ)
+	spew.Dump(os.Environ())
 	fmt.Printf("%t\n", testShouldRunIntegrationTests())
 }

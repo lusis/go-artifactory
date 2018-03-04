@@ -7,7 +7,7 @@ else
 	GOPATH := $(GOPATH):$(TRAVIS_BUILD_DIR)
 endif
 
-all: bindata clean lint test artifactory $(BINLIST)
+all: clean lint test artifactory $(BINLIST)
 
 linux: export GOOS=linux
 linux: all linux-zip

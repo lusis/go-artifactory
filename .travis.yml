@@ -1,11 +1,12 @@
 language: go
-
 go:
-  - 1.8.x
-  - 1.9.x
-  - "1.10.x"
-  - tip
-
+- 1.8.x
+- 1.9.x
+- 1.10.x
+- tip
 script:
-  - make all
-
+- make all
+env:
+  global:
+  - secure: WfxpFGPxRLPQQmNkHBdIQhy/o1bFLg4coqUDhoN1EkwxR+cBGlw9jkeIxL9KJHuNx5HAppY672lkv+mvN2Wfk71riGKkiVbhe1cBHs6J/FS+gr3UaBQbL3sjN8CUhnMgg8MAloI6kPORJnN/tgfM6/bpp5msCj+n/VeDZG2aLQFkT+5+3W1RWu7UcFczVhxk9ckyIwu+1iaOtotnqVz6b2axPUfcZrIxG7cLdgdRumDHknoU2KaRVnTFZ/OhqyIc0IlmAeGOCoH0D8pMeGGD0mfPYrx21bMUm2TGuX98qQiGtwoJ4hOiZTUcEddjDjEQsR4FWZqGojmKqGUpIwMKnqKHCR9EHmCF5qfHp59UTnMPeBhC2DMnw91m1jI1fyA0vp1oro8YwG3onVDrsfwIdm/dyhs3R5wUYcvsvzdFLswl0o0DwG8LDAAvXBa9hHCvrXb4Lyikf0sleXsQ/CNOpOlgCmIxmDs00mgdlXr6wv/4/sTIp/ywoZEgBn94smyIFD+UM0ZQq9LmSj3r+AFMpNEeH3RxfBsbMuTAIqLXjtY1bd38u9YtcXIDuJwPHr8O0of8Ihl+X/HWmjU8YQtsdpXPr8oH6ACT4f15pyzbu1E7Vb0ISKhBdT7ZpGImZCQbizBsyrme0lOKH/PkTUUOUOxJYaglyuIKDkmveGaUszA=
+  - secure: N5ikYliay7+cxcOigh/WOys4DTvF9SG90ENPklSXbwY3pFMaqCBlI28PlzgQRZfyq4NRvIzjxCI+kgWCOA3rRBoWRQSSyHZBuZB7gEnzGsrOawSaiseOAP4HTqUSTLPAfmrkqWbQtIBUDKEYMSRwA03sgsAcQHeVevgpiko+Cj7xj+ygTHXMxzNU2mxLDXcSnNuEVPiB67jzUoj3Iyk7x0PRlVRk0YapJuxusjkKxgzknQhVtqmpxPxNu+y7n4Tlf16MewT2KiaCYvSLc0MGrZdTUO+mL4UXcqDiw8OqXnFwI23ssVF3GZ/1yVQiB16SOS8Se9lA7tXR5Opr7Ll9H86zec5rc9YfHNphfi6NG3zgCUwFnHi3aO2RYgBuww+3r9rb8pSJJt1cZLpITHEyEjrYImN23OrDRALn9ufZ5cjkruxKIqgo8yGofNzt/Nt5t2IieA8DhkGsukh/RO4uKLAFmcvLeVtKJRFNRLB2yxwZ1ac4rTOAeJ5K7QUS/twcigkalYDduFAijdyrUdGxkYC629NuYTyyrHqM5KPrGg2mSdhTrizADrC9XQZecALSv3mjD9LCoykuJo0QArxFw96eptYMk8+UnhYK4kl7pd4r4JJSOE8RsaqgONDDo1K4wv2R2cjm8fRIL6dU/H6xDpu/w76UjTAzf/6KHFoc88Q=

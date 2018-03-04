@@ -39,7 +39,7 @@ linux-zip:
 
 bindata:
 	@go get -u github.com/jteeuwen/go-bindata/...
-	@cd ./pkg/artifactory/responses/testdata;  go-bindata -pkg testdata -o testdata.go *.json *.txt; cd -
+	@cd ${GOPATH}/src/github.com/lusis/go-artifactory/pkg/artifactory/responses/testdata;  go-bindata -pkg testdata -o testdata.go *.json *.txt; cd -
 
 clean:
 	@rm -rf bin/ pkg/

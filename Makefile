@@ -1,12 +1,6 @@
 BINARIES := $(shell find cmd/ -maxdepth 1 -type d -name 'artif-*' -exec sh -c 'echo $(basename {})' \;)
 BINLIST := $(subst cmd/,,$(BINARIES))
 
-ifeq ($(TRAVIS_BUILD_DIR),)
-	GOPATH := $(GOPATH)
-else
-	GOPATH := $(GOPATH):$(TRAVIS_BUILD_DIR)
-endif
-
 all: clean lint test artifactory $(BINLIST)
 
 linux: export GOOS=linux
@@ -20,6 +14,7 @@ lint:
 
 test:
 	@script/test
+	@script/coverage
 
 artifactory:
 	@echo "Building for $(GOOS)"

@@ -16,8 +16,8 @@ gometalinter \
     --enable=gosimple \
     --enable=errcheck \
     --tests \
-    --deadline=30s \
+    --deadline=60s \
     --exclude=/usr/local/go/src/ \
     --exclude=pkg/artifactory/responses/testdata \
     --exclude=pkg/artifactory/requests/testdata \
-    ./pkg/... ./artifactory.v54 ./artifactory.v51
+    ./artifactory.v54 ./artifactory.v51 ./cmd/... ./pkg/...

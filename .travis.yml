@@ -5,7 +5,9 @@ go:
 - 1.10.x
 - tip
 script:
-- make all
+- script/lint
+- script/test
+- script/coverage
 env:
   global:
   - secure: MhSN72uI6JxWLQMN6137IAyF1oWyihpCexaSi03PYVb/qd+aGYNPXEqyHYQUY9ZE9CpimBPmLFAYkFKPYt25roVjEuI/vs63rD8nvpdMXmvU8iwM4+y3/CQ2PDHvZIrfwOaBNOtzktxSY4FLECL0WalkqCOdW1pIf5C+JH8ZtY5B+wsVtWbtKe8CqINzD5xw/eAqG4n79sTQTrUCxI6A3IV/3MEKodAnbvozwnsd/RrzqUaapDp+ZAZbkqgrl6tq/wMfjbyl+81duDgiy9pp3f0a8aTlDm9cMVUWA9bS5QhHR0oxtX+er9Dbfq2vKtmeayr2RNu7rscdLh1/cnJRoHr3ViYgLjDiCopbeiH11PLooaVSpPIqssCk/AEQNM25bQ2Dvs1cxeHNOI9nr8/SKpgblKBm+Jku0c/q3odZj834l0wvCZlo2oSCojGAz5IQl3TWr1DcxpATTJOIVXTsgQTDCHyO8QTTM76XfXlVe53mFk4DzG1i1BJPN5Puihz1l0eaTueFQkhpIHKbL8YWGoHXbqbd2H8Av9XhYuOTZ/SDpasp3aO4dn7cG0hRqVsFYE7DcCiXirGV+hFL8sa9uW6n3jr1LjoEX27V1FSpYM9OuDlwfbOmwdx2nfL+yuyDvI6lCjn/DjYSxrqp53GQdisrAsmTxfL4LhoMaNR5N9Q=

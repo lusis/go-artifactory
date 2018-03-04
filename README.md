@@ -1,7 +1,12 @@
 # go-artifactory
 
 [![Build Status](https://travis-ci.org/lusis/go-artifactory.svg?branch=master)](https://travis-ci.org/lusis/go-artifactory)
+
 Go library and utilities for interacting with [Artifactory](http://jfrog.com)
+
+Thanks to [JFrog](http://jfrog.com) for providing an Artifactory Cloud installation that can be used for testing.
+
+![Powered By Artifactory](Powered-by-artifactory_01.png?raw=true "Powered by Artifactory")
 
 ## Structure change notice
 

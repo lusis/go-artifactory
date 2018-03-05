@@ -47,11 +47,13 @@ func testStashEnvVars(t *testing.T) {
 		"ARTIFACTORY_USERNAME",
 		"ARTIFACTORY_PASSWORD",
 		"ARTIFACTORY_VERSION",
+		"ARTIFACTORY_DEBUG",
 	} {
 		if os.Getenv(v) != "" {
 			//stash it
 			toStash := os.Getenv(v)
 			_ = os.Setenv("TST_"+v, toStash)
+			// clear it for the tests
 			_ = os.Unsetenv(v)
 		}
 	}
@@ -64,11 +66,16 @@ func testUnStashEnvVars(t *testing.T) {
 		"ARTIFACTORY_USERNAME",
 		"ARTIFACTORY_PASSWORD",
 		"ARTIFACTORY_VERSION",
+		"ARTIFACTORY_DEBUG",
 	} {
 		if os.Getenv("TST_"+v) != "" {
-			//stash it
+			//unstash it
 			fromStash := os.Getenv("TST_" + v)
+			// clear existing
+			_ = os.Unsetenv(v)
+			// set from stash
 			_ = os.Setenv(v, fromStash)
+			// clear stash
 			_ = os.Unsetenv("TST_" + v)
 		}
 	}

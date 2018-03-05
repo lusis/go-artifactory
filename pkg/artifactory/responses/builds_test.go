@@ -23,17 +23,20 @@ func TestBuildsResponses(t *testing.T) {
 
 	for _, testCase := range systemResponsesTestCases {
 		for k, v := range testCase {
-			data, err := testdata.GetBytes(v)
-			require.NoError(t, err)
-			placeholder := make(map[string]interface{})
-			_ = json.Unmarshal(data, &placeholder)
-			config := newMSDecoderConfig()
-			config.Result = k
-			decoder, newErr := mapstructure.NewDecoder(config)
-			require.NoError(t, newErr)
-			dErr := decoder.Decode(placeholder)
-			require.NoError(t, dErr, fmt.Sprintf("should parse %s", v))
-			require.Implements(t, (*VersionedResponse)(nil), k)
+			t.Run(v,
+				func(*testing.T) {
+					data, err := testdata.GetBytes(v)
+					require.NoError(t, err)
+					placeholder := make(map[string]interface{})
+					_ = json.Unmarshal(data, &placeholder)
+					config := newMSDecoderConfig()
+					config.Result = k
+					decoder, newErr := mapstructure.NewDecoder(config)
+					require.NoError(t, newErr)
+					dErr := decoder.Decode(placeholder)
+					require.NoError(t, dErr, fmt.Sprintf("should parse %s", v))
+					require.Implements(t, (*VersionedResponse)(nil), k)
+				})
 		}
 	}
 }

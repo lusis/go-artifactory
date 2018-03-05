@@ -36,17 +36,20 @@ func TestGetRepositories(t *testing.T) {
 	}
 
 	for desc, testCase := range cases {
-		client, server, err := newTestClient(testCase.Data, "application/json", testCase.Code)
-		defer server.Close()
-		require.NoError(t, err)
-		obj, err := client.GetRepositories()
-		if testCase.Fail {
-			require.Error(t, err, desc)
-			require.Nil(t, obj, desc)
-		} else {
-			require.NoError(t, err, desc)
-			require.NotNil(t, obj, desc)
-		}
+		t.Run(desc,
+			func(*testing.T) {
+				client, server, err := newTestClient(testCase.Data, "application/json", testCase.Code)
+				defer server.Close()
+				require.NoError(t, err)
+				obj, err := client.GetRepositories()
+				if testCase.Fail {
+					require.Error(t, err, desc)
+					require.Nil(t, obj, desc)
+				} else {
+					require.NoError(t, err, desc)
+					require.NotNil(t, obj, desc)
+				}
+			})
 	}
 }
 
@@ -96,26 +99,29 @@ func TestGetRepositoryConfiguration(t *testing.T) {
 	}
 
 	for desc, testCase := range cases {
-		client, server, err := newTestClient(testCase.Data, "application/json", testCase.Code)
-		defer server.Close()
-		require.NoError(t, err)
-		var obj RepositoryConfiguration
-		switch testCase.RepoType {
-		case "local":
-			obj, err = client.GetLocalRepositoryConfiguration("foo")
-		case "remote":
-			obj, err = client.GetRemoteRepositoryConfiguration("foo")
-		case "virtual":
-			obj, err = client.GetVirtualRepositoryConfiguration("foo")
-		}
+		t.Run(desc,
+			func(*testing.T) {
+				client, server, err := newTestClient(testCase.Data, "application/json", testCase.Code)
+				defer server.Close()
+				require.NoError(t, err)
+				var obj RepositoryConfiguration
+				switch testCase.RepoType {
+				case "local":
+					obj, err = client.GetLocalRepositoryConfiguration("foo")
+				case "remote":
+					obj, err = client.GetRemoteRepositoryConfiguration("foo")
+				case "virtual":
+					obj, err = client.GetVirtualRepositoryConfiguration("foo")
+				}
 
-		if testCase.Fail {
-			require.Error(t, err, desc)
-			require.Nil(t, obj, desc)
-		} else {
-			require.NoError(t, err, desc)
-			require.NotNil(t, obj, desc)
-		}
+				if testCase.Fail {
+					require.Error(t, err, desc)
+					require.Nil(t, obj, desc)
+				} else {
+					require.NoError(t, err, desc)
+					require.NotNil(t, obj, desc)
+				}
+			})
 	}
 }
 
@@ -147,27 +153,30 @@ func TestCreateRepository(t *testing.T) {
 		}},
 	}
 	for desc, testCase := range testCases {
-		client, server, err := newTestClient([]byte(""), "application/json", testCase.code)
-		defer server.Close()
-		require.NoError(t, err)
-		err = client.CreateLocalRepository("testrepo", testCase.opts...)
-		if testCase.fail {
-			require.Error(t, err, desc)
-		} else {
-			require.NoError(t, err, desc)
-		}
-		err = client.CreateRemoteRepository("testrepo", "http://foo", testCase.opts...)
-		if testCase.fail {
-			require.Error(t, err, desc)
-		} else {
-			require.NoError(t, err, desc)
-		}
-		err = client.CreateVirtualRepository("testrepo", "generic", testCase.opts...)
-		if testCase.fail {
-			require.Error(t, err, desc)
-		} else {
-			require.NoError(t, err, desc)
-		}
+		t.Run(desc,
+			func(*testing.T) {
+				client, server, err := newTestClient([]byte(""), "application/json", testCase.code)
+				defer server.Close()
+				require.NoError(t, err)
+				err = client.CreateLocalRepository("testrepo", testCase.opts...)
+				if testCase.fail {
+					require.Error(t, err, desc)
+				} else {
+					require.NoError(t, err, desc)
+				}
+				err = client.CreateRemoteRepository("testrepo", "http://foo", testCase.opts...)
+				if testCase.fail {
+					require.Error(t, err, desc)
+				} else {
+					require.NoError(t, err, desc)
+				}
+				err = client.CreateVirtualRepository("testrepo", "generic", testCase.opts...)
+				if testCase.fail {
+					require.Error(t, err, desc)
+				} else {
+					require.NoError(t, err, desc)
+				}
+			})
 	}
 }
 
@@ -199,15 +208,18 @@ func TestUpdateRepositoryConfiguration(t *testing.T) {
 		}},
 	}
 	for desc, testCase := range testCases {
-		client, server, err := newTestClient([]byte(""), "application/json", testCase.code)
-		defer server.Close()
-		require.NoError(t, err)
-		err = client.UpdateRepositoryConfiguration("testrepo", testCase.opts...)
-		if testCase.fail {
-			require.Error(t, err, desc)
-		} else {
-			require.NoError(t, err, desc)
-		}
+		t.Run(desc,
+			func(*testing.T) {
+				client, server, err := newTestClient([]byte(""), "application/json", testCase.code)
+				defer server.Close()
+				require.NoError(t, err)
+				err = client.UpdateRepositoryConfiguration("testrepo", testCase.opts...)
+				if testCase.fail {
+					require.Error(t, err, desc)
+				} else {
+					require.NoError(t, err, desc)
+				}
+			})
 	}
 }
 
@@ -231,7 +243,7 @@ func TestCalculateAndIndex(t *testing.T) {
 	failClient, failServer, failErr := newTestClient([]byte(""), "text/plain", 500)
 	defer failServer.Close()
 	require.NoError(t, failErr)
-
+	t.Parallel()
 	noOptCases := map[string]func(string) error{
 		"nuget": client.CalculateNuGetRepositoryMetadata,
 		"npm":   client.CalculateNPMRepositoryMetadata,
@@ -259,38 +271,50 @@ func TestCalculateAndIndex(t *testing.T) {
 	}
 
 	for name, f := range noOptCases {
-		err := f("foo")
-		require.NoError(t, err, name+" - no error")
-		err = client.CalculateMavenIndex()
-		require.NoError(t, err, "maven - no error")
+		t.Run(name,
+			func(*testing.T) {
+				err := f("foo")
+				require.NoError(t, err, name+" - no error")
+				err = client.CalculateMavenIndex()
+				require.NoError(t, err, "maven - no error")
+			})
 	}
 
 	for name, f := range optCases {
-		err := f("foo", CalculateGPGPassphrase("password"), CalculateQueryParams(map[string]string{"foo": "bar"}))
-		require.NoError(t, err, name+" - no error with options")
-		err = f("foo")
-		require.NoError(t, err, name+" - no error with no options")
-		failOption := func() CalculateOption {
-			return func(h *[]httpclient.RequestOption) error {
-				return fmt.Errorf("option setting failed")
-			}
-		}
-		err = f("foo", failOption())
-		require.Error(t, err, name+" - bad option")
-		err = client.CalculateMavenIndex(failOption())
-		require.Error(t, err, "maven - bad option")
+		t.Run(name,
+			func(*testing.T) {
+				err := f("foo", CalculateGPGPassphrase("password"), CalculateQueryParams(map[string]string{"foo": "bar"}))
+				require.NoError(t, err, name+" - no error with options")
+				err = f("foo")
+				require.NoError(t, err, name+" - no error with no options")
+				failOption := func() CalculateOption {
+					return func(h *[]httpclient.RequestOption) error {
+						return fmt.Errorf("option setting failed")
+					}
+				}
+				err = f("foo", failOption())
+				require.Error(t, err, name+" - bad option")
+				err = client.CalculateMavenIndex(failOption())
+				require.Error(t, err, "maven - bad option")
+			})
 	}
 
 	for name, f := range noOptCasesFail {
-		err := f("foo")
-		require.Error(t, err, name+" - http error")
-		err = failClient.CalculateMavenIndex()
-		require.Error(t, err, "maven - http error")
+		t.Run(name,
+			func(*testing.T) {
+				err := f("foo")
+				require.Error(t, err, name+" - http error")
+				err = failClient.CalculateMavenIndex()
+				require.Error(t, err, "maven - http error")
+			})
 	}
 
 	for name, f := range optCasesFail {
-		err := f("foo", CalculateGPGPassphrase("password"), CalculateQueryParams(map[string]string{"foo": "bar"}))
-		require.Error(t, err, name+" - http error")
+		t.Run(name,
+			func(*testing.T) {
+				err := f("foo", CalculateGPGPassphrase("password"), CalculateQueryParams(map[string]string{"foo": "bar"}))
+				require.Error(t, err, name+" - http error")
+			})
 	}
 
 }

@@ -31,19 +31,23 @@ func TestSecurityResponses(t *testing.T) {
 		{&GetCertificatesResponse{}: GetCertificatesResponseTestData},
 	}
 
+	t.Parallel()
 	for _, testCase := range responsesTestCases {
 		for k, v := range testCase {
-			require.Implements(t, (*VersionedResponse)(nil), k)
-			data, err := testdata.GetBytes(v)
-			require.NoError(t, err)
-			placeholder := make(map[string]interface{})
-			_ = json.Unmarshal(data, &placeholder)
-			config := newMSDecoderConfig()
-			config.Result = k
-			decoder, newErr := mapstructure.NewDecoder(config)
-			require.NoError(t, newErr)
-			dErr := decoder.Decode(placeholder)
-			require.NoError(t, dErr, fmt.Sprintf("should parse %s", v))
+			t.Run(v,
+				func(*testing.T) {
+					require.Implements(t, (*VersionedResponse)(nil), k)
+					data, err := testdata.GetBytes(v)
+					require.NoError(t, err)
+					placeholder := make(map[string]interface{})
+					_ = json.Unmarshal(data, &placeholder)
+					config := newMSDecoderConfig()
+					config.Result = k
+					decoder, newErr := mapstructure.NewDecoder(config)
+					require.NoError(t, newErr)
+					dErr := decoder.Decode(placeholder)
+					require.NoError(t, dErr, fmt.Sprintf("should parse %s", v))
+				})
 		}
 	}
 }

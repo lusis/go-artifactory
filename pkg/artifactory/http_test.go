@@ -74,17 +74,21 @@ func TestParseHTTPresp(t *testing.T) {
 			contains: "good body",
 		},
 	}
+	t.Parallel()
 	for k, v := range testCases {
-		data, err := parseHTTPresp(v.response, v.e)
-		if v.fail {
-			require.Nil(t, data, "data should be nil: "+k)
-			require.Error(t, err, "should be an error: "+k)
-			require.Contains(t, err.Error(), v.contains, "error should match: "+k)
-			continue
-		}
-		require.NotNil(t, data, "data should not be nil: "+k)
-		require.Equal(t, v.contains, string(data), "body should match: "+k)
-		require.NoError(t, err, "should not be an error: "+k)
+		t.Run(k,
+			func(*testing.T) {
+				data, err := parseHTTPresp(v.response, v.e)
+				if v.fail {
+					require.Nil(t, data, "data should be nil: "+k)
+					require.Error(t, err, "should be an error: "+k)
+					require.Contains(t, err.Error(), v.contains, "error should match: "+k)
+					return
+				}
+				require.NotNil(t, data, "data should not be nil: "+k)
+				require.Equal(t, v.contains, string(data), "body should match: "+k)
+				require.NoError(t, err, "should not be an error: "+k)
+			})
 	}
 }
 func TestHTTPErrors(t *testing.T) {

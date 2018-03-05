@@ -20,21 +20,24 @@ func TestExportResponses(t *testing.T) {
 
 	for _, testCase := range responsesTestCases {
 		for k, v := range testCase {
-			require.Implements(t, (*VersionedResponse)(nil), k)
-			require.NotNil(t, k.minVersion())
-			require.NotNil(t, k.maxVersion())
+			t.Run(v,
+				func(*testing.T) {
+					require.Implements(t, (*VersionedResponse)(nil), k)
+					require.NotNil(t, k.minVersion())
+					require.NotNil(t, k.maxVersion())
 
-			data, err := testdata.GetBytes(v)
-			require.NoError(t, err)
-			placeholder := make(map[string]interface{})
-			_ = json.Unmarshal(data, &placeholder)
-			config := newMSDecoderConfig()
-			config.Result = k
-			decoder, newErr := mapstructure.NewDecoder(config)
-			require.NoError(t, newErr)
-			dErr := decoder.Decode(placeholder)
-			require.NoError(t, dErr, fmt.Sprintf("should parse %s", v))
-			require.NotNil(t, k)
+					data, err := testdata.GetBytes(v)
+					require.NoError(t, err)
+					placeholder := make(map[string]interface{})
+					_ = json.Unmarshal(data, &placeholder)
+					config := newMSDecoderConfig()
+					config.Result = k
+					decoder, newErr := mapstructure.NewDecoder(config)
+					require.NoError(t, newErr)
+					dErr := decoder.Decode(placeholder)
+					require.NoError(t, dErr, fmt.Sprintf("should parse %s", v))
+					require.NotNil(t, k)
+				})
 		}
 	}
 }

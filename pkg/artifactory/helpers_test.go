@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"os"
+	"testing"
 )
 
 func newTestClient(content []byte, contentType string, statusCode int) (*Client, *httptest.Server, error) {
@@ -36,4 +38,38 @@ func newTestClient(content []byte, contentType string, statusCode int) (*Client,
 		return nil, nil, err
 	}
 	return client, server, nil
+}
+
+func testStashEnvVars(t *testing.T) {
+	for _, v := range []string{
+		"ARTIFACTORY_TOKEN",
+		"ARTIFACTORY_URL",
+		"ARTIFACTORY_USERNAME",
+		"ARTIFACTORY_PASSWORD",
+		"ARTIFACTORY_VERSION",
+	} {
+		if os.Getenv(v) != "" {
+			//stash it
+			toStash := os.Getenv(v)
+			_ = os.Setenv("TST_"+v, toStash)
+			_ = os.Unsetenv(v)
+		}
+	}
+}
+
+func testUnStashEnvVars(t *testing.T) {
+	for _, v := range []string{
+		"ARTIFACTORY_TOKEN",
+		"ARTIFACTORY_URL",
+		"ARTIFACTORY_USERNAME",
+		"ARTIFACTORY_PASSWORD",
+		"ARTIFACTORY_VERSION",
+	} {
+		if os.Getenv("TST_"+v) != "" {
+			//stash it
+			fromStash := os.Getenv("TST_" + v)
+			_ = os.Setenv(v, fromStash)
+			_ = os.Unsetenv("TST_" + v)
+		}
+	}
 }

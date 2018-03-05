@@ -2,21 +2,25 @@ package artifactory_test
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 	"testing"
 
 	"github.com/davecgh/go-spew/spew"
+	"github.com/lusis/go-artifactory/pkg/artifactory"
 )
 
 func testShouldRunIntegrationTests(t *testing.T) bool {
 	// are the env vars set?
-	if os.Getenv("ARTIFACTORY_TOKEN") == "" || os.Getenv("ARTIFACTORY_URL") == "" {
-		t.Skip("Not running integration tests as env vars are missing")
+	c, err := artifactory.NewClientFromEnv()
+	if err != nil {
+		log.Printf("error creating client: %s", err.Error())
 		return false
 	}
 	// are we pointing to our test instance?
-	return strings.Contains(os.Getenv("ARTIFACTORY_URL"), "lusis.jfrog.io")
+
+	return !strings.Contains(c.Config.BaseURL, "lusis")
 }
 
 func TestShouldRun(t *testing.T) {

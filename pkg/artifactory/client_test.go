@@ -55,14 +55,18 @@ func TestClientHTTPVerifySSLFalse(t *testing.T) {
 }
 
 func TestClientFromEnvWithBasicAuth(t *testing.T) {
+	testStashEnvVars(t)
 	os.Setenv("ARTIFACTORY_URL", "http://artifactory.server.com") //nolint
-	defer os.Unsetenv("ARTIFACTORY_URL")                          //nolint
 	os.Setenv("ARTIFACTORY_USERNAME", "admin")                    //nolint
-	defer os.Unsetenv("ARTIFACTORY_USERNAME")                     //nolint
 	os.Setenv("ARTIFACTORY_PASSWORD", "password")                 //nolint
-	defer os.Unsetenv("ARTIFACTORY_PASSWORD")                     //nolint
 	os.Setenv("ARTIFACTORY_TOKEN", "")                            //nolint
-	defer os.Unsetenv("ARTIFACTORY_TOKEN")                        //nolint
+	defer func() {
+		_ = os.Unsetenv("ARTIFACTORY_URL")
+		_ = os.Unsetenv("ARTIFACTORY_USERNAME")
+		_ = os.Unsetenv("ARTIFACTORY_PASSWORD")
+		_ = os.Unsetenv("ARTIFACTORY_TOKEN")
+		testUnStashEnvVars(t)
+	}()
 	client, err := NewClientFromEnv()
 	require.Nil(t, err)
 	require.NotNil(t, client)
@@ -73,10 +77,16 @@ func TestClientFromEnvWithBasicAuth(t *testing.T) {
 }
 
 func TestClientFromEnvWithTokenAuth(t *testing.T) {
+	testStashEnvVars(t)
 	os.Setenv("ARTIFACTORY_URL", "http://artifactory.server.com") //nolint
-	defer os.Unsetenv("ARTIFACTORY_URL")                          //nolint
 	os.Setenv("ARTIFACTORY_TOKEN", "someToken")                   //nolint
-	defer os.Unsetenv("ARTIFACTORY_TOKEN")                        //nolint
+	defer func() {
+		_ = os.Unsetenv("ARTIFACTORY_URL")
+		_ = os.Unsetenv("ARTIFACTORY_USERNAME")
+		_ = os.Unsetenv("ARTIFACTORY_PASSWORD")
+		_ = os.Unsetenv("ARTIFACTORY_TOKEN")
+		testUnStashEnvVars(t)
+	}()
 	client, err := NewClientFromEnv()
 	require.NotNil(t, client)
 	require.Nil(t, err)
@@ -86,39 +96,68 @@ func TestClientFromEnvWithTokenAuth(t *testing.T) {
 }
 
 func TestClientWithDebug(t *testing.T) {
+	testStashEnvVars(t)
 	os.Setenv("ARTIFACTORY_URL", "http://artifactory.server.com") //nolint
-	defer os.Unsetenv("ARTIFACTORY_URL")                          //nolint
 	os.Setenv("ARTIFACTORY_TOKEN", "someToken")                   //nolint
-	defer os.Unsetenv("ARTIFACTORY_TOKEN")                        //nolint
 	os.Setenv("ARTIFACTORY_DEBUG", "1")                           // nolint
-	defer os.Unsetenv("ARTIFACTORY_DEBUG")                        // nolint
+	defer func() {
+		_ = os.Unsetenv("ARTIFACTORY_URL")
+		_ = os.Unsetenv("ARTIFACTORY_USERNAME")
+		_ = os.Unsetenv("ARTIFACTORY_PASSWORD")
+		_ = os.Unsetenv("ARTIFACTORY_TOKEN")
+		testUnStashEnvVars(t)
+	}()
 	client, err := NewClientFromEnv()
 	assert.NoError(t, err)
 	assert.True(t, client.Config.Debug)
 }
 
 func TestClientWithVersion(t *testing.T) {
+	testStashEnvVars(t)
 	os.Setenv("ARTIFACTORY_URL", "http://artifactory.server.com") //nolint
-	defer os.Unsetenv("ARTIFACTORY_URL")                          //nolint
 	os.Setenv("ARTIFACTORY_TOKEN", "someToken")                   //nolint
-	defer os.Unsetenv("ARTIFACTORY_TOKEN")                        //nolint
 	os.Setenv("ARTIFACTORY_VERSION", "1.0")                       // nolint
-	defer os.Unsetenv("ARTIFACTORY_VERSION")                      // nolint
+	defer func() {
+		_ = os.Unsetenv("ARTIFACTORY_URL")
+		_ = os.Unsetenv("ARTIFACTORY_USERNAME")
+		_ = os.Unsetenv("ARTIFACTORY_PASSWORD")
+		_ = os.Unsetenv("ARTIFACTORY_TOKEN")
+		_ = os.Unsetenv("ARTIFACTORY_VERSION")
+		testUnStashEnvVars(t)
+	}()
 	client, err := NewClientFromEnv()
 	assert.NoError(t, err)
 	assert.True(t, client.Config.APIVersion.Equal(versionMustParse("1.0").Version))
 }
 
 func TestClientFromEnvWithNoURL(t *testing.T) {
+	testStashEnvVars(t)
+	defer func() {
+		_ = os.Unsetenv("ARTIFACTORY_URL")
+		_ = os.Unsetenv("ARTIFACTORY_USERNAME")
+		_ = os.Unsetenv("ARTIFACTORY_PASSWORD")
+		_ = os.Unsetenv("ARTIFACTORY_TOKEN")
+		_ = os.Unsetenv("ARTIFACTORY_VERSION")
+		testUnStashEnvVars(t)
+	}()
 	client, err := NewClientFromEnv()
 	require.Error(t, err)
 	require.Nil(t, client)
 }
 
 func TestClientFromEnvWithNoCredentials(t *testing.T) {
+	testStashEnvVars(t)
 	os.Setenv("ARTIFACTORY_URL", "http://artifactory.server.com") //nolint
-	defer os.Unsetenv("ARTIFACTORY_URL")                          //nolint
+	defer func() {
+		_ = os.Unsetenv("ARTIFACTORY_URL")
+		_ = os.Unsetenv("ARTIFACTORY_USERNAME")
+		_ = os.Unsetenv("ARTIFACTORY_PASSWORD")
+		_ = os.Unsetenv("ARTIFACTORY_TOKEN")
+		_ = os.Unsetenv("ARTIFACTORY_VERSION")
+		testUnStashEnvVars(t)
+	}()
 	client, err := NewClientFromEnv()
 	require.Error(t, err)
 	require.Nil(t, client)
+
 }
